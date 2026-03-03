@@ -130,20 +130,7 @@ export class AuthController {
 
             refreshTokenDB.user = user._id
 
-            try {
-                const decoded = jwt.verify(accessToken, accessTokenKey)
-
-                if (typeof decoded === 'object' && decoded.id) {
-                    const user = await User.findById(decoded.id).select('name email')
-                    if (user) {
-                        req.user = user
-                    }
-                }
-            } catch {
-                const error = new Error('No se pudo obtener el token')
-                return res.status(400).json({error: error.message})
-            }
-
+        
             await Promise.allSettled([user.save(), refreshTokenDB.save()])
             res.cookie('refreshToken',refreshToken, {
                 httpOnly: true,
