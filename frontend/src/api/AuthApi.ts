@@ -1,7 +1,5 @@
 import axios, { isAxiosError } from 'axios'
 import { userReqSchema, type RegistrationForm, type UserLoginForm } from '@/types'
-import { getAccessToken } from '@/stores/auth'
-
 
 const baseUrl = import.meta.env.VITE_API_URL
 export async function createAccount(formData: RegistrationForm) {
@@ -18,9 +16,8 @@ export async function createAccount(formData: RegistrationForm) {
 }
 
 
-export async function getUser() {
+export async function getUser(accessToken: string) {
     try {
-        const accessToken = getAccessToken()
         const { data } = await axios.get(`${baseUrl}/auth/user`, {
             headers: {
                 'Authorization' : `Bearer ${accessToken}`
@@ -28,9 +25,10 @@ export async function getUser() {
         })
         const response = userReqSchema.safeParse(data)
 
-        if (response.success) {
-            return response.data
-        }
+        if (!response.success) throw new Error('Respuesta inválida del servidor');
+        
+        return response.data
+        
 
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -57,7 +55,10 @@ export async function confirmAccount(formData: string) {
 
 export async function authenticateAccount(formData: UserLoginForm) {
     try {
-        const { data } = await axios.post(`${baseUrl}/auth/authenticate-account`, formData)
+        const { data } = await axios.post(`${baseUrl}/auth/authenticate-account`, formData, {
+            withCredentials: true
+        })
+        console.log(data)
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -72,6 +73,27 @@ export async function resendToken(formData: string) {
     try {
         const { data } = await axios.post(`${baseUrl}/auth/resend-confirmation-token`, formData)
         return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+
+export async function getRefreshToken() {
+    try {
+        const response = await fetch(`${baseUrl}/auth/refresh-token`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+        if (!response.ok) throw new Error('Hubo un error al obtener el token de refresco')
+
+        if (response.status === 401) return null
+
+        const data = await response.json()
+
+        return data.access_token
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)

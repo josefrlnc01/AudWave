@@ -5,12 +5,14 @@ import { mainRoute } from '../routes/mainRoute.js'
 import { corsMiddleware } from '../middlewares/corsOptions.js'
 import { authRoute } from '../routes/auth.js'
 import { connectToDb } from '../config/db.js'
+import cookieParser from 'cookie-parser'
 
 await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
 const port = process.env.PORT 
 
 const app = express()
+app.use(cookieParser())
 app.use(corsMiddleware())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) 

@@ -21,6 +21,7 @@ if (isProd) {
 }
 
 export const corsMiddleware = () => cors({
+    credentials:true,
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         const ACCEPTED_ORIGINS:string[] | undefined = [
         frontendUrl

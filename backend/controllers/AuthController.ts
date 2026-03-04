@@ -7,6 +7,7 @@ import { AuthEmail } from "../emails/AuthEmail.js"
 import jwt from 'jsonwebtoken'
 import RefreshToken from "../models/RefreshToken.js"
 import { getRequiredEnv } from "../utils/auth.js"
+import { de } from "zod/v4/locales"
 declare global {
     namespace Express {
         interface Request {
@@ -126,15 +127,18 @@ export class AuthController {
                 expiresIn: '90d'
             })
 
-            const refreshTokenDB = new RefreshToken({token: refreshToken})
+            console.log('refreshToken', refreshToken)
 
+            const refreshTokenDB = new RefreshToken({token: refreshToken})
+            console.log(refreshTokenDB)
             refreshTokenDB.user = user._id
 
         
             await Promise.allSettled([user.save(), refreshTokenDB.save()])
-            res.cookie('refreshToken',refreshToken, {
+            res.cookie('refreshToken', refreshToken, {
                 httpOnly: true,
-                sameSite: 'strict'
+                sameSite: 'lax',
+                secure: false
             })
 
             res.send(accessToken)
@@ -175,6 +179,68 @@ export class AuthController {
             return res.status(200).send('Nuevo token enviado, revisa tu bandeja de email')
         } catch (error) {
             return res.status(500).json({error: 'Hubo un error en el reenvío del token de confirmación de cuenta'})
+        }
+    }
+
+
+    static refreshToken = async (req: Request, res: Response) => {
+        try {
+            const accessTokenKey = getRequiredEnv('ACCESS_JWT_KEY')
+            const refreshTokenKey = getRequiredEnv('REFRESH_JWT_KEY')
+            const {refreshToken} = req.cookies
+
+            console.log('cookies recibidas,', refreshToken)
+
+            const tokenInBD = await RefreshToken.findOne({token: refreshToken})
+
+            console.log('Token in bd', tokenInBD)
+
+            if (!tokenInBD) {
+                const error = new Error('Token inválido o expirado')
+                return res.status(401).json({error: error.message})
+            }
+            const decoded = jwt.verify(tokenInBD.token, refreshTokenKey)
+            
+            if (typeof decoded !== 'object') {
+                const error = new Error('No se pudo obtener el cuerpo del token')
+                return res.status(401).json({error: error.message})
+            }
+            
+            const user = await User.findById(decoded.id)
+            
+                
+            if (!user) return res.status(401).json({error: 'Usuario no encontrado'})
+
+            const accessToken = jwt.sign({
+                id:user._id
+            }, accessTokenKey, {
+                expiresIn: '10m'
+            })
+
+            const newRefreshToken = jwt.sign({
+                id: user._id
+            }, refreshTokenKey, {
+                expiresIn: '90d'
+            })
+
+            await tokenInBD.deleteOne()
+
+            const newRefreshTokenInDB = new RefreshToken()
+            newRefreshTokenInDB.token = newRefreshToken
+
+            newRefreshTokenInDB.user = user._id
+
+
+            res.cookie('refreshToken', newRefreshToken, {
+                httpOnly: true,
+                sameSite: 'lax',
+                secure: false
+            })
+            await Promise.allSettled([user.save(), newRefreshTokenInDB.save()])
+            return res.status(200).json({access_token: accessToken})
+        } catch (error) {
+            console.error('Error en refreshToken:', error)
+            return res.status(500).json({error: 'Hubo un error al reenviar el token'})
         }
     }
 
