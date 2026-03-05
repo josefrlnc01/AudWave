@@ -3,11 +3,20 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { Link, Navigate } from 'react-router'
 import { Outlet } from 'react-router'
+import { Spinner } from '@/shared/components/ui/spinner'
 
 export default function AppLayout() {
     const { data, isError, isLoading } = useAuth()
 
-    if (isLoading) return 'Cargando...'
+    if (isLoading) {
+        return (
+            <aside className=" p-4 bg-slate-950 flex flex-col gap-3 items-center text-white justify-center">
+                <Spinner
+                    className="size-20"
+                />
+            </aside>
+        )
+    }
 
     if (isError || !data) return <Navigate to={'/auth/login'} />
 
