@@ -1,8 +1,8 @@
 import { Request, Response } from "express"
 import { IUser} from "../user/user.model.js"
-import { AuthEmail } from "../../config/mail/mail.js"
 import { authJWT, confirmToken, createUser, decodeAndGenerateTokens, verifyAndSendToken } from "./auth.service.js"
 import { registerSchema } from "./auth.schema.js"
+import { ZodError } from "zod"
 declare global {
     namespace Express {
         interface Request {
@@ -20,15 +20,14 @@ export class AuthController {
     static createAccount = async (req: Request, res: Response) => {
         try {
             const data = registerSchema.parse(req.body)
-            const { user, token } = await createUser(data)
-            await AuthEmail.sendEmail({
-                name: user.name,
-                email: user.email,
-                token: token.token
-            })
-
+            await createUser(data)
             return res.status(201).send('Usuario creado correctamente, revisa tu correo para confirmar tu cuenta')
         } catch (error) {
+            if (error instanceof ZodError) {
+                return res.status(400).json({errors: error.issues.map(isue => ({
+                    error: isue.message
+                }))})
+            }
             if (error instanceof Error) {
                 return res.status(400).json({ error: error.message })
             }

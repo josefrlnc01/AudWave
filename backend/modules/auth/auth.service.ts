@@ -24,6 +24,12 @@ export async function createUser(u: UserRegistrationForm) {
     const token = new Token()
     token.token = generate6DigitsToken()
     token.user = user._id
+
+    await AuthEmail.sendEmail({
+                name: user.name,
+                email: user.email,
+                token: token.token
+            })
     await Promise.all([user.save(), token.save()])
 
     return { user, token }
