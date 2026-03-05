@@ -9,11 +9,11 @@ interface IEmail {
 export class AuthEmail {
     static sendEmail = async (user : IEmail ) => {
         await transport.sendMail({
-                from: 'Traduccioner <admin@uptask.com>',
+                from: 'Traductioner-- <admin@uptask.com>',
                 to : user.email,
-                subject : 'Uptask-- Confirma tu cuenta',
-                text : 'Uptask-- Confirma tu cuenta',
-                html : `<p>Hola ${user.name}, te has registrado correctamente, ya casi esta todo listo, solo debes confirmar tu cuenta.</p>
+                subject : 'Traductioner-- Confirma tu cuenta',
+                text : 'Traductioner-- Confirma tu cuenta',
+                html : `<p>Hola ${user.name}, te has registrado correctamente en Traductioner, ya casi esta todo listo, solo debes confirmar tu cuenta.</p>
                 <p>Visita el siguiente enlace:</p>
                 <a href="${process.env.FRONTEND_URL}/auth/confirm-account">Confirmar cuenta</a>
                 <p>Ingresa el código: <b>${user.token}</b></p>
