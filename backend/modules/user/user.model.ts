@@ -27,7 +27,7 @@ export const userSchema: Schema = new Schema({
     }
 })
 
-export type UserType = z.infer<typeof userSchema>
+
 const User = mongoose.model<IUser>('User', userSchema)
 
 export default User

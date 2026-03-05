@@ -3,7 +3,7 @@ import { AuthEmail } from "../../config/mail/mail.js";
 import RefreshToken from "../tokens/refreshToken.model.js";
 import Token from "../tokens/token.model.js";
 import User from "../user/user.model.js";
-import { UserRegistrationForm } from "../../shared/types/index.js";
+import type { UserRegistrationForm } from "../user/user.types.js";
 import { getRequiredEnv, hashPassword } from "../../shared/utils/auth.js";
 import { generate6DigitsToken } from "../../shared/utils/token.js";
 
