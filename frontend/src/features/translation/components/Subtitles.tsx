@@ -1,5 +1,5 @@
 import type { UseMutationResult } from "@tanstack/react-query";
-import type { MutationProps } from "./FormView";
+import type { MutationProps } from "./Form";
 import gsap from 'gsap'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ type SubtitlesViewProps = {
     } | undefined, Error, MutationProps, unknown>
 }
 
-export default function SubtitlesView({ mutation }: SubtitlesViewProps) {
+export default function Subtitles({ mutation }: SubtitlesViewProps) {
     const [phrase, setPhrase] = useState('')
     const [index, setIndex] = useState(0)
     const [fade, setFade] = useState(true)

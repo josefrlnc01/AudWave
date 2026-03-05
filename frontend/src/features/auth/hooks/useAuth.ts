@@ -1,6 +1,6 @@
-import { getUser } from "@/api/AuthApi";
+import { getUser } from "@/features/auth/api/authApi";
 import { useQuery } from "@tanstack/react-query";
-import { useRefreshToken } from "./token";
+import { useRefreshToken } from "@/features/token/hooks/useRefreshToken";
 
 export const useAuth = () => {
     const {

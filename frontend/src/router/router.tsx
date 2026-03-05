@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router"
-import AppLayout from "./layouts/AppLayout"
-import MainView from "./views/MainView"
-import AuthLayout from "./layouts/AuthLayout"
-import ConfirmAccountView from "./views/ConfirmAccountView"
-import LoginView from "./views/LoginView"
-import RegisterView from "./views/RegisterView"
-import ResendTokenView from "./views/ResendTokenView"
+import AppLayout from "../layouts/AppLayout"
+import MainView from "../features/translation/pages/MainView"
+import AuthLayout from "../features/auth/layout/AuthLayout"
+import ConfirmAccountView from "../features/auth/pages/ConfirmAccountView"
+import LoginView from "../features/auth/pages/LoginView"
+import RegisterView from "../features/auth/pages/RegisterView"
+import ResendTokenView from "../features/auth/pages/ResendTokenView"
 
 export default function Router() {
   return (

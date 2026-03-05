@@ -1,4 +1,4 @@
-import { authenticateAccount } from '@/api/AuthApi'
+import { authenticateAccount } from '@/features/auth/api/authApi'
 import ErrorMessage from '@/components/ErrorMessage'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'

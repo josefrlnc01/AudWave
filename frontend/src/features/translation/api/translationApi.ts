@@ -10,7 +10,6 @@ export async function sendLink(link:string, lang:string | null):Promise<{subtitl
                 'Content-Type': 'application/json'
             }
         })
-        console.log(response)
         
         if (!response.ok) {
             const errorText = await response.text()

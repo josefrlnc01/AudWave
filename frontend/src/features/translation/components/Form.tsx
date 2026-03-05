@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { sendLink } from "../services/video.service";
+import { sendLink } from "../api/translationApi";
 import { ComboboxMultiple } from "@/components/ComboboxMultiple";
-import SubtitlesView from "./SubtitlesView";
+import Subtitles from "./Subtitles";
 
-import { getAbbreviateLanguage } from "@/utils/getAbbreviateLang";
+import { getAbbreviateLanguage } from "@/shared/utils/getAbbreviateLang";
 import { useMutation } from "@tanstack/react-query";
 
 export type MutationProps = {
     link: string
     lang: string | null
 }
-export default function FormView() {
+export default function Form() {
     const [inputValue, setInputValue] = useState('')
     const [language, setLanguage] = useState<string | null>(null)
     
@@ -63,7 +63,7 @@ export default function FormView() {
     </form>
     
     </aside>
-    <SubtitlesView
+    <Subtitles
     mutation={mutation}
     />
     </>

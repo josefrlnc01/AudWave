@@ -1,4 +1,4 @@
-import { confirmAccount } from "@/api/AuthApi"
+import { confirmAccount } from "@/features/auth/api/authApi"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { toast } from 'react-toastify'
@@ -7,7 +7,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
-import type { TokenConfirmation } from "@/types"
+import type { TokenConfirmation } from "@/features/token/types/token.types"
 import { Link } from "react-router"
 
 

@@ -1,6 +1,6 @@
 
-import FormView from './FormView'
-import Header from '../components/Header'
+import Form from '@/features/translation/components/Form'
+import Header from '../../../components/Header'
 
 
 export default function MainView() {
@@ -8,7 +8,7 @@ export default function MainView() {
     <>
     <main className='h-dvh h-vh max-h-vh w-vw bg-slate-950 flex flex-col'>
     <Header/>
-    <FormView/>
+    <Form/>
    
     </main>
     </>

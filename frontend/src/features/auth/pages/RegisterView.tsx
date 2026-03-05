@@ -1,6 +1,6 @@
-import { createAccount } from "@/api/AuthApi"
+import { createAccount } from "@/features/auth/api/authApi"
 import ErrorMessage from "@/components/ErrorMessage"
-import type { RegistrationForm } from "@/types"
+import type { RegistrationForm } from "../types/auth.types"
 import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router"

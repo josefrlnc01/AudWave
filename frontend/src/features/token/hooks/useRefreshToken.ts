@@ -1,4 +1,4 @@
-import { getRefreshToken } from "@/api/AuthApi";
+import { getRefreshToken } from "@/features/auth/api/authApi";
 import { useQuery } from "@tanstack/react-query";
 
 
