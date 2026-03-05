@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router"
-import AppLayout from "../layouts/AppLayout"
+import AppLayout from "../features/translation/layout/AppLayout"
 import MainView from "../features/translation/pages/MainView"
 import AuthLayout from "../features/auth/layout/AuthLayout"
 import ConfirmAccountView from "../features/auth/pages/ConfirmAccountView"

@@ -1,6 +1,5 @@
-
 import Form from '@/features/translation/components/Form'
-import Header from '../../../components/Header'
+import Header from '@/shared/components/Header'
 
 
 export default function MainView() {

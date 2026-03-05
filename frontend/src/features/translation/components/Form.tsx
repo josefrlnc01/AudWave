@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { sendLink } from "../api/translationApi";
-import { ComboboxMultiple } from "@/components/ComboboxMultiple";
+import { ComboboxMultiple } from "@/shared/components/ComboboxMultiple";
 import Subtitles from "./Subtitles";
 
-import { getAbbreviateLanguage } from "@/shared/utils/getAbbreviateLang";
+import { getAbbreviateLanguage } from "@/shared/utils/lang";
 import { useMutation } from "@tanstack/react-query";
 
 export type MutationProps = {

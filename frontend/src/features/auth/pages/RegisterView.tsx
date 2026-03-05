@@ -1,5 +1,5 @@
 import { createAccount } from "@/features/auth/api/authApi"
-import ErrorMessage from "@/components/ErrorMessage"
+import ErrorMessage from "@/shared/components/ErrorMessage"
 import type { RegistrationForm } from "../types/auth.types"
 import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
