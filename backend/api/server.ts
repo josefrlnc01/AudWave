@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 dotenv.config()
 import { mainRoute } from '../modules/main/main.routes.js'
-import { corsMiddleware } from '../shared/middlewares/cors.middleware.js'
+import { corsMiddleware } from '../config/cors.js'
 import { authRoute } from '../modules/auth/auth.routes.js'
 import { connectToDb } from '../config/db.js'
 import cookieParser from 'cookie-parser'

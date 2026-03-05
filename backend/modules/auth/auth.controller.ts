@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { IUser, userSchema } from "../user/user.model.js"
+import { IUser} from "../user/user.model.js"
 import { checkPassword, hashPassword } from "../../shared/utils/auth.js"
 import Token from "../tokens/token.model.js"
 import { generate6DigitsToken } from "../../shared/utils/token.js"

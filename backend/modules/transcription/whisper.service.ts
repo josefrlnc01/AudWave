@@ -1,7 +1,5 @@
-import { exec } from "child_process";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import { promisify }from 'util'
 import OpenAi from 'openai'
 import fs from 'node:fs'
 
