@@ -1,14 +1,6 @@
 "use client"
 import * as React from "react"
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxItem,
-  ComboboxList,
-
-} from "@/components/ui/combobox"
+import { ComboboxInput, Combobox, ComboboxContent, ComboboxEmpty, ComboboxList, ComboboxItem } from "./ui/combobox"
 
 
 type ComboboxMultipleProps = {

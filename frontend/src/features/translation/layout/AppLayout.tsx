@@ -1,6 +1,6 @@
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/features/auth/hooks/useAuth'
 import { Link, Navigate } from 'react-router'
 import { Outlet } from 'react-router'
 

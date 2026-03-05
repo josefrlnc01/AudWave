@@ -1,5 +1,7 @@
 import axios, { isAxiosError } from 'axios'
-import { userReqSchema, type RegistrationForm, type UserLoginForm } from '@/types'
+import { userReqSchema} from '../schemas/auth.schema'
+import type { RegistrationForm, UserLoginForm } from '../types/auth.types'
+
 
 const baseUrl = import.meta.env.VITE_API_URL
 export async function createAccount(formData: RegistrationForm) {
