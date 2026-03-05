@@ -1,4 +1,4 @@
-import transport from "../config/NODEMAILER.js"
+import transport from "./NODEMAILER.js"
 
 interface IEmail {
     email: string

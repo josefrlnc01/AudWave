@@ -3,7 +3,7 @@ import { IUser, userSchema } from "../user/user.model.js"
 import { checkPassword, hashPassword } from "../../shared/utils/auth.js"
 import Token from "../tokens/token.model.js"
 import { generate6DigitsToken } from "../../shared/utils/token.js"
-import { AuthEmail } from "../../emails/AuthEmail.js"
+import { AuthEmail } from "../../config/mail/mail.js"
 import { authJWT, confirmToken, createUser, decodeAndGenerateTokens, verifyAndSendToken } from "./auth.service.js"
 declare global {
     namespace Express {

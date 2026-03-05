@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { AuthEmail } from "../../emails/AuthEmail.js";
+import { AuthEmail } from "../../config/mail/mail.js";
 import RefreshToken from "../tokens/refreshToken.model.js";
 import Token from "../tokens/token.model.js";
 import User from "../user/user.model.js";

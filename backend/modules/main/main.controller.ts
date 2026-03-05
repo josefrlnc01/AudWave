@@ -3,7 +3,7 @@ import fs from 'node:fs/promises'
 import getVideoId from 'get-video-id'
 import { translateText } from "../modules/translation/translation.service.js";
 import type { DataOfId, RequestProps } from "../shared/types/index.js";
-import { VideoService } from "../services/video.service.js";
+import { VideoService } from "../modules/video/video.service.js";
 
 
 export async function init(req: Request, res: Response) {

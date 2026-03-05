@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { videoSchema } from '../../schemas/video.js'
+import { videoSchema } from '../../modules/video/video.schema.js'
 
 export const validateProcessVideo = (req:Request, res:Response, next:NextFunction) => {
     const result = videoSchema.safeParse(req.body)

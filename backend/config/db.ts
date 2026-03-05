@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { requiredEnv } from "./NODEMAILER.js";
+import { requiredEnv } from "./mail/NODEMAILER.js";
 
 export async function connectToDb() {
     const uri = requiredEnv('URI')
