@@ -10,7 +10,7 @@ export default function AppLayout() {
 
     if (isLoading) {
         return (
-            <aside className=" p-4 bg-slate-950 flex flex-col gap-3 items-center text-white justify-center">
+            <aside className="p-4 min-h-screen max-w-screen h-screen bg-slate-950 flex flex-col gap-3 items-center text-white justify-center">
                 <Spinner
                     className="size-20"
                 />

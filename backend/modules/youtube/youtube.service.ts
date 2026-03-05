@@ -23,6 +23,8 @@ export async function getTitleAndLanguage (id:string) {
         const data = await response.json()
         const videoInfo = data.items[0].snippet
         if (videoInfo) {
+            console.log(videoInfo)
+            
             const title:string = videoInfo.title
             const language: string = videoInfo.defaultLanguage
             return {title,language}

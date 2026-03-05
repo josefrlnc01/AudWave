@@ -1,13 +1,16 @@
+import { tokenStore } from "@/lib/token.store"
 
 
 const urlBackend = import.meta.env.VITE_API_URL
 export async function sendLink(link:string, lang:string | null):Promise<{subtitles: string, translatedText:string, title:string, id: string} | undefined> {
+    const accessToken = tokenStore.get()
     try {
         const response = await fetch(`${urlBackend}/link`, {
             method:'POST',
             body: JSON.stringify({videoLink: link, lang}),
             headers : {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${accessToken}`
             }
         })
         

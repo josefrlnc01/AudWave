@@ -9,7 +9,7 @@ export async function transcribeWhisperAudio():Promise<string | null>{
     try {
         const __fileName = fileURLToPath(import.meta.url)
         const __dirname = dirname(__fileName)
-        const audioPath = path.join(__dirname, "..", "audio.mp3")
+        const audioPath = path.join(__dirname, "..", "..", "audio.mp3")
         const openAi = new OpenAi()
 
         const transcription = await openAi.audio.transcriptions.create({
