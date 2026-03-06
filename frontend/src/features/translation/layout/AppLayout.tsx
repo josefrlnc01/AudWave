@@ -24,9 +24,9 @@ export default function AppLayout() {
     if (data) {
         return (
             <>
-                <aside className='max-w-screen min-w-screen'>
+                <main className='max-w-screen min-w-screen'>
                     <Outlet />
-                </aside>
+                </main>
 
                 <ToastContainer
                     pauseOnHover={false}

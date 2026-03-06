@@ -56,7 +56,7 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
 
     if (!mutation.isSuccess) {
         return (
-            <aside className="flex flex-col lg:items-center p-4 text-gray-400">
+            <aside className="flex flex-col lg:items-center p-4 text-gray-400 lg:hidden">
                 Pega un enlace de Youtube y selecciona un idioma para ver la traducción
             </aside>
         )
