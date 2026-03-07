@@ -26,21 +26,22 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     if (data) {
         return (
             <>
-            <SidebarProvider
-            defaultOpen={false}>
-                <AppSidebar/>
-                <main className='max-w-screen min-w-screen max-h-screen min-h-screen bg-slate-950 text-white'>
-                    <SidebarTrigger className='p-8 text-xl bg-slate-950'/>
-                    <Outlet />
+                <SidebarProvider
+                    defaultOpen={false}>
+                    <AppSidebar />
                     
-                    {children}
-                </main>
+                    <main className='max-w-screen min-w-screen max-h-screen min-h-screen bg-slate-950 text-white'>
+                        
+                        <Outlet />
 
-                <ToastContainer
-                    pauseOnHover={false}
-                    pauseOnFocusLoss={false}
-                />
-    </SidebarProvider>
+                        {children}
+                    </main>
+
+                    <ToastContainer
+                        pauseOnHover={false}
+                        pauseOnFocusLoss={false}
+                    />
+                </SidebarProvider>
             </>
         )
     }

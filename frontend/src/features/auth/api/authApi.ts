@@ -106,6 +106,7 @@ export async function getRefreshToken() {
 
 export async function logOut() {
     try {
+        
         await axios.post(`${baseUrl}/auth/logout`, {})
     } catch (error) {
         if (isAxiosError(error) && error.response) {

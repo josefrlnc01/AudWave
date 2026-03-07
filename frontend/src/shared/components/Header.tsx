@@ -1,13 +1,10 @@
+import { SidebarTrigger } from "./ui/sidebar";
 
 export default function Header() {
   return (
-    <header className='text-center py-4'>
-        <div className='w-full p-3 pl-4 pr-4 flex justify-between'>
-            <div>
-                <p className='font-bold text-md text-white text-shadow-white'>Traductioner</p>
-            </div>
-
-            
+    <header className='w-full text-center py-4'>
+        <div className='w-full p-2 pl-4 pr-4 flex justify-start'>
+          <SidebarTrigger className=' bg-slate-950' />
         </div>
     </header>
   )
