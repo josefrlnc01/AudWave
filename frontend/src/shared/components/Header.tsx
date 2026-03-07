@@ -1,4 +1,3 @@
-import LogOut from "@/features/auth/components/LogOut";
 
 export default function Header() {
   return (
@@ -7,7 +6,8 @@ export default function Header() {
             <div>
                 <p className='font-bold text-md text-white text-shadow-white'>Traductioner</p>
             </div>
-            <LogOut/>
+
+            
         </div>
     </header>
   )
