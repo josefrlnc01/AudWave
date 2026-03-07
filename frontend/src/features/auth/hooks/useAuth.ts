@@ -15,7 +15,7 @@ export const useAuth = () => {
         queryKey: ["user", accessToken],
         retry: 1,
         refetchOnWindowFocus: false,
-        enabled: !!accessToken,
+        enabled: !!accessToken
     });
 
     if (isRefreshLoading) {

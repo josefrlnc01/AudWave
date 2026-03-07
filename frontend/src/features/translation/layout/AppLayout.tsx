@@ -9,7 +9,7 @@ import { AppSidebar } from '@/shared/components/AppSidebar'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     const { data, isError, isLoading } = useAuth()
-
+    const isAuth = localStorage.getItem('isAuth')
     if (isLoading) {
         return (
             <aside className="p-4 min-h-screen max-w-screen h-screen bg-slate-950 flex flex-col gap-3 items-center text-white justify-center">
@@ -20,7 +20,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         )
     }
 
-    if (isError || !data) return <Navigate to={'/auth/login'} />
+    if (!isAuth && isError) return <Navigate to={'/auth/login'} />
 
 
     if (data) {

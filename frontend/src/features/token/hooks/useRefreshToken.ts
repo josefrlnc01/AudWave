@@ -7,6 +7,7 @@ export const useRefreshToken = () => {
     queryKey: ["refresh-token"],
     queryFn: getRefreshToken,
     retry: false,
+    refetchOnWindowFocus:false,
     refetchInterval: 9 * 60 * 1000,
     refetchIntervalInBackground: true,
   });

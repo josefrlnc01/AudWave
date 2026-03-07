@@ -61,7 +61,7 @@ export async function authenticateAccount(formData: UserLoginForm) {
         const { data } = await axios.post(`${baseUrl}/auth/authenticate-account`, formData, {
             withCredentials: true
         })
-        console.log(data)
+        localStorage.setItem('isAuth', 'true')
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -90,7 +90,11 @@ export async function getRefreshToken() {
         const response = await axios.post(`${baseUrl}/auth/refresh-token`, {}, {
             withCredentials: true
         })
-        if (response.status === 401) return null
+        if (response.status === 401) {
+            localStorage.setItem('isAuth', 'false')
+            return null
+        }
+        localStorage.setItem('isAuth', 'true')
         return response.data.access_token
     } catch (error) {
         if (isAxiosError(error) && error.response) {
