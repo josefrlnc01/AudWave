@@ -1,7 +1,7 @@
 import mongoose, {Document, Schema, Types} from "mongoose";
 
 
-interface IVideoStored extends Document {
+export interface IVideoStored extends Document {
     videoId: string,
     title: string,
     text: string,
