@@ -15,17 +15,21 @@ export async function sendLink(link:string, lang:string | null):Promise<{subtitl
         })
         
         if (!response.ok) {
-            const errorText = await response.text()
-            throw new Error(`Server error: ${response.status} - ${errorText}`)
+            if (response.status === 429){
+                throw new Error('No puedes realizar más traducciones')
+            }
+            
+            throw new Error(`Server error`)
         }
-        
+  
         const data = await response.json()
-        if (data) {
-            const {subtitles, translatedText, title, id} = data
-            return {title, subtitles, translatedText, id}
+        if (!data) {
+            throw new Error('Hubo un error en el proceso')
         }
+        const {subtitles, translatedText, title, id} = data
+            return {title, subtitles, translatedText, id}
     } catch (error) {
-        console.error(error)
+        throw error instanceof Error ? error : new Error('Hubo un error en el proceso')
     }
 }
 

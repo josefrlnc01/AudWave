@@ -38,6 +38,7 @@ export default function Form() {
     }
 
 
+
     return (
         <>
             <aside className="w-full lg:w-2/4 lg:mx-auto  lg:min-h-2/5 lg:h-2/5 lg:self-start flex flex-col justify-center items-center lg:justify-center">

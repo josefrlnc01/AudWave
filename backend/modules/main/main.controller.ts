@@ -27,7 +27,10 @@ export async function init(req: Request, res: Response) {
 
     try {
         const data = await VideoService.getSubtitlesFromVideo(id)
-        if (!data) return "Error al obtener datos del video"
+        if (!data) {
+        const error = new Error('No se pudo obtener la transcripción del vídeo')
+        return res.status(400).json({ error: error.message })
+        }
         const { subtitles, title } = data
         const translatedText = await translateText(lang, subtitles)
         return res.json({ title, translatedText, id })

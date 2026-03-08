@@ -9,7 +9,7 @@ export const useAuth = () => {
         isLoading: isRefreshLoading,
         isError: isRefreshError,
     } = useRefreshToken();
-    tokenStore.set(accessToken)
+    tokenStore.set(accessToken ?? null)
     const { data, isError, isLoading } = useQuery({
         queryFn: () => getUser(accessToken!),
         queryKey: ["user", accessToken],

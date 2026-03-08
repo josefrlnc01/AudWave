@@ -1,0 +1,11 @@
+import { Router } from "express";
+import { AuthController } from "./auth.controller.js";
+import { authenticate } from "../../shared/middlewares/auth.middleware.js";
+export const authRoute = Router();
+authRoute.post('/create-account', AuthController.createAccount);
+authRoute.post('/confirm-account', AuthController.confirmAccount);
+authRoute.post('/authenticate-account', AuthController.authenticateAndLogin);
+authRoute.post('/resend-confirmation-token', AuthController.resetAccountConfirmationToken);
+authRoute.post('/refresh-token', AuthController.refreshToken);
+authRoute.post('/logout', AuthController.logOut);
+authRoute.get('/user', authenticate, AuthController.user);

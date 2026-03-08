@@ -14,6 +14,12 @@ declare global {
 
 
 export class AuthController {
+    private static refreshCookieOptions = {
+        httpOnly: true as const,
+        sameSite: 'strict' as const,
+        maxAge: 90 * 24 * 60 * 60 * 1000
+    }
+
     static createAccount = async (req: Request, res: Response) => {
         try {
             const data = registerSchema.parse(req.body)
@@ -55,11 +61,7 @@ export class AuthController {
 
             const { accessToken, refreshToken, user } = await authJWT(email, password)
 
-            res.cookie('refreshToken', refreshToken, {
-                httpOnly: true,
-                sameSite: 'strict'
-
-            })
+            res.cookie('refreshToken', refreshToken, AuthController.refreshCookieOptions)
             res.send(accessToken)
         } catch (error) {
             if (error instanceof Error) {
@@ -89,14 +91,18 @@ export class AuthController {
             const { refreshToken } = req.cookies
             const { accessToken, newRefreshToken } = await decodeAndGenerateTokens(refreshToken)
 
-            res.cookie('refreshToken', newRefreshToken, {
-                httpOnly: true,
-                sameSite: 'strict'
-            })
+            res.cookie('refreshToken', newRefreshToken, AuthController.refreshCookieOptions)
 
             return res.status(200).json({ access_token: accessToken })
         } catch (error) {
             console.error('Error en refreshToken:', error)
+            if (error instanceof Error) {
+                if (error.message === 'Refresh token no proporcionado' || error.message === 'Token inválido o expirado') {
+                    res.clearCookie('refreshToken')
+                    return res.status(401).json({ error: error.message })
+                }
+                return res.status(400).json({ error: error.message })
+            }
             return res.status(500).json({ error: 'Hubo un error al reenviar el token' })
         }
     }
@@ -106,7 +112,7 @@ export class AuthController {
         const { refreshToken } = req.cookies
         const refreshTokenDB = await RefreshToken.findOne({ token: refreshToken })
         await refreshTokenDB?.deleteOne()
-        res.clearCookie(refreshToken)
+        res.clearCookie('refreshToken')
         res.sendStatus(204)
     }
 

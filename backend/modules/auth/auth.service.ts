@@ -130,24 +130,30 @@ export async function verifyAndSendToken(email: string) {
 
 
 
-export async function decodeAndGenerateTokens(refreshToken: string) {
+export async function decodeAndGenerateTokens(refreshToken?: string) {
+    if (!refreshToken) {
+        throw new Error('Refresh token no proporcionado')
+    }
 
     const tokenInBD = await RefreshToken.findOne({ token: refreshToken })
 
-    console.log('Token in bd', tokenInBD)
-
     if (!tokenInBD) {
         throw new Error('Token inválido o expirado')
-
     }
-    const decoded = jwt.verify(tokenInBD.token, refreshTokenKey)
+
+    let decoded: string | jwt.JwtPayload
+    try {
+        decoded = jwt.verify(tokenInBD.token, refreshTokenKey)
+    } catch {
+        await tokenInBD.deleteOne()
+        throw new Error('Token inválido o expirado')
+    }
 
     if (typeof decoded !== 'object') {
         throw new Error('No se pudo obtener el cuerpo del token')
     }
 
     const user = await User.findById(decoded.id)
-
 
     if (!user) throw new Error('Usuario no encontrado')
 
@@ -167,11 +173,9 @@ export async function decodeAndGenerateTokens(refreshToken: string) {
 
     const newRefreshTokenInDB = new RefreshToken()
     newRefreshTokenInDB.token = newRefreshToken
-
     newRefreshTokenInDB.user = user._id
 
     await Promise.all([user.save(), newRefreshTokenInDB.save()])
-
 
     return { accessToken, newRefreshToken }
 }

@@ -7,8 +7,8 @@ export const useRefreshToken = () => {
     queryKey: ["refresh-token"],
     queryFn: getRefreshToken,
     retry: false,
-    refetchOnWindowFocus:false,
-    refetchInterval: 9 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    refetchInterval: () => (localStorage.getItem('isAuth') === 'true' ? 9 * 60 * 1000 : false),
     refetchIntervalInBackground: true,
   });
 

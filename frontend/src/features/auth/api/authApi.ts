@@ -90,16 +90,18 @@ export async function getRefreshToken() {
         const response = await axios.post(`${baseUrl}/auth/refresh-token`, {}, {
             withCredentials: true
         })
-        if (response.status === 401) {
-            localStorage.setItem('isAuth', 'false')
-            return null
-        }
         localStorage.setItem('isAuth', 'true')
         return response.data.access_token
     } catch (error) {
         if (isAxiosError(error) && error.response) {
+            if (error.response.status === 401 || error.response.status === 403) {
+                localStorage.setItem('isAuth', 'false')
+                return null
+            }
             throw new Error(error.response.data.error)
         }
+        localStorage.setItem('isAuth', 'false')
+        return null
     }
 }
 

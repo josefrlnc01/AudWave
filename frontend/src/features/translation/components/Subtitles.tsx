@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useState } from "react";
 import { Spinner } from "@/shared/components/ui/spinner";
 import type { SubtitlesViewProps } from "../types/subtitles.types";
+import { toast } from 'react-toastify';
 
 
 
@@ -32,6 +33,14 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
 
    
 
+    if (mutation.isError) {
+        toast.error(mutation.error.message)
+        return (
+            <aside className="p-4 text-red-500">
+                Error al cargar los subtítulos
+            </aside>
+        )
+    }
 
     if (mutation.isPending) {
         return (
@@ -46,13 +55,7 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
         )
     }
 
-    if (mutation.isError) {
-        return (
-            <aside className="p-4 text-red-500">
-                Error al cargar los subtítulos
-            </aside>
-        )
-    }
+    
 
     if (!mutation.isSuccess) {
         return (
@@ -107,7 +110,7 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
                             key={i}
                             className='group hover:bg-slate-800/40 -mx-2 px-2 py-2 rounded-lg transition-all duration-200'
                         >
-                            <p className='text-xl font-semibold text-gray-200 leading-relaxed'>
+                            <p className='text-xl lg:text-2xl lg:text-center font-semibold text-gray-200 leading-relaxed'>
                                 {chunk}
                             </p>
                         </div>
