@@ -7,17 +7,18 @@ export type PromiseLink = {
 }
 
 export type PromiseFile = {
-    text: string
+    text:string
 }
 const urlBackend = import.meta.env.VITE_API_URL
-export async function sendLink(link:string | null, formData: FormData | null):Promise<PromiseLink | PromiseFile | undefined> {
+export async function sendLink(link:string | null, lang: string | null, formData: FormData | null):Promise<PromiseLink | PromiseFile | undefined> {
     const accessToken = tokenStore.get()
     try {
-        let response
-        if (link) {
-            response = await fetch(`${urlBackend}/link`, {
+        
+        
+        if (link !== null) {
+            const response = await fetch(`${urlBackend}/link`, {
             method:'POST',
-            body: JSON.stringify({videoLink: link}),
+            body: JSON.stringify({videoLink: link, lang}),
             headers : {
                 'Content-Type': 'application/json',
                 'Authorization' : `Bearer ${accessToken}`
@@ -37,8 +38,8 @@ export async function sendLink(link:string | null, formData: FormData | null):Pr
         }
         const {subtitles, translatedText, title, id} = data
             return {title, subtitles, translatedText, id}
-        } else if (formData) {
-            response = await fetch(`${urlBackend}/file`, {
+        } else {
+            const response = await fetch(`${urlBackend}/file`, {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -57,15 +58,13 @@ export async function sendLink(link:string | null, formData: FormData | null):Pr
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-            const {text} = data
-            return text
+            const { text } = data
+            return { text }
         }
     } catch (error) {
         throw error instanceof Error ? error : new Error('Hubo un error en el proceso')
     }
 }
-
-
 
 
 

@@ -3,5 +3,5 @@ import type { MutationProps } from "../components/Form"
 import type { PromiseFile, PromiseLink } from "../api/translationApi"
 
 export type SubtitlesViewProps = {
-    mutation: UseMutationResult<PromiseLink  | undefined, Error, MutationProps, unknown>
+    mutation: UseMutationResult<PromiseLink  | PromiseFile | undefined, Error, MutationProps, unknown>
 }

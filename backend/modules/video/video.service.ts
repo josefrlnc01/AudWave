@@ -1,6 +1,6 @@
 import ytDlp from 'yt-dlp-exec'
 import fs from 'node:fs/promises'
-import path from 'node:path'
+import path, { extname } from 'node:path'
 import { getVideoLength } from '../youtube/youtube.service.js'
 import { getVideoMinutes } from '../../shared/utils/video.js'
 import type { VideoSubtitles } from './video.types.js'
@@ -52,6 +52,9 @@ export class VideoService {
 
 
     static getSubtitlesFromVideo = async (id: string): Promise<VideoSubtitles> => {
+        const backendDir = process.cwd()
+        const base = path.join(backendDir, 'audio')
+        const filepath = base + '.mp3'
         const data = await getTitleAndLanguage(id)
         if (!data) {
             throw new Error("No se pudo encontrar información del video")
@@ -62,7 +65,7 @@ export class VideoService {
         if (!videoLink) throw new Error("No se encontró el link del video")
 
         await this.downloadAudio(videoLink)
-        const subtitles = await transcribeWhisperAudio()
+        const subtitles = await transcribeWhisperAudio(filepath)
         if (!subtitles) throw new Error('No se pudo transcribir el audio')
         return { subtitles, title }
     }

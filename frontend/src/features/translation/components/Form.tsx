@@ -49,7 +49,6 @@ export default function Form() {
         console.log(formData)
         setFileInputValue(e.currentTarget.value)
     }
-    console.log(fileInputValue)
 
     return (
         <>
@@ -73,7 +72,8 @@ export default function Form() {
                     <div className="w-full flex gap-2 justify-between items-center">
                         <input type="file" 
                         onChange={handleInputFile} 
-                        name="audio" 
+                        name="audio"
+                        accept="video/*" 
                         formEncType="multipart/form-data"
                         className="min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl bg-slate-900"/>
                         <ComboboxMultiple

@@ -77,6 +77,20 @@ export default function Subtitles({ mutation }: SubtitlesViewProps) {
 
     if (!mutation.data) return null
 
+    if (!("translatedText" in mutation.data)) {
+        return (
+            <section className='flex flex-col md:items-center p-6 rounded-xl overflow-y-auto'>
+                <aside className='w-full max-w-4xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
+                    <h2 className='text-2xl font-bold tracking-tight text-gray-100 leading-tight mb-4'>
+                        Traducción de audio
+                    </h2>
+                    <p className='text-xl md:text-2xl md:text-center font-semibold text-gray-200 leading-relaxed'>
+                        {mutation.data.text}
+                    </p>
+                </aside>
+            </section>
+        )
+    }
 
     const { translatedText, title, id } = mutation.data
     

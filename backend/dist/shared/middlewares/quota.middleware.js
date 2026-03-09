@@ -12,7 +12,7 @@ export const checkQuota = async (req, res, next) => {
                 resetAt: new Date(Date.now() + 24 * 60 * 60 * 1000)
             }
         }, { upsert: true, new: true });
-        if (quota.requestCount > 1) {
+        if (quota.requestCount > 50) {
             return res.status(429).json({ error: 'No puedes hacer más de una traducción' });
         }
         next();
