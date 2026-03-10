@@ -50,7 +50,6 @@ export default function Form() {
         setFileInputValue(e.currentTarget.value)
     }
 
-    console.log(langForTranslate)
 
     return (
         <>

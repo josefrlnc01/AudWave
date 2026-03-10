@@ -5,7 +5,7 @@ import { Spinner } from "@/shared/components/ui/spinner";
 import type { SubtitlesViewProps } from "../types/subtitles.types";
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
-import { saveVideo } from '@/features/stored/storedApi';
+import { saveTranscription } from '@/features/stored/storedApi';
 
 
 
@@ -15,9 +15,11 @@ gsap.registerPlugin(ScrollTrigger)
 export default function Subtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     const [phrase, setPhrase] = useState('')
     const [index, setIndex] = useState(0)
+    const [text, setText] = useState('')
+    const [translated, setTranslated] = useState('')
     const [fade, setFade] = useState(true)
     const { mutate } = useMutation({
-        mutationFn: saveVideo,
+        mutationFn: saveTranscription,
         onError: (error) => {
             toast.error(error.message)
         },
@@ -25,7 +27,7 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
             toast.success(data)
         }
     })
-    
+
     const awaitPhrases = ['Cargando traducción, puede tardar un poco...', 'Procesando audio...', 'Extrayendo texto...']
 
     useEffect(() => {
@@ -41,10 +43,10 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
         return () => clearTimeout(timeOut)
     }, [index, awaitPhrases.length])
 
-   
+
 
     if (mutation.isError) {
-        
+
         return (
             <aside className="p-4 text-red-500 md:text-center">
                 No puedes realizar más traducciones
@@ -58,14 +60,13 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
                 <Spinner
                     className="size-20"
                 />
-                <small className={`text-gray-100 transition-opacity duration-300 ${
-                    fade ? "opacity-100" : "opacity-0"
-                }`}>{phrase}</small>
+                <small className={`text-gray-100 transition-opacity duration-300 ${fade ? "opacity-100" : "opacity-0"
+                    }`}>{phrase}</small>
             </aside>
         )
     }
 
-    
+
 
     if (!mutation.isSuccess) {
         return (
@@ -78,43 +79,56 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
     if (!mutation.data) return null
 
     if (!("translatedText" in mutation.data)) {
+        const text = mutation.data.text
+        const translated = mutation.data.translated
+        const handleSave = () => {
+            const data = {
+                videoId: null,
+                title: null,
+                text: text,
+                translated: translated
+            }
+            mutate(data)
+        }
         return (
-            <section className='flex justify-center items-center p-6 rounded-xl overflow-y-auto gap-4'>
-                <aside className='min-w-2xl max-w-2xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
-                    <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
-                        Transcripción de audio
-                    </h2>
-                    <p className='text-xl md:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                        {mutation.data.text}
-                    </p>
+            <section className='flex flex-col md:items-center p-6 rounded-xl'>
+                <button
+                    onClick={handleSave}
+                    className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
+                    type='button'>Guardar</button>
+                <aside className='w-full max-w-3/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
+                    <section className='flex justify-center items-center p-6 rounded-xl overflow-x-hidden overflow-y-auto gap-4'>
+                        <aside className='min-2/4 max-w-2/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
+                            <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
+                                Transcripción
+                            </h2>
+                            <p className='text-xl md:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                {mutation.data.text}
+                            </p>
+                        </aside>
+                        {((inputValue || fileInputValue) && language) && <aside className='min-2/4 max-w-2/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
+                            <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
+                                Traducción
+                            </h2>
+                            <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
+                                {mutation.data.translated}
+                            </p>
+                        </aside>}
+                    </section>
                 </aside>
-                {((inputValue || fileInputValue) && language) && <aside className='min-w-2xl max-w-2xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
-                    <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
-                        Traducción de audio
-                    </h2>
-                    <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
-                        {mutation.data.translated}
-                    </p>
-                </aside> }
             </section>
         )
     }
 
-    const { translatedText, title, id } = mutation.data
-    
-    const chunksArray = (words: string[], size: number) => {
-        return words.reduce((acc, _, i) => {
-            if (i % size === 0) acc.push(words.slice(i, i + size).join(' '))
-            return acc
-        }, [] as string[])
-    }
+    const { translatedText, title, id, subtitles } = mutation.data
 
-    
+
     const handleSave = () => {
         const data = {
-            videoId:id,
+            videoId: id,
             title,
-            text: translatedText
+            text: subtitles,
+            translated: translatedText
         }
         mutate(data)
     }
@@ -123,7 +137,7 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
     return (
 
         <section className='flex flex-col md:items-center p-6 rounded-xl overflow-y-auto'>
-            <aside className='w-full max-w-4xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
+            <aside className='w-full max-w-screen rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
 
                 {/* Video Container */}
                 <div className="aspect-video w-full rounded-t-2xl overflow-hidden bg-black">
@@ -143,25 +157,31 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
                 </div>
                 <div className='w-full flex justify-end p-3'>
                     <button
-                onClick={handleSave}
-                className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
-                type='button'>Guardar canción</button>
+                        onClick={handleSave}
+                        className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
+                        type='button'>Guardar</button>
                 </div>
-                
+
 
                 {/* Lyrics Section */}
-                <div className='px-4 py-3 space-y-2'>
-                    {chunksArray(translatedText.toLowerCase().split(' '), 5).map((chunk, i) => (
-                        <div
-                            key={i}
-                            className='group hover:bg-slate-800/40 -mx-2 px-2 py-2 rounded-md transition-all duration-200'
-                        >
-                            <p className='text-xl md:text-2xl md:text-center font-semibold text-gray-200 leading-relaxed'>
-                                {chunk}
-                            </p>
-                        </div>
-                    ))}
-                </div>
+                <section className='flex justify-center items-center p-6 rounded-xl overflow-y-auto gap-4'>
+                    <aside className='min-w-2xl max-w-2xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
+                        <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
+                            Transcripción
+                        </h2>
+                        <p className='text-xl md:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                            {mutation.data.subtitles}
+                        </p>
+                    </aside>
+                    {((inputValue || fileInputValue) && language) && <aside className='min-w-2xl max-w-2xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
+                        <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
+                            Traducción
+                        </h2>
+                        <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
+                            {mutation.data.translatedText}
+                        </p>
+                    </aside>}
+                </section>
 
             </aside>
         </section>

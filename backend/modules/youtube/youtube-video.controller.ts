@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { insert } from "./stored.service.js";
-import { storedSchema } from "./stored.schema.js";
+import { insert } from "./youtube-video.service.js";
+import {youtubeVideoSchema } from "./youtube-video.schema.js";
 
-export class VideoStoredController {
+export class YoutubeVideoController {
     static saveVideo = async (req: Request, res: Response) => {
         try {
             const user = req.user
-            const data = storedSchema.parse(req.body)
+            const data = youtubeVideoSchema.parse(req.body)
             await insert({data, user})
             return res.status(201).send('Video guardado correctamente')
         } catch (error) {

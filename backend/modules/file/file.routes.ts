@@ -17,3 +17,4 @@ const upload = multer({storage})
 export const fileRoute = Router()
 
 fileRoute.post('/:lang', authenticate, checkQuota, upload.single('audio'), FileController.init)
+fileRoute.post('/save', authenticate, FileController.saveAudio)

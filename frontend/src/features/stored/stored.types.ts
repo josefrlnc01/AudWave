@@ -1,5 +1,6 @@
 export type Stored = {
-    videoId: string,
-    title: string,
-    text: string
+    videoId: string | null,
+    title: string | null,
+    text: string,
+    translated: string | null
 }

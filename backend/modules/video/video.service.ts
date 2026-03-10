@@ -1,10 +1,9 @@
 import ytDlp from 'yt-dlp-exec'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { getVideoLength } from '../youtube/youtube.service.js'
 import { getVideoMinutes } from '../../shared/utils/video.js'
 import type { VideoSubtitles } from './video.types.js'
-import { getTitleAndLanguage } from '../youtube/youtube.service.js'
+import { getTitleAndLanguage, getVideoLength } from '../youtube/youtube-video.service.js'
 import { transcribeWhisperAudio } from '../transcription/whisper.service.js'
 
 export class VideoService {

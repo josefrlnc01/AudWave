@@ -6,7 +6,7 @@ import { corsMiddleware } from '../config/cors.js'
 import { authRoute } from '../modules/auth/auth.routes.js'
 import { connectToDb } from '../config/db.js'
 import cookieParser from 'cookie-parser'
-import { storedRoute } from '../modules/stored/stored.routes.js'
+import { youtubeVideoRoute } from '../modules/youtube/youtube-video.routes.js'
 import { fileRoute } from '../modules/file/file.routes.js'
 
 await connectToDb()
@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/link', mainRoute)
 app.use('/auth', authRoute)
-app.use('/storeds', storedRoute)
+app.use('/yt-video', youtubeVideoRoute)
 app.use('/file', fileRoute)
 
 if (!isProd) {

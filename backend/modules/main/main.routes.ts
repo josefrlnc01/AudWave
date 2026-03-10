@@ -6,5 +6,5 @@ import { checkQuota } from "../../shared/middlewares/quota.middleware.js";
 
 export const mainRoute = Router()
 
-mainRoute.post('/',authenticate, checkQuota, validateProcessVideo, init)
+mainRoute.post('/:lang',authenticate, checkQuota, validateProcessVideo, init)
 

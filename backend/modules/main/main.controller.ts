@@ -7,7 +7,11 @@ import { VideoService } from "../video/video.service.js";
 
 
 export async function init(req: Request, res: Response) {
-    const { videoLink, lang }: RequestProps = req.body
+    const { videoLink}: RequestProps = req.body
+
+    const lang = String(req.params.lang)
+
+    console.log(lang)
 
     await fs.writeFile('link.json', JSON.stringify({ key: videoLink }))
 
@@ -32,6 +36,9 @@ export async function init(req: Request, res: Response) {
         return res.status(400).json({ error: error.message })
         }
         const { subtitles, title } = data
+        if (lang === 'not') {
+            return res.json({title, subtitles, id})
+        }
         const translatedText = await translateText(lang, subtitles)
         return res.json({ title, translatedText, subtitles, id })
     } catch (err) {

@@ -1,13 +1,12 @@
-import axios, { isAxiosError } from "axios";
-import type { Stored } from "./stored.types";
 import { tokenStore } from "@/lib/token.store";
+import axios, { isAxiosError } from "axios";
+import type { File } from "./file.types";
 const baseUrl = import.meta.env.VITE_API_URL
-export async function saveTranscription ({videoId, title, text, translated}: Stored) {
+
+export async function saveFileTranscription ({ text, translated}: File) {
     const accessToken = tokenStore.get()
     try {
-        const {data} = await axios.post(`${baseUrl}/yt-video/save`, {
-            videoId,
-            title,
+        const {data} = await axios.post(`${baseUrl}/file/save`, {
             text,
             translated
         },
@@ -25,4 +24,3 @@ export async function saveTranscription ({videoId, title, text, translated}: Sto
         }
     }
 }
-

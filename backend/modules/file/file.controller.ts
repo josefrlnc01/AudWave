@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { transcribeWhisperAudio } from "../transcription/whisper.service.js";
 import { convertVideoToAudio } from "../audio/audio.service.js";
 import { translateText } from "../translation/translation.service.js";
-import { createPath } from "./file.service.js";
+import { createPath, insert } from "./file.service.js";
 
 
 export class FileController {
@@ -29,6 +29,18 @@ export class FileController {
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Hubo un error al enviar el archivo' })
+        }
+    }
+
+    static saveAudio = async (req: Request, res: Response) => {
+        try {
+            const {text, translated} = req.body
+            const user = req.user
+            await insert({text, translated, user})
+            return res.status(201).send('Transcripción guardada correctamente')
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({error: 'Hubo un error al guardar la transcripción'})
         }
     }
 }
