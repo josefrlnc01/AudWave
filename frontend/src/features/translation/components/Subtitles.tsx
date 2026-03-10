@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import { saveTranscription } from '@/features/stored/storedApi';
 import { saveFileTranscription } from '@/features/file/fileApi';
+import { generatePDF } from '@/features/document/api/documentApi';
 
 
 
@@ -27,6 +28,15 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
         }
     })
 
+    const generatePdf = useMutation({
+        mutationFn: generatePDF,
+        onError : (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+        }
+    })
 
     const saveFile = useMutation({
         mutationFn: saveFileTranscription,
@@ -84,6 +94,9 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
     if (!("translatedText" in mutation.data)) {
         const text = mutation.data.text
         const translated = mutation.data.translated
+        const handleGenerate = () => {
+            generatePdf.mutate(text)
+        }
         const handleSave = () => {
             const data = {
                 videoId: null,
@@ -98,6 +111,10 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
 
                 <aside className='w-full flex flex-col lg:flex lg:max-w-3/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
                     <div className='w-full flex justify-end p-2'>
+                         <button
+                            onClick={handleGenerate}
+                            className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
+                            type='button'>PDF</button>
                         <button
                             onClick={handleSave}
                             className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'

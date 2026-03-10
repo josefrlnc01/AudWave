@@ -8,6 +8,7 @@ import { connectToDb } from '../config/db.js'
 import cookieParser from 'cookie-parser'
 import { youtubeVideoRoute } from '../modules/youtube/youtube-video.routes.js'
 import { fileRoute } from '../modules/file/file.routes.js'
+import { documentRoute } from '../modules/document/document.routes.js'
 
 await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
@@ -23,6 +24,7 @@ app.use('/link', mainRoute)
 app.use('/auth', authRoute)
 app.use('/yt-video', youtubeVideoRoute)
 app.use('/file', fileRoute)
+app.use('/document', documentRoute)
 
 if (!isProd) {
     app.listen(port, () => {
