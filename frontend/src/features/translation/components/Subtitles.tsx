@@ -30,11 +30,8 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
 
     const generatePdf = useMutation({
         mutationFn: generatePDF,
-        onError : (error) => {
+        onError: (error) => {
             toast.error(error.message)
-        },
-        onSuccess: (data) => {
-            toast.success(data)
         }
     })
 
@@ -68,7 +65,7 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
     if (mutation.isError) {
 
         return (
-            <aside className="p-4 text-red-500 md:text-center">
+            <aside className="p-4 text-red-400 md:text-center">
                 No puedes realizar más traducciones
             </aside>
         )
@@ -76,11 +73,11 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
 
     if (mutation.isPending) {
         return (
-            <aside className="p-4 flex flex-col gap-3 items-center text-white justify-center">
+            <aside className="p-6 flex flex-col gap-4 items-center text-white justify-center">
                 <Spinner
-                    className="size-20"
+                    className="size-16 text-white"
                 />
-                <small className={`text-gray-100 transition-opacity duration-300 ${fade ? "opacity-100" : "opacity-0"
+                <small className={`text-neutral-200 transition-opacity duration-300 ${fade ? "opacity-100" : "opacity-0"
                     }`}>{phrase}</small>
             </aside>
         )
@@ -88,7 +85,7 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
 
 
 
-    
+
     if (!mutation.data) return null
 
     if (!("translatedText" in mutation.data)) {
@@ -107,17 +104,17 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
             saveFile.mutate(data)
         }
         return (
-            <section className='flex flex-col lg:flex md:items-center p-6 rounded-xl'>
+            <section className='flex flex-col lg:flex md:items-center p-3 rounded-xl'>
 
                 <aside className='w-full flex flex-col lg:flex lg:max-w-3/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
-                    <div className='w-full flex justify-end p-2'>
-                         <button
+                    <div className='w-full flex justify-end p-4 gap-3'>
+                        <button
                             onClick={handleGenerate}
-                            className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>PDF</button>
+                            className='p- pl-4 pr-4 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
+                            type='button'>Descargar</button>
                         <button
                             onClick={handleSave}
-                            className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
+                            className='p-2 pl-4 pr-4 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>Guardar</button>
                     </div>
 
@@ -130,15 +127,15 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
                                 {mutation.data.text}
                             </p>
                         </aside>
-                        {((inputValue || fileInputValue) && language && translated) && 
-                        <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
-                            <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
-                                Traducción
-                            </h2>
-                            <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
-                                {mutation.data.translated}
-                            </p>
-                        </aside>}
+                        {((inputValue || fileInputValue) && language && translated) &&
+                            <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
+                                <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
+                                    Traducción
+                                </h2>
+                                <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
+                                    {mutation.data.translated}
+                                </p>
+                            </aside>}
                     </section>
                 </aside>
             </section>
@@ -160,55 +157,42 @@ export default function Subtitles({ mutation, inputValue, fileInputValue, langua
 
 
     return (
+        
+        <section className='flex flex-col lg:flex md:items-center p-3 rounded-xl'>
 
-        <section className='flex flex-col md:items-center p-6 rounded-xl overflow-y-auto'>
-            <aside className='w-full max-w-screen rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
-
-                {/* Video Container */}
-                <div className="aspect-video w-full rounded-t-2xl overflow-hidden bg-black">
-                    <iframe
-                        src={`https://www.youtube.com/embed/${id}`}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="w-full h-full"
-                    />
-                </div>
-
-                {/* Title Section */}
-                <div className='px-8 py-6 border-b border-slate-800'>
-                    <h2 className='text-3xl font-bold tracking-tight text-gray-100 leading-tight'>
-                        {title}
-                    </h2>
-                </div>
-                <div className='w-full flex justify-end p-3'>
-                    <button
-                        onClick={handleSave}
-                        className='p-2 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
-                        type='button'>Guardar</button>
-                </div>
-
-
-                {/* Lyrics Section */}
-                <section className='flex justify-center items-center p-6 rounded-xl overflow-y-auto gap-4'>
-                    <aside className='min-w-2xl max-w-2xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
-                        <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
-                            Transcripción
-                        </h2>
-                        <p className='text-xl md:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                            {mutation.data.subtitles}
-                        </p>
-                    </aside>
-                    {((inputValue || fileInputValue) && language) && <aside className='min-w-2xl max-w-2xl rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl p-6'>
-                        <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
-                            Traducción
-                        </h2>
-                        <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
-                            {mutation.data.translatedText}
-                        </p>
-                    </aside>}
-                </section>
-
-            </aside>
-        </section>
+                <aside className='w-full flex flex-col lg:flex lg:max-w-3/4 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-800 shadow-2xl'>
+               
+                    <div className='w-full flex justify-end p-4 gap-3'>
+                        <button
+                            onClick={handleSave}
+                            className='p- pl-4 pr-4 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
+                            type='button'>Descargar</button>
+                        <button
+                            onClick={handleSave}
+                            className='p-2 pl-4 pr-4 bg-blue-800 text-white font-bold rounded-xl hover:bg-blue-900 transition-colors cursor-pointer'
+                            type='button'>Guardar</button>
+                    </div>
+                     <h2 className='text-center text-2xl text-white font-bold'>{title}</h2>
+                    <section className='flex flex-col lg:flex lg:flex-row justify-center gap-2  items-center p-6 rounded-xl overflow-x-hidden overflow-y-auto'>
+                        <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
+                            <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
+                                Transcripción
+                            </h2>
+                            <p className='text-xl lg:text-center wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                {mutation.data.subtitles}
+                            </p>
+                        </aside>
+                        {((inputValue || fileInputValue) && language && translatedText) &&
+                            <aside className='w-full lg:min-w-2/4 lg:max-w-2/4 min-h-52 rounded-2xl bg-slate-900/80 backdrop-blur-sm shadow-2xl p-6'>
+                                <h2 className='text-2xl font-bold tracking-tight text-center text-gray-100 leading-tight mb-4'>
+                                    Traducción
+                                </h2>
+                                <p className='text-xl text-start md:text-center font-semibold text-gray-200 leading-relaxed'>
+                                    {mutation.data.translatedText}
+                                </p>
+                            </aside>}
+                    </section>
+                </aside>
+            </section>
     )
 }
