@@ -25,7 +25,7 @@ export function AppSidebar() {
             <div className="w-7 h-7 rounded-md bg-blue-600 flex items-center justify-center">
               <Languages className="w-4 h-4 text-white" />
             </div>
-            <span className="text-white font-semibold text-sm tracking-wide">Traductioner</span>
+            <span className="text-white font-semibold text-sm tracking-wide">Transcriber</span>
           </div>
         </div>
 

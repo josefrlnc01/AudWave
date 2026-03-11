@@ -53,12 +53,13 @@ export default function Form() {
 
     return (
         <>
-            <aside className="hidden w-full mx-auto lg:items-center p-4 text-gray-400 lg:flex lg:flex-col lg:gap-4 mb-10">
+        <section className="w-full grow flex flex-col justify-start items-center mb-15">
+            <aside className="hidden w-full mx-auto lg:items-center p-4 text-gray-400 lg:flex lg:flex-col lg:gap-4">
                 <h2 className="hidden text-5xl font-bold  text-white text-center lg:block">Transcribe cualquier vídeo o audio en <span className="text-blue-600">segundos</span></h2>
 
                 <span className="text-xl">Selecciona un idioma si quieres ver su traducción</span>
             </aside>
-            <section className="w-screen lg:w-3/4 lg:m-auto lg:max-w-3/4 lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
+            <section className="w-screen mt-0 lg:w-3/4 self-auto lg:max-w-3/4 lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
 
                 <form className="w-full flex p-2 gap-6">
 
@@ -114,6 +115,7 @@ export default function Form() {
                 language={language}
 
             />
+            </section>
         </>
     )
 
