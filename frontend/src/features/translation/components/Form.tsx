@@ -76,7 +76,7 @@ export default function Form() {
                                 onChange={handleInputFile}
                                 name="audio"
                                 id="fileUpload"
-                                accept="video/*"
+                                accept="video/*,audio/*"
                                 formEncType="multipart/form-data"
                                 className="hidden" />
 

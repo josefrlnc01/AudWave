@@ -80,7 +80,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                     <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                         <button
                             onClick={() => handleGenerateTranscriptionPdf(text)}
-                            className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                            className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>Descargar</button>
                         <button
                             onClick={handleSave}
@@ -104,7 +104,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                         <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] p-3'>
                             <button
                                 onClick={() => handleGenerateTranscriptionPdf(translated)}
-                                className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
+                                className='p-3 pl-4 pr-4 grow text-white font-bold rounded-md bg-blue-700 hover:bg-blue-900 transition-colors cursor-pointer'
                                 type='button'>Descargar</button>
                             <button
                                 onClick={handleSave}
