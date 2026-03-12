@@ -7,6 +7,7 @@ import LoginView from "../features/auth/pages/LoginView"
 import RegisterView from "../features/auth/pages/RegisterView"
 import ResendTokenView from "../features/auth/pages/ResendTokenView"
 
+
 export default function Router() {
   return (
     <BrowserRouter>

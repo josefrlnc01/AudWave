@@ -1,6 +1,7 @@
 import { tokenStore } from "@/lib/token.store"
 import axios, { isAxiosError } from "axios";
 import type { YoutubeVideoStored } from "../types/yt-video.types";
+import type { FileStored } from "../types/file.types";
 
 export type PromiseLink = {
     subtitles: string,
@@ -80,6 +81,30 @@ export async function saveTranscription ({videoId, title, text, translated}: You
         const {data} = await axios.post(`${baseUrl}/yt-video/save`, {
             videoId,
             title,
+            text,
+            translated
+        },
+        {
+            headers: {
+                'Authorization' : `Bearer ${accessToken}`
+            }, 
+        }
+    )
+
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+
+export async function saveFileTranscription ({ text, translated}: FileStored) {
+    const accessToken = tokenStore.get()
+    console.log('saveFile')
+    try {
+        const {data} = await axios.post(`${baseUrl}/file/save`, {
             text,
             translated
         },

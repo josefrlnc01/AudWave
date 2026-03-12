@@ -1,13 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { useMutation } from '@tanstack/react-query'
 import { saveTranscription } from '../api/transcriptionApi'
 import { toast } from 'react-toastify'
 import { generatePDF } from '@/features/document/api/documentApi'
 import FileSubtitles from './FileSubtitles'
+import { Link } from 'react-router'
+import { Button } from '@headlessui/react'
+import SaveTranscriptionForm from './SaveTranscriptionForm'
 
-export default function YoutubeVideoSubtitles({mutation, inputValue, fileInputValue, language}: SubtitlesViewProps ) {
-    
+export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
+    const [isOpen, setIsOpen] = useState(false)
+    function open() {
+        setIsOpen(true)
+    }
+
     const saveYtFile = useMutation({
         mutationFn: saveTranscription,
         onError: (error) => {
@@ -17,10 +24,10 @@ export default function YoutubeVideoSubtitles({mutation, inputValue, fileInputVa
             toast.success(data)
         }
     })
-    
+
     if (!mutation.data) return null
 
-    if (!("translatedText" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language}/>
+    if (!("translatedText" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
 
     const { translatedText, title, id, subtitles } = mutation.data
 
@@ -43,9 +50,12 @@ export default function YoutubeVideoSubtitles({mutation, inputValue, fileInputVa
         generatePdf.mutate(subtitles)
     }
 
-  return (
-    <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
-
+    return (
+        <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
+            <SaveTranscriptionForm
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+            />
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
                     <header className='flex justify-between items-center w-full p-4 bg-slate-700/40  border-b border-slate-800'>
@@ -63,10 +73,13 @@ export default function YoutubeVideoSubtitles({mutation, inputValue, fileInputVa
                             onClick={() => handleGenerateTranscriptionPdf(subtitles)}
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>Descargar</button>
-                        <button
-                            onClick={handleSave}
-                            className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                            type='button'>Guardar</button>
+                        <Button
+                            onClick={open}
+                            className="p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer"
+                        >
+                            Guardar
+                        </Button>
+
                     </div>
 
                 </aside>
@@ -87,13 +100,16 @@ export default function YoutubeVideoSubtitles({mutation, inputValue, fileInputVa
                                 onClick={() => handleGenerateTranscriptionPdf(translatedText)}
                                 className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                                 type='button'>Descargar</button>
-                            <button
-                                onClick={handleSave}
-                                className='p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                                type='button'>Guardar</button>
+                            <Button
+                            onClick={open}
+                            className="p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer"
+                        >
+                            Guardar
+                        </Button>
+
                         </div>
                     </aside>}
             </section>
         </section>
-  )
+    )
 }
