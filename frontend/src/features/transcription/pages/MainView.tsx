@@ -1,4 +1,4 @@
-import Form from '@/features/translation/components/Form'
+import Form from '@/features/transcription/components/Form'
 import Footer from '@/shared/components/Footer'
 
 import Header from '@/shared/components/Header'

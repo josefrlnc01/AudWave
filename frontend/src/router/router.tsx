@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router"
-import AppLayout from "../features/translation/layout/AppLayout"
-import MainView from "../features/translation/pages/MainView"
+import AppLayout from "../features/transcription/layout/AppLayout"
+import MainView from "../features/transcription/pages/MainView"
 import AuthLayout from "../features/auth/layout/AuthLayout"
 import ConfirmAccountView from "../features/auth/pages/ConfirmAccountView"
 import LoginView from "../features/auth/pages/LoginView"

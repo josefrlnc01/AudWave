@@ -5,7 +5,7 @@ import { useMutation, type UseMutationResult } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { Spinner } from '@/shared/components/ui/spinner'
-import Subtitles from './Subtitles'
+import Subtitles from '../pages/SubtitlesView'
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     const generatePdf = useMutation({

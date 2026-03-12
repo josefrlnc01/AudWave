@@ -1,4 +1,7 @@
 import { tokenStore } from "@/lib/token.store"
+import axios, { isAxiosError } from "axios";
+import type { YoutubeVideoStored } from "../types/yt-video.types";
+
 export type PromiseLink = {
     subtitles: string,
     translatedText: string,
@@ -67,6 +70,35 @@ export async function sendLink(link: string | null, lang: string | null, formDat
         throw error instanceof Error ? error : new Error('Hubo un error en el proceso')
     }
 }
+
+
+
+const baseUrl = import.meta.env.VITE_API_URL
+export async function saveTranscription ({videoId, title, text, translated}: YoutubeVideoStored) {
+    const accessToken = tokenStore.get()
+    try {
+        const {data} = await axios.post(`${baseUrl}/yt-video/save`, {
+            videoId,
+            title,
+            text,
+            translated
+        },
+        {
+            headers: {
+                'Authorization' : `Bearer ${accessToken}`
+            }, 
+        }
+    )
+
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+
 
 
 

@@ -1,6 +1,6 @@
 import type { UseMutationResult } from "@tanstack/react-query"
 import type { MutationProps } from "../components/Form"
-import type { PromiseFile, PromiseLink } from "../api/translationApi"
+import type { PromiseFile, PromiseLink } from "../api/transcriptionApi"
 
 export type SubtitlesViewProps = {
     mutation: UseMutationResult<PromiseLink  | PromiseFile | undefined, Error, MutationProps, unknown>,

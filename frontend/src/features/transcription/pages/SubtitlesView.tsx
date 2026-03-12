@@ -3,20 +3,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useState } from "react";
 import { Spinner } from "@/shared/components/ui/spinner";
 import type { SubtitlesViewProps } from "../types/subtitles.types";
-import { toast } from 'react-toastify';
-import { useMutation } from '@tanstack/react-query';
-import { saveTranscription } from '@/features/stored/storedApi';
-import { saveFileTranscription } from '@/features/file/fileApi';
-import { generatePDF } from '@/features/document/api/documentApi';
-import FileSubtitles from './FileSubtitles';
-import YoutubeVideoSubtitles from './YoutubeVideoSubtitles';
+
+import FileSubtitles from '../components/FileSubtitles';
+import YoutubeVideoSubtitles from '../components/YoutubeVideoSubtitles';
 
 
 
 gsap.registerPlugin(ScrollTrigger)
 
 
-export default function Subtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
+export default function SubtitlesView({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     const [phrase, setPhrase] = useState('')
     const [index, setIndex] = useState(0)
     const [fade, setFade] = useState(true)

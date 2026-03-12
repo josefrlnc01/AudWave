@@ -1,7 +1,7 @@
 import React from 'react'
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { useMutation } from '@tanstack/react-query'
-import { saveTranscription } from '@/features/stored/storedApi'
+import { saveTranscription } from '../api/transcriptionApi'
 import { toast } from 'react-toastify'
 import { generatePDF } from '@/features/document/api/documentApi'
 import FileSubtitles from './FileSubtitles'

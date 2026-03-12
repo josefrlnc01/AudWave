@@ -1,6 +1,6 @@
 
 import './App.css'
-import MainView from './features/translation/pages/MainView'
+import MainView from './features/transcription/pages/MainView'
 
 function App() {
 

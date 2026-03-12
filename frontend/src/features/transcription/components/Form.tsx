@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { sendLink, type PromiseFile, type PromiseLink } from "../api/translationApi";
-import Subtitles from "./Subtitles";
+import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
+import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
 import { getAbbreviateLanguage } from "@/shared/utils/lang";
 import { useMutation } from "@tanstack/react-query";
@@ -108,7 +108,7 @@ export default function Form() {
 
                 </form>
             </section>
-            <Subtitles
+            <SubtitlesView
                 mutation={mutation}
                 inputValue={inputValue}
                 fileInputValue={fileInputValue}
