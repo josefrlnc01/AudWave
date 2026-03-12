@@ -17,7 +17,7 @@ export async function sendLink(link: string | null, lang: string | null, formDat
 
 
         if (link !== null) {
-            const response = await fetch(`${urlBackend}/link/${lang ? lang : 'not'}`, {
+            const response = await fetch(`${urlBackend}/yt-video/${lang ? lang : 'not'}`, {
                 method: 'POST',
                 body: JSON.stringify({ videoLink: link }),
                 headers: {

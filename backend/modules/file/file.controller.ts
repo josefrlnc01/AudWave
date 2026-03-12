@@ -32,7 +32,7 @@ export class FileController {
         }
     }
 
-    static saveAudio = async (req: Request, res: Response) => {
+    static save = async (req: Request, res: Response) => {
         try {
             const {text, translated} = req.body
             const user = req.user

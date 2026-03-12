@@ -1,7 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
 dotenv.config()
-import { mainRoute } from '../modules/link/link.routes.js'
 import { corsMiddleware } from '../config/cors.js'
 import { authRoute } from '../modules/auth/auth.routes.js'
 import { connectToDb } from '../config/db.js'
@@ -20,7 +19,7 @@ app.use(corsMiddleware())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) 
 
-app.use('/link', mainRoute)
+
 app.use('/auth', authRoute)
 app.use('/yt-video', youtubeVideoRoute)
 app.use('/file', fileRoute)
