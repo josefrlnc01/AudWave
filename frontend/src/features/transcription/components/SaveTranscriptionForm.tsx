@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useMutation } from '@tanstack/react-query'
-import { saveFileTranscription, saveTranscription } from '../api/transcriptionApi'
+import { saveFileTranscription, saveFileTranslation, saveTranscription } from '../api/transcriptionApi'
 import { toast } from 'react-toastify'
 
 type TranscriptionProps = {
@@ -10,13 +10,25 @@ type TranscriptionProps = {
     fileText: string | null,
     youtubeVideoText: string | null,
     translatedFile: string | null,
-    translatedYoutubeVideo: string | null
+    translatedYoutubeVideo: string | null,
+    isSavingFileTranscription: boolean,
+    setIsSavingFileTranscription:React.Dispatch<React.SetStateAction<boolean>>
 }
-export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, youtubeVideoText, translatedFile, translatedYoutubeVideo }: TranscriptionProps) {
+export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, youtubeVideoText, translatedFile, translatedYoutubeVideo, isSavingFileTranscription, setIsSavingFileTranscription }: TranscriptionProps) {
     const [inputValue, setInputValue] = useState('')
     const [textAreaValue, setTextAreaValue] = useState('')
-    const saveFile = useMutation({
+    const saveFileTranscript = useMutation({
         mutationFn: saveFileTranscription,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+        }
+    })
+
+    const saveFileTransl = useMutation({
+        mutationFn: saveFileTranslation,
         onError: (error) => {
             toast.error(error.message)
         },
@@ -45,19 +57,33 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
     }
 
 
-    
+
 
 
     function handleSaveTranscription() {
-        if (fileText && youtubeVideoText === null) {
+        console.log(fileText)
+        console.log(translatedFile)
+        console.log(youtubeVideoText)
+        if (fileText && isSavingFileTranscription === true) {
+            console.log('save transcription')
             const data = {
                 title: inputValue,
                 comment: textAreaValue,
                 fileText: fileText,
+            }
+            saveFileTranscript.mutate(data)
+            setIsSavingFileTranscription(false)
+        }
+        if (translatedFile && isSavingFileTranscription === false) {
+            console.log('save translation')
+            const data = {
+                title: inputValue,
+                comment: textAreaValue,
                 translatedFile: translatedFile
             }
-            saveFile.mutate(data)
-        } else if (youtubeVideoText && fileText === null) {
+            saveFileTransl.mutate(data)
+        }
+        if (youtubeVideoText && fileText === null) {
             const data = {
                 title: inputValue,
                 comment: textAreaValue,
@@ -68,7 +94,7 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
         }
     }
 
-      function close() {
+    function close() {
         handleSaveTranscription()
         setIsOpen(false)
     }

@@ -3,7 +3,7 @@ import mongoose, {Document, Types, Schema} from "mongoose";
 interface IFileStored extends Document {
     title: string,
     comment: string | null
-    fileText: string,
+    fileText: string | null,
     translatedFile: string | null
     user: Types.ObjectId
 }
@@ -19,7 +19,7 @@ const fileSchema: Schema = new Schema({
     },
     fileText: {
         type: String,
-        required: true
+        required: false
     },
     translatedFile: {
         type: String,

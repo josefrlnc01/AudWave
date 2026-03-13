@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { transcribeWhisperAudio } from "../transcription/whisper.service.js";
 import { convertVideoToAudio } from "../audio/audio.service.js";
 import { translateText } from "../translation/translation.service.js";
-import { createPath, insertTranscription } from "./file.service.js";
+import { createPath, insertTranscription, insertTranslation } from "./file.service.js";
 
 
 export class FileController {
@@ -10,7 +10,7 @@ export class FileController {
         try {
             const lang = String(req.params.lang)
             const file = req.file
-            
+
             if (!file) {
                 return res.status(400).json({ error: 'No se recibio ningun archivo en el campo audio' })
             }
@@ -22,10 +22,10 @@ export class FileController {
             if (lang === 'not') {
                 return res.status(200).json({ fileText })
             }
-            
+
             const translatedFile = await translateText(lang, fileText)
             console.log(translatedFile)
-            return res.status(200).json({ fileText, translatedFile})
+            return res.status(200).json({ fileText, translatedFile })
         } catch (error) {
             console.error(error)
             return res.status(500).json({ error: 'Hubo un error al enviar el archivo' })
@@ -34,14 +34,29 @@ export class FileController {
 
     static saveTranscription = async (req: Request, res: Response) => {
         try {
-            const {title, fileText, comment} = req.body
+            const { title, fileText, comment } = req.body
             console.log(req.body)
             const user = req.user
-            await insertTranscription({title, fileText,  comment, user})
+            await insertTranscription({ title, fileText, comment, user })
             return res.status(201).send('Transcripción guardada correctamente')
         } catch (error) {
             console.error(error)
-            return res.status(500).json({error: 'Hubo un error al guardar la transcripción'})
+            return res.status(500).json({ error: 'Hubo un error al guardar la transcripción' })
+        }
+    }
+
+
+    static saveTranslation = async (req: Request, res: Response) => {
+        try {
+            const {title, translatedFile, comment} = req.body
+
+            console.log('body', req.body)
+            const user = req.user
+            await insertTranslation({title, translatedFile, comment, user})
+            return res.status(201).send('Traducción guardada correctamente')
+        } catch (error) {
+            console.error(error)
+            return res.status(500).json({ error: 'Hubo un error al guardar la traducción' })
         }
     }
 }

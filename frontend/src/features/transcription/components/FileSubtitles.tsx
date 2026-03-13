@@ -13,8 +13,15 @@ import SaveTranscriptionForm from './SaveTranscriptionForm'
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     const [isOpen, setIsOpen] = useState(false)
+    const [isSavingFileTranscription, setIsSavingFileTranscription] = useState(false)
     function open() {
         setIsOpen(true)
+    }
+
+    function openForSave () {
+        setIsSavingFileTranscription(true)
+        setIsOpen(true)
+
     }
 
     const generatePdf = useMutation({
@@ -63,6 +70,8 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
             youtubeVideoText={null}
             translatedFile={translatedFile}
             translatedYoutubeVideo={null}
+            isSavingFileTranscription={isSavingFileTranscription}
+            setIsSavingFileTranscription={setIsSavingFileTranscription}
             />
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
@@ -82,7 +91,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>Descargar</button>
                         <Button
-                            onClick={open}
+                            onClick={openForSave}
                             className="p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer"
                         >
                             Guardar

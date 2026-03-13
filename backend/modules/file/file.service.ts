@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { InsertFileTranscriptionProps } from './file.types.js'
+import { InsertFileTranscriptionProps, InsertFileTranslationProps } from './file.types.js'
 import FileModel from './file.model.js'
 import { error } from 'node:console'
 
@@ -48,6 +48,7 @@ async function fileExists() {
 
 
 export async function insertTranscription ({title, fileText, comment, user}: InsertFileTranscriptionProps) {
+    console.log('insert transcription')
     try {
         const fileExists = await FileModel.findOne({
             user: user,
@@ -58,16 +59,47 @@ export async function insertTranscription ({title, fileText, comment, user}: Ins
             throw new Error('Este documento ya existe')
         }
 
-        const file = new FileModel()
-        file.title = title
-        file.fileText = fileText
-        file.comment = comment
-        file.user = user._id
-        await file.save()
+        const transcription = new FileModel()
+        transcription.title = title
+        transcription.fileText = fileText
+        transcription.comment = comment
+        transcription.user = user._id
+        await transcription.save()
     } catch (error:any) {
         if (error?.code === 1100) {
             throw new Error('Este documento ya existe')
         }
         throw new Error('Hubo un error al guardar la transcripción')
+    }
+}
+
+
+
+export async function insertTranslation ({title, translatedFile, comment, user}: InsertFileTranslationProps ) {
+    console.log('insert translation')
+    try {
+        const fileExists = await FileModel.findOne({
+            user: user,
+            translatedFile: translatedFile
+        })
+
+        if (fileExists) {
+            throw new Error('Este documento ya existe')
+        }
+
+        const translation = new FileModel()
+
+        translation.title = title
+        translation.comment = comment
+        translation.translatedFile = translatedFile
+        
+        translation.user = user._id
+        await translation.save()
+    } catch (error:any) {
+        if (error?.code === 1100) {
+            throw new Error('Este documento ya existe')
+        }
+        console.log(error)
+        throw new Error('Hubo un error al guardar la traducción')
     }
 }

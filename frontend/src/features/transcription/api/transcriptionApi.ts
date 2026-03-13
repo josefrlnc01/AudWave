@@ -1,7 +1,7 @@
 import { tokenStore } from "@/lib/token.store"
 import axios, { isAxiosError } from "axios";
 import type { YoutubeVideoStored } from "../types/yt-video.types";
-import type { StoredFileTranscription } from "../types/file.types";
+import type { StoredFileTranscription, StoredFileTranslation } from "../types/file.types";
 
 export type PromiseLink = {
     youtubeVideoText: string,
@@ -14,6 +14,7 @@ export type PromiseFile = {
     fileText: string,
     translatedFile: string
 }
+
 const urlBackend = import.meta.env.VITE_API_URL
 export async function sendLink(link: string | null, lang: string | null, formData: FormData | null): Promise<PromiseLink | PromiseFile | undefined> {
     const accessToken = tokenStore.get()
@@ -114,6 +115,28 @@ export async function saveFileTranscription ({title, fileText, comment}: StoredF
             }, 
         }
     )
+
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+
+export async function saveFileTranslation ({title, comment, translatedFile}: StoredFileTranslation) {
+    const accessToken = tokenStore.get()
+    try {
+        const {data} = await axios.post(`${baseUrl}/file/save-translation`, {
+            title,
+            comment,
+            translatedFile
+        }, {
+            headers: {
+                "Authorization" : `Bearer ${accessToken}`
+            }
+        })
 
         return data
     } catch (error) {

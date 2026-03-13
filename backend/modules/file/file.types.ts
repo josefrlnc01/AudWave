@@ -6,3 +6,11 @@ export type InsertFileTranscriptionProps = {
     comment: string | null
     user: IUser
 }
+
+
+export type InsertFileTranslationProps = {
+    title: string,
+    translatedFile: string,
+    comment: string | null,
+    user: IUser
+}
