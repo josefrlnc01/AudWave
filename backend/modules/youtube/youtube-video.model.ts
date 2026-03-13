@@ -2,8 +2,8 @@ import mongoose, {Document, Schema, Types} from "mongoose";
 
 
 export interface IYoutubeVideo extends Document {
-    videoId: string | null,
     title: string,
+    commnent: string | null
     youtubeVideoText: string,
     translatedYoutubeVideo: string
     user: Types.ObjectId
@@ -11,13 +11,13 @@ export interface IYoutubeVideo extends Document {
 
 
 const youtubeVideoSchema: Schema = new Schema({
-    videoId: {
-        type: String,
-        required: false
-    },
     title: {
         type: String,
         required: true
+    },
+    comment : {
+        type: String,
+        required:  false
     },
     youtubeVideoText: {
         type: String,
@@ -34,7 +34,6 @@ const youtubeVideoSchema: Schema = new Schema({
     }
 })
 
-youtubeVideoSchema.index({id:1, videoId:1}, {unique: true})
 
 const YoutubeVideo = mongoose.model<IYoutubeVideo>('YoutubeVideo', youtubeVideoSchema)
 

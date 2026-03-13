@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { InsertFileProps } from './file.types.js'
+import { InsertFileTranscriptionProps } from './file.types.js'
 import FileModel from './file.model.js'
 import { error } from 'node:console'
 
@@ -47,7 +47,7 @@ async function fileExists() {
 }
 
 
-export async function insert ({fileText, translatedFile, user}: InsertFileProps) {
+export async function insertTranscription ({title, fileText, comment, user}: InsertFileTranscriptionProps) {
     try {
         const fileExists = await FileModel.findOne({
             user: user,
@@ -59,8 +59,9 @@ export async function insert ({fileText, translatedFile, user}: InsertFileProps)
         }
 
         const file = new FileModel()
+        file.title = title
         file.fileText = fileText
-        file.translatedFile = translatedFile
+        file.comment = comment
         file.user = user._id
         await file.save()
     } catch (error:any) {

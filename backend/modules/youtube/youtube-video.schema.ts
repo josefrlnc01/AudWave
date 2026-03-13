@@ -2,7 +2,6 @@ import z from "zod";
 
 
 export const youtubeVideoSchema = z.object({
-    videoId: z.string(),
     title: z.string(),
     youtubeVideoText: z.string()
 })

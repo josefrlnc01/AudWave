@@ -15,15 +15,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         setIsOpen(true)
     }
 
-    const saveYtFile = useMutation({
-        mutationFn: saveTranscription,
-        onError: (error) => {
-            toast.error(error.message)
-        },
-        onSuccess: (data) => {
-            toast.success(data)
-        }
-    })
+    
 
     if (!mutation.data) return null
 
@@ -31,15 +23,6 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     const { translatedYoutubeVideo, title, id, youtubeVideoText } = mutation.data
 
-    const handleSave = () => {
-        const data = {
-            videoId: id,
-            title,
-            text: youtubeVideoText,
-            translatedYoutubeVideo: translatedYoutubeVideo
-        }
-        saveYtFile.mutate(data)
-    }
     const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {

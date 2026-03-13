@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useMutation } from '@tanstack/react-query'
-import { saveFileTranscription } from '../api/transcriptionApi'
+import { saveFileTranscription, saveTranscription } from '../api/transcriptionApi'
 import { toast } from 'react-toastify'
 
 type TranscriptionProps = {
@@ -24,6 +24,18 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
             toast.success(data)
         }
     })
+
+    const saveYtFile = useMutation({
+        mutationFn: saveTranscription,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+        }
+    })
+
+
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
@@ -33,22 +45,32 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
     }
 
 
-    function close() {
-        setIsOpen(false)
-    }
+    
 
 
     function handleSaveTranscription() {
-         
-        const data = {
-
-            title: inputValue,
-            comment: textAreaValue,
-            fileText: fileText,
-            translatedFile: translatedFile
+        if (fileText && youtubeVideoText === null) {
+            const data = {
+                title: inputValue,
+                comment: textAreaValue,
+                fileText: fileText,
+                translatedFile: translatedFile
+            }
+            saveFile.mutate(data)
+        } else if (youtubeVideoText && fileText === null) {
+            const data = {
+                title: inputValue,
+                comment: textAreaValue,
+                youtubeVideoText: youtubeVideoText,
+                translatedYoutubeVideo: translatedYoutubeVideo
+            }
+            saveYtFile.mutate(data)
         }
-        saveFile.mutate(data)
-   
+    }
+
+      function close() {
+        handleSaveTranscription()
+        setIsOpen(false)
     }
     return (
         <>
@@ -80,7 +102,7 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
                                 <Button
                                     onClick={close}
                                     className="w-full gap-2 rounded-md bg-gray-700 p-2 text-center text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 cursor-pointer"
-    
+
                                 >
                                     Guardar
                                 </Button>

@@ -11,7 +11,7 @@ export async function insert({ data, user }: InsertProps) {
     try {
         const videoExists = await VideoStored.findOne({
             user: user._id,
-            videoId: data.videoId
+            youtubeVideoText: data.youtubeVideoText
         })
 
         if (videoExists) {
@@ -19,7 +19,6 @@ export async function insert({ data, user }: InsertProps) {
         }
 
         const video = new VideoStored()
-        video.videoId = data.videoId
         video.title = data.title
         video.youtubeVideoText = data.youtubeVideoText
         video.user = user._id

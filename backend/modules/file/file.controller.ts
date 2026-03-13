@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { transcribeWhisperAudio } from "../transcription/whisper.service.js";
 import { convertVideoToAudio } from "../audio/audio.service.js";
 import { translateText } from "../translation/translation.service.js";
-import { createPath, insert } from "./file.service.js";
+import { createPath, insertTranscription } from "./file.service.js";
 
 
 export class FileController {
@@ -32,11 +32,12 @@ export class FileController {
         }
     }
 
-    static save = async (req: Request, res: Response) => {
+    static saveTranscription = async (req: Request, res: Response) => {
         try {
-            const {fileText, translatedFile} = req.body
+            const {title, fileText, comment} = req.body
+            console.log(req.body)
             const user = req.user
-            await insert({fileText, translatedFile, user})
+            await insertTranscription({title, fileText,  comment, user})
             return res.status(201).send('Transcripción guardada correctamente')
         } catch (error) {
             console.error(error)

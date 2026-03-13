@@ -1,6 +1,6 @@
 export type YoutubeVideoStored = {
-    videoId: string | null,
-    title: string | null,
-    text: string,
+    title: string,
+    comment: string | null
+    youtubeVideoText: string,
     translatedYoutubeVideo: string | null
 }

@@ -1,7 +1,8 @@
 import { IUser } from "../user/user.model.js"
 
-export type InsertFileProps = {
+export type InsertFileTranscriptionProps = {
+    title: string
     fileText: string,
-    translatedFile: string | null,
+    comment: string | null
     user: IUser
 }

@@ -1,6 +1,5 @@
-export type FileStored = {
+export type StoredFileTranscription = {
     title: string,
     comment: string | null
-    fileText: string | null,
-    translatedFile: string | null
+    fileText: string,
 }
