@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { useMutation } from '@tanstack/react-query'
-import { saveTranscription } from '../api/transcriptionApi'
+import { saveYoutubeTranscription } from '../api/transcriptionApi'
 import { toast } from 'react-toastify'
 import { generatePDF } from '@/features/document/api/documentApi'
 import FileSubtitles from './FileSubtitles'
@@ -42,6 +42,8 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                 youtubeVideoText={youtubeVideoText}
                 translatedFile={null}
                 translatedYoutubeVideo={translatedYoutubeVideo}
+                isSavingFileTranscription={undefined}
+                setIsSavingFileTranscription={undefined}
             />
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>

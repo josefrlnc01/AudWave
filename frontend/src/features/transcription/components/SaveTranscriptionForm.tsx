@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useMutation } from '@tanstack/react-query'
-import { saveFileTranscription, saveFileTranslation, saveTranscription } from '../api/transcriptionApi'
+import { saveFileTranscription, saveFileTranslation, saveYoutubeTranscription } from '../api/transcriptionApi'
 import { toast } from 'react-toastify'
 
 type TranscriptionProps = {
@@ -11,8 +11,8 @@ type TranscriptionProps = {
     youtubeVideoText: string | null,
     translatedFile: string | null,
     translatedYoutubeVideo: string | null,
-    isSavingFileTranscription: boolean,
-    setIsSavingFileTranscription:React.Dispatch<React.SetStateAction<boolean>>
+    isSavingFileTranscription?: boolean,
+    setIsSavingFileTranscription?: React.Dispatch<React.SetStateAction<boolean>>
 }
 export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, youtubeVideoText, translatedFile, translatedYoutubeVideo, isSavingFileTranscription, setIsSavingFileTranscription }: TranscriptionProps) {
     const [inputValue, setInputValue] = useState('')
@@ -38,7 +38,7 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
     })
 
     const saveYtFile = useMutation({
-        mutationFn: saveTranscription,
+        mutationFn: saveYoutubeTranscription,
         onError: (error) => {
             toast.error(error.message)
         },
@@ -64,7 +64,7 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
         console.log(fileText)
         console.log(translatedFile)
         console.log(youtubeVideoText)
-        if (fileText && isSavingFileTranscription === true) {
+        if (fileText && isSavingFileTranscription === true && setIsSavingFileTranscription) {
             console.log('save transcription')
             const data = {
                 title: inputValue,

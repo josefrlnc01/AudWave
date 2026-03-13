@@ -5,5 +5,6 @@ import { checkQuota } from "../../shared/middlewares/quota.middleware.js";
 
 export const youtubeVideoRoute = Router()
 
-youtubeVideoRoute.post('/save', authenticate, YoutubeVideoController.save)
+youtubeVideoRoute.post('/save-transcription', authenticate, YoutubeVideoController.saveTranscription)
+youtubeVideoRoute.post('/save-translation', authenticate, YoutubeVideoController.saveTranslation)
 youtubeVideoRoute.post('/:lang', authenticate, checkQuota, YoutubeVideoController.init)

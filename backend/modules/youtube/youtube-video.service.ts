@@ -1,13 +1,22 @@
+import { TranslationServiceClient } from "@google-cloud/translate";
 import { IUser } from "../user/user.model.js";
+import YoutubeVideo from "./youtube-video.model.js";
 import VideoStored from "./youtube-video.model.js";
-import { StoredSchema } from "./youtube-video.schema.js";
+import { StoredTranscriptionSchema, StoredTranslationSchema } from "./youtube-video.schema.js";
 
-type InsertProps = {
-    data: StoredSchema
+type InsertTranscriptionProps = {
+    data: StoredTranscriptionSchema
     user: IUser
 }
 
-export async function insert({ data, user }: InsertProps) {
+type InsertTranslationProps = {
+    data: StoredTranslationSchema,
+    user: IUser
+}
+
+
+
+export async function insertTranscription({ data, user }: InsertTranscriptionProps) {
     try {
         const videoExists = await VideoStored.findOne({
             user: user._id,
@@ -30,6 +39,32 @@ export async function insert({ data, user }: InsertProps) {
             throw new Error('Este video ya está guardado')
         }
         throw new Error('Hubo un error al guardar el vídeo')
+    }
+}
+
+
+export async function insertTranslation({data, user}: InsertTranslationProps) {
+    try {
+        const fileExists = await YoutubeVideo.findOne({
+            user: user,
+            translatedYoutubeVideo: data.translatedYoutubeVideo
+        })
+
+        if (fileExists) {
+            throw new Error('Este documento ya está guardado')
+        }
+
+        const translation = new YoutubeVideo()
+
+        translation.title = data.title
+        translation.comment = data.comment
+        translation.translatedYoutubeVideo = data.translatedYoutubeVideo
+        await translation.save()
+    } catch (error: any) {
+        if (error?.code === 1100) {
+            throw new Error('Este documento ya está guardado')
+        }
+        throw new Error('Hubo un error al guardar la traducción')
     }
 }
 

@@ -76,10 +76,10 @@ export async function sendLink(link: string | null, lang: string | null, formDat
 
 
 const baseUrl = import.meta.env.VITE_API_URL
-export async function saveTranscription ({title, youtubeVideoText, translatedYoutubeVideo}: YoutubeVideoStored) {
+export async function saveYoutubeTranscription ({title, youtubeVideoText, translatedYoutubeVideo}: YoutubeVideoStored) {
     const accessToken = tokenStore.get()
     try {
-        const {data} = await axios.post(`${baseUrl}/yt-video/save`, {
+        const {data} = await axios.post(`${baseUrl}/yt-video/save-transcription`, {
             title,
             youtubeVideoText,
             translatedYoutubeVideo
