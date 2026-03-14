@@ -35,12 +35,13 @@ export class YoutubeVideoController {
                 const error = new Error('No se pudo obtener la transcripción del vídeo')
                 return res.status(400).json({ error: error.message })
             }
-            const { youtubeVideoText, title } = data
+            const { youtubeVideoText } = data
+            console.log('text', youtubeVideoText)
             if (lang === 'not') {
-                return res.json({ title, youtubeVideoText, id })
+                return res.json({ youtubeVideoText})
             }
             const translatedYoutubeVideo = await translateText(lang, youtubeVideoText)
-            return res.json({ title, translatedYoutubeVideo, youtubeVideoText, id })
+            return res.json({translatedYoutubeVideo, youtubeVideoText })
         } catch (err) {
             console.error('Error processing video:', err)
             return res.status(500).json({ error: 'Failed to process video' })
@@ -67,6 +68,7 @@ export class YoutubeVideoController {
         try {
             const user = req.user
             const data = youtubeVideoTranslationSchema.parse(req.body)
+            console.log('data save translation', data)
             await insertTranslation({data, user})
             return res.status(201).send('Traducción guardada correctamente')
         } catch (error) {

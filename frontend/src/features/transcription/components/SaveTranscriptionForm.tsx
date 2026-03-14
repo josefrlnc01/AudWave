@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useMutation } from '@tanstack/react-query'
-import { saveFileTranscription, saveFileTranslation, saveYoutubeTranscription } from '../api/transcriptionApi'
+import { saveFileTranscription, saveFileTranslation, saveYoutubeTranscription, saveYoutubeTranslation } from '../api/transcriptionApi'
 import { toast } from 'react-toastify'
 
 type TranscriptionProps = {
@@ -12,9 +12,11 @@ type TranscriptionProps = {
     translatedFile: string | null,
     translatedYoutubeVideo: string | null,
     isSavingFileTranscription?: boolean,
-    setIsSavingFileTranscription?: React.Dispatch<React.SetStateAction<boolean>>
+    setIsSavingFileTranscription?: React.Dispatch<React.SetStateAction<boolean>>,
+    isSavingYtTranscription?: boolean,
+    setIsSavingYtTranscription?: React.Dispatch<React.SetStateAction<boolean>>
 }
-export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, youtubeVideoText, translatedFile, translatedYoutubeVideo, isSavingFileTranscription, setIsSavingFileTranscription }: TranscriptionProps) {
+export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, youtubeVideoText, translatedFile, translatedYoutubeVideo, isSavingFileTranscription, setIsSavingFileTranscription, isSavingYtTranscription, setIsSavingYtTranscription }: TranscriptionProps) {
     const [inputValue, setInputValue] = useState('')
     const [textAreaValue, setTextAreaValue] = useState('')
     const saveFileTranscript = useMutation({
@@ -37,8 +39,18 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
         }
     })
 
-    const saveYtFile = useMutation({
+    const saveYtVideoTranscript = useMutation({
         mutationFn: saveYoutubeTranscription,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+        }
+    })
+
+    const saveYtVideoTransl = useMutation({
+        mutationFn: saveYoutubeTranslation,
         onError: (error) => {
             toast.error(error.message)
         },
@@ -83,14 +95,23 @@ export default function SaveTranscriptionForm({ isOpen, setIsOpen, fileText, you
             }
             saveFileTransl.mutate(data)
         }
-        if (youtubeVideoText && fileText === null) {
+        if (youtubeVideoText && isSavingYtTranscription === true && setIsSavingYtTranscription) {
             const data = {
                 title: inputValue,
                 comment: textAreaValue,
-                youtubeVideoText: youtubeVideoText,
+                youtubeVideoText: youtubeVideoText
+            }
+            saveYtVideoTranscript.mutate(data)
+            setIsSavingYtTranscription(false)
+        }
+
+        if (translatedYoutubeVideo && isSavingYtTranscription === false) {
+            const data = {
+                title: inputValue,
+                comment: textAreaValue,
                 translatedYoutubeVideo: translatedYoutubeVideo
             }
-            saveYtFile.mutate(data)
+            saveYtVideoTransl.mutate(data)
         }
     }
 

@@ -19,7 +19,6 @@ export async function transcribeWhisperAudio(filePath:string):Promise<string | n
         })
 
         if (!transcription) throw new Error("Error en la transcripción del audio")
-        
         return transcription.text
     } catch (error) {
         console.error(error)

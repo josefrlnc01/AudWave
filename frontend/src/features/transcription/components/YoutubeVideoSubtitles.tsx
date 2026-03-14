@@ -11,6 +11,11 @@ import SaveTranscriptionForm from './SaveTranscriptionForm'
 
 export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
     const [isOpen, setIsOpen] = useState(false)
+    const [isSavingYtTranscription, setIsSavingYtTranscription] = useState(false)
+    function openForSave() {
+        setIsSavingYtTranscription(true)
+        setIsOpen(true)
+    }
     function open() {
         setIsOpen(true)
     }
@@ -21,7 +26,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
 
-    const { translatedYoutubeVideo, title, id, youtubeVideoText } = mutation.data
+    const { translatedYoutubeVideo, youtubeVideoText } = mutation.data
 
     const generatePdf = useMutation({
         mutationFn: generatePDF,
@@ -44,6 +49,8 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                 translatedYoutubeVideo={translatedYoutubeVideo}
                 isSavingFileTranscription={undefined}
                 setIsSavingFileTranscription={undefined}
+                isSavingYtTranscription={isSavingYtTranscription}
+                setIsSavingYtTranscription={setIsSavingYtTranscription}
             />
             <section className='flex flex-col justify-start lg:flex lg:flex-row gap-2 rounded-xl overflow-x-hidden overflow-y-auto'>
                 <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
@@ -63,7 +70,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>Descargar</button>
                         <Button
-                            onClick={open}
+                            onClick={openForSave}
                             className="p-3 pl-4 pr-4 grow bg-slate-800 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer"
                         >
                             Guardar

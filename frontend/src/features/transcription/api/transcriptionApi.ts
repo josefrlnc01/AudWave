@@ -1,13 +1,11 @@
 import { tokenStore } from "@/lib/token.store"
 import axios, { isAxiosError } from "axios";
-import type { YoutubeVideoStored } from "../types/yt-video.types";
+import type { StoredYoutubeVideoTranscription, StoredYoutubeVideoTranslation } from "../types/yt-video.types";
 import type { StoredFileTranscription, StoredFileTranslation } from "../types/file.types";
 
 export type PromiseLink = {
     youtubeVideoText: string,
     translatedYoutubeVideo: string,
-    title: string,
-    id: string
 }
 
 export type PromiseFile = {
@@ -43,8 +41,8 @@ export async function sendLink(link: string | null, lang: string | null, formDat
             if (!data) {
                 throw new Error('Hubo un error en el proceso')
             }
-            const { youtubeVideoText, translatedYoutubeVideo, title, id } = data
-            return { title, youtubeVideoText, translatedYoutubeVideo, id }
+            const { youtubeVideoText, translatedYoutubeVideo } = data
+            return { youtubeVideoText, translatedYoutubeVideo}
         } else {
             const response = await fetch(`${urlBackend}/file/${lang ? lang : 'not'}`, {
                 method: 'POST',
@@ -76,13 +74,13 @@ export async function sendLink(link: string | null, lang: string | null, formDat
 
 
 const baseUrl = import.meta.env.VITE_API_URL
-export async function saveYoutubeTranscription ({title, youtubeVideoText, translatedYoutubeVideo}: YoutubeVideoStored) {
+export async function saveYoutubeTranscription ({title, youtubeVideoText, comment}: StoredYoutubeVideoTranscription) {
     const accessToken = tokenStore.get()
     try {
         const {data} = await axios.post(`${baseUrl}/yt-video/save-transcription`, {
             title,
             youtubeVideoText,
-            translatedYoutubeVideo
+            comment
         },
         {
             headers: {
@@ -90,6 +88,27 @@ export async function saveYoutubeTranscription ({title, youtubeVideoText, transl
             }, 
         }
     )
+
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+export async function saveYoutubeTranslation ({title, translatedYoutubeVideo, comment}:StoredYoutubeVideoTranslation ) {
+    const accessToken = tokenStore.get()
+    try {
+        const {data} = await axios.post(`${baseUrl}/yt-video/save-translation`, {
+            title: title,
+            translatedYoutubeVideo: translatedYoutubeVideo,
+            comment: comment
+        }, {
+            headers: {
+                "Authorization" : `Bearer ${accessToken}`
+            }
+        })
 
         return data
     } catch (error) {

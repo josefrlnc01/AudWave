@@ -1,6 +1,14 @@
-export type YoutubeVideoStored = {
+export type StoredYoutubeVideoTranscription = {
     title: string,
-    comment: string | null
     youtubeVideoText: string,
-    translatedYoutubeVideo: string | null
+    comment: string | null
+    
+    
+}
+
+
+export type StoredYoutubeVideoTranslation = {
+    title: string,
+    translatedYoutubeVideo: string,
+    comment: string | null
 }

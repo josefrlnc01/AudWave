@@ -1,6 +1,5 @@
 export type VideoSubtitles = {
     youtubeVideoText: string
-    title: string
 }
 
 

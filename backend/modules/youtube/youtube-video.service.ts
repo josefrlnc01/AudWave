@@ -29,6 +29,7 @@ export async function insertTranscription({ data, user }: InsertTranscriptionPro
 
         const video = new VideoStored()
         video.title = data.title
+        video.comment = data.comment
         video.youtubeVideoText = data.youtubeVideoText
         video.user = user._id
 
@@ -53,14 +54,16 @@ export async function insertTranslation({data, user}: InsertTranslationProps) {
         if (fileExists) {
             throw new Error('Este documento ya está guardado')
         }
-
+        console.log('data translation', data)
         const translation = new YoutubeVideo()
 
         translation.title = data.title
         translation.comment = data.comment
         translation.translatedYoutubeVideo = data.translatedYoutubeVideo
+        translation.user = user._id
         await translation.save()
     } catch (error: any) {
+        console.log(error)
         if (error?.code === 1100) {
             throw new Error('Este documento ya está guardado')
         }
