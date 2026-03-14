@@ -8,6 +8,7 @@ import { checkPassword, hashPassword } from "../../shared/utils/auth.js";
 import { generate6DigitsToken } from "../../shared/utils/token.js";
 import { refreshTokenKey, accessTokenKey } from "../../shared/utils/variables.js";
 import { AuthJwtProps } from "./auth.types.js";
+import { AppError } from "../errors/AppError.js";
 
 
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
 
             return { user, token }
         } catch (error) {
-    
+
             throw new Error('Hubo un error al crear el usuario')
         }
     }
@@ -45,31 +46,32 @@ export class AuthService {
         try {
             const tokenExists = await Token.findOne({ token })
             if (!tokenExists) {
-                throw new Error('Token no válido')
+                throw new AppError('Token no válido', 400)
             }
 
             //Confirmamos el usuario
             const user = await User.findById(tokenExists.user)
             if (!user) {
-                throw new Error('Usuario no encontrado')
+                throw new AppError('Usuario no encontrado', 404)
             }
 
             user.confirmed = true
             await Promise.all([user.save(), tokenExists.deleteOne()])
         } catch (error) {
+            if (error instanceof AppError) throw error
             throw new Error('Token inválido o expirado')
         }
     }
 
 
 
-    static authJWT = async ({data}: AuthJwtProps) => {
+    static authJWT = async ({ data }: AuthJwtProps) => {
         try {
             console.log('data auth jwt', data.password)
-            const user = await User.findOne({email: data.email})
+            const user = await User.findOne({ email: data.email })
             console.log('user', user)
             if (!user) {
-                throw new Error('Usuario no registrado')
+                throw new AppError('Usuario no registrado', 404)
 
             }
 
@@ -83,14 +85,14 @@ export class AuthService {
                     token: token.token
                 })
                 await token.save()
-                throw new Error('La cuenta no está confirmada, se ha enviado un nuevo token de confirmación')
+                throw new AppError('La cuenta no está confirmada, se ha enviado un nuevo token de confirmación', 400)
             }
 
 
             const isValidPassword = await checkPassword(data.password, user.password)
 
             if (!isValidPassword) {
-                throw new Error('Contraseña incorrecta')
+                throw new AppError('Contraseña incorrecta', 400)
             }
 
             const accessToken = jwt.sign({
@@ -113,6 +115,7 @@ export class AuthService {
 
             return { accessToken, refreshToken, user }
         } catch (error) {
+            if (error instanceof AppError) throw error
             throw new Error('Error al generar tokens de acceso y refresco')
         }
     }
@@ -123,11 +126,11 @@ export class AuthService {
             const user = await User.findOne({ email })
 
             if (!user) {
-                throw new Error('Usuario no registrado')
+                throw new AppError('Usuario no registrado', 404)
             }
 
             if (user.confirmed) {
-                throw new Error('Esta cuenta ya está confirmada')
+                throw new AppError('Esta cuenta ya está confirmada', 400)
             }
 
             const token = new Token()
@@ -141,6 +144,7 @@ export class AuthService {
 
             await Promise.all([user.save(), token.save()])
         } catch (error) {
+            if (error instanceof AppError) throw error
             throw new Error('Hubo un error al verificar la cuenta')
         }
     }
@@ -149,13 +153,13 @@ export class AuthService {
     static decodeAndGenerateTokens = async (refreshToken?: string) => {
         try {
             if (!refreshToken) {
-                throw new Error('Refresh token no proporcionado')
+                throw new AppError('Refresh token no proporcionado', 404)
             }
 
             const tokenInBD = await RefreshToken.findOne({ token: refreshToken })
 
             if (!tokenInBD) {
-                throw new Error('Token inválido o expirado')
+                throw new AppError('Token inválido o expirado', 404)
             }
 
             let decoded: string | jwt.JwtPayload
@@ -163,16 +167,16 @@ export class AuthService {
                 decoded = jwt.verify(tokenInBD.token, refreshTokenKey)
             } catch {
                 await tokenInBD.deleteOne()
-                throw new Error('Token inválido o expirado')
+                throw new AppError('Token inválido o expirado', 404)
             }
 
             if (typeof decoded !== 'object') {
-                throw new Error('No se pudo obtener el cuerpo del token')
+                throw new AppError('No se pudo obtener el cuerpo del token', 404)
             }
 
             const user = await User.findById(decoded.id)
 
-            if (!user) throw new Error('Usuario no encontrado')
+            if (!user) throw new AppError('Usuario no encontrado', 404)
 
             const accessToken = jwt.sign({
                 id: user._id
@@ -196,6 +200,7 @@ export class AuthService {
 
             return { accessToken, newRefreshToken }
         } catch (error) {
+            if (error instanceof AppError) throw error
             throw new Error('Hubo un error al verificar tokens')
         }
     }

@@ -1,9 +1,10 @@
 import { Request, Response } from "express"
 import { IUser } from "../user/user.model.js"
-import {  AuthService } from "./auth.service.js"
+import { AuthService } from "./auth.service.js"
 import { loginSchema, registerSchema } from "./auth.schema.js"
 import { ZodError } from "zod"
 import RefreshToken from "../tokens/refreshToken.model.js"
+import { AppError } from "../errors/AppError.js"
 
 
 declare global {
@@ -35,8 +36,8 @@ export class AuthController {
                     }))
                 })
             }
-            if (error instanceof Error) {
-                return res.status(400).json({ error: error.message })
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error en la creación de usuario' })
         }
@@ -49,8 +50,8 @@ export class AuthController {
             await AuthService.confirmToken(token)
             res.send('Cuenta confirmada correctamente')
         } catch (error) {
-            if (error instanceof Error) {
-                return res.status(400).json({ error: error.message })
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error en la confirmación de la cuenta' })
         }
@@ -61,13 +62,13 @@ export class AuthController {
         try {
             const data = loginSchema.parse(req.body)
             console.log('data', data)
-            const { accessToken, refreshToken, user } = await AuthService.authJWT({data})
+            const { accessToken, refreshToken, user } = await AuthService.authJWT({ data })
 
             res.cookie('refreshToken', refreshToken, AuthController.refreshCookieOptions)
             res.send(accessToken)
         } catch (error) {
-            if (error instanceof Error) {
-                return res.status(400).json({ error: error.message })
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error en el login del usuario' })
         }
@@ -80,8 +81,8 @@ export class AuthController {
             await AuthService.verifyAndSendToken(email)
             return res.status(200).send('Nuevo token enviado, revisa tu bandeja de email')
         } catch (error) {
-            if (error instanceof Error) {
-                return res.status(400).json({ error: error.message })
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error en el reenvío del token de confirmación de cuenta' })
         }
@@ -97,13 +98,8 @@ export class AuthController {
 
             return res.status(200).json({ access_token: accessToken })
         } catch (error) {
-            console.error('Error en refreshToken:', error)
-            if (error instanceof Error) {
-                if (error.message === 'Refresh token no proporcionado' || error.message === 'Token inválido o expirado') {
-                    res.clearCookie('refreshToken')
-                    return res.status(401).json({ error: error.message })
-                }
-                return res.status(400).json({ error: error.message })
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error al reenviar el token' })
         }
