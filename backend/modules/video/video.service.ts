@@ -3,7 +3,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { getVideoMinutes } from '../../shared/utils/video.js'
 import type { VideoSubtitles } from './video.types.js'
-import { getVideoLength } from '../youtube-video/youtube-video.service.js'
+import { YoutubeVideoService } from '../youtube-video/youtube-video.service.js'
 import { transcribeWhisperAudio } from '../transcription/whisper.service.js'
 
 export class VideoService {
@@ -40,7 +40,7 @@ export class VideoService {
 
 
     static isValidLength = async (id: string) => {
-        const videoInfo = await getVideoLength(id)
+        const videoInfo = await YoutubeVideoService.getVideoInfo(id)
         const videoItems = videoInfo.items
         const videoDuration = videoItems[0].contentDetails.duration
         const minutes: string = getVideoMinutes(videoDuration)
@@ -53,7 +53,7 @@ export class VideoService {
 
 
 
-    static getSubtitlesFromVideo = async (id: string): Promise<VideoSubtitles> => {
+    static getTranscriptionFromAudio = async (id: string): Promise<VideoSubtitles> => {
         const backendDir = process.cwd()
         const base = path.join(backendDir, 'audio')
         const filepath = base + '.mp3'

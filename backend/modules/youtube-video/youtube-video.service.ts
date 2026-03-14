@@ -4,8 +4,9 @@ import VideoStored from "./youtube-video.model.js";
 import { InsertTranscriptionProps, InsertTranslationProps } from "./youtube-video.types.js";
 
 
-export async function insertTranscription({ data, user }: InsertTranscriptionProps) {
-    try {
+export class YoutubeVideoService {
+    static insertTransciption = async ({ data, user }: InsertTranscriptionProps) => {
+        try {
         //Comprobación de documento existente
         const videoExists = await VideoStored.findOne({
             user: user._id,
@@ -31,11 +32,11 @@ export async function insertTranscription({ data, user }: InsertTranscriptionPro
         }
         throw new Error('Hubo un error al guardar el vídeo')
     }
-}
+    }
 
 
-export async function insertTranslation({data, user}: InsertTranslationProps) {
-    try {
+    static insertTranslation = async ({data, user}: InsertTranslationProps) => {
+        try {
         //Comprobación de documento existente
         const fileExists = await YoutubeVideo.findOne({
             user: user,
@@ -62,11 +63,10 @@ export async function insertTranslation({data, user}: InsertTranslationProps) {
         }
         throw new Error('Hubo un error al guardar la traducción')
     }
-}
+    }
 
-
-export async function getVideoLength (id:string) {
-    try {
+    static getVideoInfo = async (id:string) => {
+        try {
         //Obtención de info de video para conocer duración
         const apiKey = process.env.GOOGLE_API_KEY
         const url = `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${apiKey}&part=contentDetails`
@@ -78,6 +78,9 @@ export async function getVideoLength (id:string) {
     } catch (error) {
         console.error(error)
     }
+    }
 }
+
+
 
 

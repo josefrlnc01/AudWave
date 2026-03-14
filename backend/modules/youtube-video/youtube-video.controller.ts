@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { insertTranscription, insertTranslation } from "./youtube-video.service.js";
+import { YoutubeVideoService } from "./youtube-video.service.js";
 import { youtubeVideoTranscriptionSchema, youtubeVideoTranslationSchema } from "./youtube-video.schema.js";
 import { translateText } from "../translation/translation.service.js";
 import { VideoService } from "../video/video.service.js";
@@ -33,8 +33,8 @@ export class YoutubeVideoController {
         }
 
         try {
-            //Obtención de transcripción del vídeo
-            const data = await VideoService.getSubtitlesFromVideo(id)
+            //Obtención de transcripción del vídeo ya convertido en audio
+            const data = await VideoService.getTranscriptionFromAudio(id)
             if (!data) {
                 const error = new Error('No se pudo obtener la transcripción del vídeo')
                 return res.status(400).json({ error: error.message })
@@ -60,7 +60,7 @@ export class YoutubeVideoController {
         try {
             const user = req.user
             const data = youtubeVideoTranscriptionSchema.parse(req.body)
-            await insertTranscription({ data, user })
+            await YoutubeVideoService.insertTransciption({ data, user })
             return res.status(201).send('Transcripción guardada correctamente')
         } catch (error) {
             if (error instanceof Error) {
@@ -76,7 +76,7 @@ export class YoutubeVideoController {
             const user = req.user
             const data = youtubeVideoTranslationSchema.parse(req.body)
             console.log('data save translation', data)
-            await insertTranslation({data, user})
+            await YoutubeVideoService.insertTranslation({data, user})
             return res.status(201).send('Traducción guardada correctamente')
         } catch (error) {
             console.error(error)

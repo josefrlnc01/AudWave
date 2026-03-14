@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { transcribeWhisperAudio } from "../transcription/whisper.service.js";
 import { convertVideoToAudio } from "../audio/audio.service.js";
 import { translateText } from "../translation/translation.service.js";
-import { createPath, insertTranscription, insertTranslation } from "./file.service.js";
+import { FileService } from "./file.service.js";
 import { fileTranscriptionSchema, fileTranslationSchema } from "./file.schema.js";
 
 
@@ -16,7 +16,7 @@ export class FileController {
                 return res.status(400).json({ error: 'No se recibio ningun archivo en el campo audio' })
             }
 
-            const filePath = await createPath(file)
+            const filePath = await FileService.createPath(file)
             const finalFilePath = await convertVideoToAudio(filePath)
             const fileText = await transcribeWhisperAudio(finalFilePath)
             if (!fileText) return res.status(400).json({ error: 'Error al obtener transcripción' })
@@ -37,7 +37,7 @@ export class FileController {
         try {
             const data = fileTranscriptionSchema.parse(req.body)
             const user = req.user
-            await insertTranscription({ data, user })
+            await FileService.insertTranscription({ data, user })
             return res.status(201).send('Transcripción guardada correctamente')
         } catch (error) {
             console.error(error)
@@ -51,7 +51,7 @@ export class FileController {
             const data = fileTranslationSchema.parse(req.body)
             console.log('body', req.body)
             const user = req.user
-            await insertTranslation({data, user})
+            await FileService.insertTranslation({data, user})
             return res.status(201).send('Traducción guardada correctamente')
         } catch (error) {
             console.error(error)
