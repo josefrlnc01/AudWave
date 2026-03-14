@@ -13,5 +13,3 @@ export const youtubeVideoTranslationSchema = z.object({
     translatedYoutubeVideo: z.string()
 })
 
-export type StoredTranscriptionSchema = z.infer<typeof youtubeVideoTranscriptionSchema>
-export type StoredTranslationSchema = z.infer<typeof youtubeVideoTranslationSchema>

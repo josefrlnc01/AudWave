@@ -15,6 +15,3 @@ export const fileTranslationSchema = z.object({
 })
 
 
-export type StoredFileTranscriptionSchema = z.infer<typeof fileTranscriptionSchema>
-
-export type StoredFileTranslationSchema = z.infer<typeof fileTranslationSchema>

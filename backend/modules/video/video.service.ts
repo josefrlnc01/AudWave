@@ -3,7 +3,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { getVideoMinutes } from '../../shared/utils/video.js'
 import type { VideoSubtitles } from './video.types.js'
-import { getTitleAndLanguage, getVideoLength } from '../youtube/youtube-video.service.js'
+import { getTitleAndLanguage, getVideoLength } from '../youtube-video/youtube-video.service.js'
 import { transcribeWhisperAudio } from '../transcription/whisper.service.js'
 
 export class VideoService {

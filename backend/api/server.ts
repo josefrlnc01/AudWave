@@ -5,7 +5,7 @@ import { corsMiddleware } from '../config/cors.js'
 import { authRoute } from '../modules/auth/auth.routes.js'
 import { connectToDb } from '../config/db.js'
 import cookieParser from 'cookie-parser'
-import { youtubeVideoRoute } from '../modules/youtube/youtube-video.routes.js'
+import { youtubeVideoRoute } from '../modules/youtube-video/youtube-video.routes.js'
 import { fileRoute } from '../modules/file/file.routes.js'
 import { documentRoute } from '../modules/document/document.routes.js'
 

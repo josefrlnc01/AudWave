@@ -1,19 +1,7 @@
-import { TranslationServiceClient } from "@google-cloud/translate";
-import { IUser } from "../user/user.model.js";
 import YoutubeVideo from "./youtube-video.model.js";
 import VideoStored from "./youtube-video.model.js";
-import { StoredTranscriptionSchema, StoredTranslationSchema } from "./youtube-video.schema.js";
 
-type InsertTranscriptionProps = {
-    data: StoredTranscriptionSchema
-    user: IUser
-}
-
-type InsertTranslationProps = {
-    data: StoredTranslationSchema,
-    user: IUser
-}
-
+import { InsertTranscriptionProps, InsertTranslationProps } from "./youtube-video.types.js";
 
 
 export async function insertTranscription({ data, user }: InsertTranscriptionProps) {
