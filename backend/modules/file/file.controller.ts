@@ -3,6 +3,7 @@ import { transcribeWhisperAudio } from "../transcription/whisper.service.js";
 import { convertVideoToAudio } from "../audio/audio.service.js";
 import { translateText } from "../translation/translation.service.js";
 import { createPath, insertTranscription, insertTranslation } from "./file.service.js";
+import { fileTranscriptionSchema, fileTranslationSchema } from "./file.schema.js";
 
 
 export class FileController {
@@ -34,10 +35,9 @@ export class FileController {
 
     static saveTranscription = async (req: Request, res: Response) => {
         try {
-            const { title, fileText, comment } = req.body
-            console.log(req.body)
+            const data = fileTranscriptionSchema.parse(req.body)
             const user = req.user
-            await insertTranscription({ title, fileText, comment, user })
+            await insertTranscription({ data, user })
             return res.status(201).send('Transcripción guardada correctamente')
         } catch (error) {
             console.error(error)
@@ -48,11 +48,10 @@ export class FileController {
 
     static saveTranslation = async (req: Request, res: Response) => {
         try {
-            const {title, translatedFile, comment} = req.body
-
+            const data = fileTranslationSchema.parse(req.body)
             console.log('body', req.body)
             const user = req.user
-            await insertTranslation({title, translatedFile, comment, user})
+            await insertTranslation({data, user})
             return res.status(201).send('Traducción guardada correctamente')
         } catch (error) {
             console.error(error)

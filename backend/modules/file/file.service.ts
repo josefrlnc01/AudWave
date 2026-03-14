@@ -47,12 +47,12 @@ async function fileExists() {
 }
 
 
-export async function insertTranscription ({title, fileText, comment, user}: InsertFileTranscriptionProps) {
+export async function insertTranscription ({data,  user}: InsertFileTranscriptionProps) {
     console.log('insert transcription')
     try {
         const fileExists = await FileModel.findOne({
             user: user,
-            fileText: fileText
+            fileText: data.fileText
         })
 
         if (fileExists) {
@@ -60,9 +60,9 @@ export async function insertTranscription ({title, fileText, comment, user}: Ins
         }
 
         const transcription = new FileModel()
-        transcription.title = title
-        transcription.fileText = fileText
-        transcription.comment = comment
+        transcription.title = data.title
+        transcription.fileText = data.fileText
+        transcription.comment = data.comment
         transcription.user = user._id
         await transcription.save()
     } catch (error:any) {
@@ -75,12 +75,12 @@ export async function insertTranscription ({title, fileText, comment, user}: Ins
 
 
 
-export async function insertTranslation ({title, translatedFile, comment, user}: InsertFileTranslationProps ) {
+export async function insertTranslation ({data,  user}: InsertFileTranslationProps ) {
     console.log('insert translation')
     try {
         const fileExists = await FileModel.findOne({
             user: user,
-            translatedFile: translatedFile
+            translatedFile: data.translatedFile
         })
 
         if (fileExists) {
@@ -89,9 +89,9 @@ export async function insertTranslation ({title, translatedFile, comment, user}:
 
         const translation = new FileModel()
 
-        translation.title = title
-        translation.comment = comment
-        translation.translatedFile = translatedFile
+        translation.title = data.title
+        translation.comment = data.comment
+        translation.translatedFile = data.translatedFile
         
         translation.user = user._id
         await translation.save()

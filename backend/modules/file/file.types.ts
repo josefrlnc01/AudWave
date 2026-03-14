@@ -1,16 +1,12 @@
 import { IUser } from "../user/user.model.js"
+import { StoredFileTranscriptionSchema, StoredFileTranslationSchema } from "./file.schema.js"
 
 export type InsertFileTranscriptionProps = {
-    title: string
-    fileText: string,
-    comment: string | null
+    data: StoredFileTranscriptionSchema,
     user: IUser
 }
 
-
 export type InsertFileTranslationProps = {
-    title: string,
-    translatedFile: string,
-    comment: string | null,
+    data: StoredFileTranslationSchema,
     user: IUser
 }

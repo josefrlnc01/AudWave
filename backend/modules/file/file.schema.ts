@@ -1,0 +1,20 @@
+import z from 'zod'
+
+
+export const fileTranscriptionSchema = z.object({
+    title: z.string(),
+    comment: z.string(),
+    fileText: z.string()
+})
+
+
+export const fileTranslationSchema = z.object({
+    title: z.string(),
+    comment: z.string(),
+    translatedFile: z.string()
+})
+
+
+export type StoredFileTranscriptionSchema = z.infer<typeof fileTranscriptionSchema>
+
+export type StoredFileTranslationSchema = z.infer<typeof fileTranslationSchema>
