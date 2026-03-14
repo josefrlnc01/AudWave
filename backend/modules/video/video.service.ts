@@ -3,12 +3,13 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { getVideoMinutes } from '../../shared/utils/video.js'
 import type { VideoSubtitles } from './video.types.js'
-import { getTitleAndLanguage, getVideoLength } from '../youtube-video/youtube-video.service.js'
+import { getVideoLength } from '../youtube-video/youtube-video.service.js'
 import { transcribeWhisperAudio } from '../transcription/whisper.service.js'
 
 export class VideoService {
     static downloadAudio = async (link: string | null): Promise<string | null> => {
         try {
+            //Creación de dirección de archivo de audio de youtube descargado
             const backendDir = process.cwd()
             const base = path.join(backendDir, 'audio')
             const filepath = base + '.mp3'
@@ -20,6 +21,8 @@ export class VideoService {
                 fs.unlink(filepath)
             }
 
+            //Descarga del audio en la ruta especificada
+            //Uso de ytDlp + ffmpeg
             await ytDlp(url, {
                 output: base + '.%(ext)s', // Permite que yt-dlp use la extensión correcta
                 format: 'bestaudio',
@@ -54,11 +57,8 @@ export class VideoService {
         const backendDir = process.cwd()
         const base = path.join(backendDir, 'audio')
         const filepath = base + '.mp3'
-        const data = await getTitleAndLanguage(id)
-        if (!data) {
-            throw new Error("No se pudo encontrar información del video")
-        }
-        const { title, language } = data
+
+        //Obtención del link mediante archivo creado previamente en controller para guardado de links
         const links = JSON.parse(await fs.readFile('link.json', 'utf-8')) as Record<string, unknown>
         const videoLink: string | null = (links.key as string) || null
         if (!videoLink) throw new Error("No se encontró el link del video")
@@ -72,6 +72,7 @@ export class VideoService {
 
 }
 
+//Función comprobadora de archivo existente
 async function audioExists() {
     try {
         const backendDir = process.cwd()

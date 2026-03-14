@@ -8,6 +8,7 @@ interface IFileStored extends Document {
     user: Types.ObjectId
 }
 
+//Esquema de videos/audios del dispositivo del usuario
 const fileSchema: Schema = new Schema({
     title: {
         type: String,
@@ -31,6 +32,7 @@ const fileSchema: Schema = new Schema({
     }
 })
 
+//Modelo de video/audio del usuario
 const FileModel = mongoose.model<IFileStored>('File', fileSchema)
 
 export default FileModel

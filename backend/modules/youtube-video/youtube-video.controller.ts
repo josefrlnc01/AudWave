@@ -13,8 +13,10 @@ export class YoutubeVideoController {
 
         const lang = String(req.params.lang)
 
+        //Guardado del link en archivo para usarlo posteriormente
         await fs.writeFile('link.json', JSON.stringify({ key: videoLink }))
 
+        //Obtención de id del video de youtube
         const dataOfId: DataOfId = getVideoId(videoLink)
         const id = dataOfId.id
 
@@ -23,6 +25,7 @@ export class YoutubeVideoController {
             return res.status(400).json({ error: error.message })
         }
 
+        //Comprobación de longitud
         const isValid = await VideoService.isValidLength(id)
         if (!isValid) {
             const message = "El vídeo es muy largo"
@@ -30,16 +33,20 @@ export class YoutubeVideoController {
         }
 
         try {
+            //Obtención de transcripción del vídeo
             const data = await VideoService.getSubtitlesFromVideo(id)
             if (!data) {
                 const error = new Error('No se pudo obtener la transcripción del vídeo')
                 return res.status(400).json({ error: error.message })
             }
             const { youtubeVideoText } = data
-            console.log('text', youtubeVideoText)
+
+            //Si el usuario no elige un lenguaje para traducir solo devolvemos la transcripción
             if (lang === 'not') {
                 return res.json({ youtubeVideoText})
             }
+
+            //Obtención de traducción del video
             const translatedYoutubeVideo = await translateText(lang, youtubeVideoText)
             return res.json({translatedYoutubeVideo, youtubeVideoText })
         } catch (err) {

@@ -6,6 +6,7 @@ import { InsertTranscriptionProps, InsertTranslationProps } from "./youtube-vide
 
 export async function insertTranscription({ data, user }: InsertTranscriptionProps) {
     try {
+        //Comprobación de documento existente
         const videoExists = await VideoStored.findOne({
             user: user._id,
             youtubeVideoText: data.youtubeVideoText
@@ -15,6 +16,7 @@ export async function insertTranscription({ data, user }: InsertTranscriptionPro
             throw new Error('Este video ya está guardado')
         }
 
+        //Guardado
         const video = new VideoStored()
         video.title = data.title
         video.comment = data.comment
@@ -34,6 +36,7 @@ export async function insertTranscription({ data, user }: InsertTranscriptionPro
 
 export async function insertTranslation({data, user}: InsertTranslationProps) {
     try {
+        //Comprobación de documento existente
         const fileExists = await YoutubeVideo.findOne({
             user: user,
             translatedYoutubeVideo: data.translatedYoutubeVideo
@@ -43,6 +46,8 @@ export async function insertTranslation({data, user}: InsertTranslationProps) {
             throw new Error('Este documento ya está guardado')
         }
         console.log('data translation', data)
+
+        //Guardado
         const translation = new YoutubeVideo()
 
         translation.title = data.title
@@ -62,6 +67,7 @@ export async function insertTranslation({data, user}: InsertTranslationProps) {
 
 export async function getVideoLength (id:string) {
     try {
+        //Obtención de info de video para conocer duración
         const apiKey = process.env.GOOGLE_API_KEY
         const url = `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${apiKey}&part=contentDetails`
         const response = await fetch(url)
@@ -75,23 +81,3 @@ export async function getVideoLength (id:string) {
 }
 
 
-export async function getTitleAndLanguage (id:string) {
-    try {
-        const apiKey = process.env.GOOGLE_API_KEY
-        const url = `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${apiKey}&part=snippet`
-        const response = await fetch(url)
-        if (!response.ok) return ''
-
-        const data = await response.json()
-        const videoInfo = data.items[0].snippet
-        if (videoInfo) {
-            console.log(videoInfo)
-            
-            const title:string = videoInfo.title
-            const language: string = videoInfo.defaultLanguage
-            return {title,language}
-        }
-    } catch (error) {
-        console.error(error)
-    }
-}

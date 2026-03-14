@@ -9,7 +9,7 @@ export interface IYoutubeVideo extends Document {
     user: Types.ObjectId
 }
 
-
+//Esquema videos de youtube introducidos por el usuario
 const youtubeVideoSchema: Schema = new Schema({
     title: {
         type: String,
@@ -34,7 +34,7 @@ const youtubeVideoSchema: Schema = new Schema({
     }
 })
 
-
+//Modelo de videos de youtube
 const YoutubeVideo = mongoose.model<IYoutubeVideo>('YoutubeVideo', youtubeVideoSchema)
 
 export default YoutubeVideo

@@ -7,6 +7,7 @@ export interface IUser extends Document {
     confirmed: boolean
 }
 
+//Esquema de usuario
 export const userSchema: Schema = new Schema({
     name: {
         type: String,
@@ -27,7 +28,7 @@ export const userSchema: Schema = new Schema({
     }
 })
 
-
+//Modelo de usuario
 const User = mongoose.model<IUser>('User', userSchema)
 
 export default User
