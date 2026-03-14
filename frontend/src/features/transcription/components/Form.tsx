@@ -59,7 +59,7 @@ export default function Form() {
 
                 <span className="text-xl">Selecciona un idioma si quieres ver su traducción</span>
             </aside>
-            <section className="w-screen mt-0 lg:w-3/4 self-auto lg:max-w-3/4 lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
+            <section className="w-screen mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
 
                 <form className="w-full flex p-2 gap-6">
 

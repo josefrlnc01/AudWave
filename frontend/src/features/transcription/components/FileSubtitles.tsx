@@ -101,7 +101,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                     </div>
 
                 </aside>
-                {((inputValue || fileInputValue) && language && translatedFile) &&
+                {(fileInputValue && language && translatedFile) &&
                     <aside className='border border-solid border-[#ffffff1a] w-full flex flex-col rounded-md bg-[#ffffff08]  backdrop-blur-md shadow-2xl'>
                         <header className='flex justify-between items-center w-full p-4 bg-slate-700/40  border-b border-slate-800'>
                             <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
