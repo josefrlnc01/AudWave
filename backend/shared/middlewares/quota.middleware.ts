@@ -3,12 +3,13 @@ import Quota from "../../modules/quota/quota.schema.js";
 
 export const checkQuota = async (req: Request, res: Response, next: NextFunction) =>  {
     const user = req.user
+    //Obtención de la ip del dispositivo
     const ip = (req.headers['x-forwarded-for']?.toString().split(' ')[0] ||
         req.socket.remoteAddress ||
         'unknown').trim()
 
     try {
-        //operación atómica
+        //Operación atómica de búsqueda
         const quota = await Quota.findOneAndUpdate(
             {user: user._id, ip},
             {
