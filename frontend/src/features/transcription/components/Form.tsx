@@ -57,18 +57,17 @@ export default function Form() {
     }
 
     //Drag and drop para archivos del usuario
-    const handleDrop = (event :  React.DragEvent<HTMLDivElement>) => {
+    const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault()
         const data = event.dataTransfer.files[0]
         if (!data) return
         const formData = new FormData()
         formData.append('audio', data)
         setFormData(formData)
-        
         setFileInputValue(formData)
     }
 
-    const handleDragOver = (event :  React.DragEvent<HTMLDivElement>) => {
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault()
     }
 

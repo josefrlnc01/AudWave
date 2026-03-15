@@ -1,3 +1,4 @@
+import { AppError } from "../errors/AppError.js"
 import FileModel from "../file/file.model.js"
 import { IUser } from "../user/user.model.js"
 import YoutubeVideo from "../youtube-video/youtube-video.model.js"
@@ -7,7 +8,7 @@ export class SavedsService {
         try {
 
             if (!user) {
-                throw new Error('Error al obtener el usuario')
+                throw new AppError('Error al obtener el usuario', 404)
             }
 
             const userFiles = await FileModel.find({
@@ -15,12 +16,12 @@ export class SavedsService {
             })
 
             if (!userFiles) {
-                throw new Error('No hay documentos guardados')
+                throw new AppError('No hay documentos guardados', 404)
             }
 
             return userFiles
         } catch (error) {
-
+            if (error instanceof AppError) throw error
             throw new Error('Hubo un error al obtener documentos')
         }
     }
@@ -28,7 +29,7 @@ export class SavedsService {
     static getYoutubeFiles = async (user: IUser) => {
         try {
             if (!user) {
-                throw new Error('Error al obtener el usuario')
+                throw new AppError('Error al obtener el usuario', 404)
             }
 
             const userYoutubeFiles = await YoutubeVideo.find({
@@ -36,11 +37,12 @@ export class SavedsService {
             })
 
             if (!userYoutubeFiles) {
-                throw new Error('No hay documentos guardados')
+                throw new AppError('No hay documentos guardados', 404)
             }
 
             return userYoutubeFiles
-        } catch {
+        } catch (error: any) {
+            if (error instanceof AppError) throw error
             throw new Error('Hubo un error al obtener documentos de vídeos de youtube')
         }
     }

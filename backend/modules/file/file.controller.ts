@@ -4,6 +4,7 @@ import { convertVideoToAudio } from "../../shared/utils/video.js";
 import { translateText } from "../translation/translation.service.js";
 import { FileService } from "./file.service.js";
 import { fileTranscriptionSchema, fileTranslationSchema } from "./file.schema.js";
+import { AppError } from "../errors/AppError.js";
 
 
 export class FileController {
@@ -41,7 +42,9 @@ export class FileController {
             await FileService.insertTranscription({ data, user })
             return res.status(201).send('Transcripción guardada correctamente')
         } catch (error) {
-            console.error(error)
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
+            }
             return res.status(500).json({ error: 'Hubo un error al guardar la transcripción' })
         }
     }
@@ -55,7 +58,9 @@ export class FileController {
             await FileService.insertTranslation({data, user})
             return res.status(201).send('Traducción guardada correctamente')
         } catch (error) {
-            console.error(error)
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
+            }
             return res.status(500).json({ error: 'Hubo un error al guardar la traducción' })
         }
     }

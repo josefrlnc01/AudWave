@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { InsertFileTranscriptionProps, InsertFileTranslationProps } from './file.types.js'
 import FileModel from './file.model.js'
 import { error } from 'node:console'
+import { AppError } from '../errors/AppError.js'
 
 
 export class FileService {
@@ -53,9 +54,7 @@ export class FileService {
             transcription.user = user._id
             await transcription.save()
         } catch (error: any) {
-            if (error?.code === 1100) {
-                throw new Error('Este documento ya existe')
-            }
+            if (error instanceof AppError) throw error
             throw new Error('Hubo un error al guardar la transcripción')
         }
     }
@@ -69,7 +68,7 @@ export class FileService {
         })
 
         if (fileExists) {
-            throw new Error('Este documento ya existe')
+            throw new AppError('Este documento ya existe', 409)
         }
 
         const translation = new FileModel()
@@ -81,9 +80,7 @@ export class FileService {
         translation.user = user._id
         await translation.save()
     } catch (error: any) {
-        if (error?.code === 1100) {
-            throw new Error('Este documento ya existe')
-        }
+        if (error instanceof AppError) throw error
         console.log(error)
         throw new Error('Hubo un error al guardar la traducción')
     }
