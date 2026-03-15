@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { generatePdf } from "../../shared/utils/pdf.js";
+import { AppError } from "../errors/AppError.js";
 
 export class DocumentController {
     static create = async (req: Request, res: Response) => {
@@ -12,8 +13,8 @@ export class DocumentController {
             return res.status(201).send(buffer)
         } catch (error) {
             console.log(error)
-            if (error instanceof Error) {
-                return res.status(400).json({error: error.message})
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
             }
             return res.status(500).json({error: 'Hubo un error al generar el pdf'})
         } 

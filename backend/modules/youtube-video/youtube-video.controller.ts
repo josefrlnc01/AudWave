@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { YoutubeVideoService } from "./youtube-video.service.js";
 import { youtubeVideoTranscriptionSchema, youtubeVideoTranslationSchema } from "./youtube-video.schema.js";
 import { translateText } from "../translation/translation.service.js";
-import { VideoService } from "../video/video.service.js";
+
 import { DataOfId, RequestProps } from "../video/video.types.js";
 import fs from "node:fs/promises"
 import getVideoId from "get-video-id";
