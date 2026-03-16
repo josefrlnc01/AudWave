@@ -9,7 +9,7 @@ import { youtubeVideoRoute } from '../modules/youtube-video/youtube-video.routes
 import { fileRoute } from '../modules/file/file.routes.js'
 import { documentRoute } from '../modules/document/document.routes.js'
 import { savedsRoute } from '../modules/saveds/saveds.routes.js'
-
+import admin from 'firebase-admin'
 await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
 const port = process.env.PORT 
@@ -26,6 +26,11 @@ app.use('/yt-video', youtubeVideoRoute)
 app.use('/file', fileRoute)
 app.use('/document', documentRoute)
 app.use('/saveds', savedsRoute)
+
+admin.initializeApp({
+    credential: admin.credential.applicationDefault()
+})
+
 if (!isProd) {
     app.listen(port, () => {
         console.log(`Sevidor corriendo en ${port}`)

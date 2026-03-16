@@ -3,7 +3,7 @@ import { AuthEmail } from "../../config/mail/mail.js";
 import RefreshToken from "../tokens/refreshToken.model.js";
 import Token from "../tokens/token.model.js";
 import User from "../user/user.model.js";
-import type { UserRegistrationForm } from "../user/user.types.js";
+import type { UserGoogleRegistration, UserRegistrationForm } from "../user/user.types.js";
 import { checkPassword, hashPassword } from "../../shared/utils/auth.js";
 import { generate6DigitsToken } from "../../shared/utils/token.js";
 import { refreshTokenKey, accessTokenKey } from "../../shared/utils/variables.js";
@@ -21,6 +21,9 @@ export class AuthService {
             }
 
             const user = new User(u)
+            if (!user.password) {
+                throw new Error('Es necesario introducir uan contraseña')
+            }
             user.password = await hashPassword(user.password)
 
             const token = new Token()
@@ -88,7 +91,9 @@ export class AuthService {
                 throw new AppError('La cuenta no está confirmada, se ha enviado un nuevo token de confirmación', 400)
             }
 
-
+            if (!user.password) {
+                throw new Error('Es necesario introducir uan contraseña')
+            }
             const isValidPassword = await checkPassword(data.password, user.password)
 
             if (!isValidPassword) {
@@ -117,6 +122,63 @@ export class AuthService {
         } catch (error) {
             if (error instanceof AppError) throw error
             throw new Error('Error al generar tokens de acceso y refresco')
+        }
+    }
+
+
+    static authJWTGoogle = async ({ userData, decodedToken}: UserGoogleRegistration) => {
+        try {
+            const userExists = await User.findOne({
+                email: userData.email
+            })
+            let user
+            console.log('decoded token', decodedToken)
+            //Parte de login
+            if (userExists) {
+                user = userExists
+                if (!userExists.confirmed) {
+                    const token = new Token()
+                    token.token = generate6DigitsToken()
+                    AuthEmail.sendEmail({
+                        email: user.email,
+                        name: user.name,
+                        token: token.token
+                    })
+                    await token.save()
+                    throw new AppError('La cuenta no está confirmada, se ha enviado un nuevo token de confirmación', 400)
+                }
+
+
+                const refreshToken = jwt.sign({ id: user._id }, refreshTokenKey, {
+                    expiresIn: '90d'
+                })
+
+                const accessToken = jwt.sign({id: user._id}, accessTokenKey, {
+                    expiresIn: '10m'
+                })
+
+                const refreshTokenInBd = new RefreshToken({token: refreshToken})
+                refreshTokenInBd.user = user._id
+                await Promise.all([user.save(), refreshTokenInBd.save()])
+                return { refreshToken, user }
+            } else {
+                const newUser = new User()
+                newUser.name = userData.name
+                newUser.email = userData.email
+                const token = new Token()
+                token.token = generate6DigitsToken()
+                token.user = newUser._id
+                AuthEmail.sendEmail({
+                    email: newUser.email,
+                    name: newUser.name,
+                    token: token.token
+                })
+                await Promise.all([newUser.save(), token.save()])
+                return { newUser }
+            }
+        } catch (error) {
+            if (error instanceof AppError) throw error
+            throw new Error('Hubo un error en la autencticación con google')
         }
     }
 

@@ -5,7 +5,7 @@ import { loginSchema, registerSchema } from "./auth.schema.js"
 import { ZodError } from "zod"
 import RefreshToken from "../tokens/refreshToken.model.js"
 import { AppError } from "../errors/AppError.js"
-
+import admin from 'firebase-admin'
 
 declare global {
     namespace Express {
@@ -71,6 +71,33 @@ export class AuthController {
                 return res.status(error.statusCode).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error en el login del usuario' })
+        }
+    }
+
+
+    static authenticateGoogle = async (req: Request, res: Response) => {
+        try {
+            const {userData} = req.body
+            const accessToken = req.body.token
+            console.log('acc', req.body)
+            const decodedToken = await admin.auth().verifyIdToken(accessToken)
+            const email = decodedToken.email
+            const name = decodedToken.name
+            console.log(decodedToken)
+            const {refreshToken, user, newUser} = await AuthService.authJWTGoogle({userData, decodedToken})
+            if (newUser) {
+                return res.status(201).send('Usuario creado correctamente, revisa tu correo para confirmar la cuenta')
+            } else if (user) {
+                res.cookie('refreshToken', refreshToken, AuthController.refreshCookieOptions)
+                return res.status(200).send('Iniciando sesión')
+            }
+            
+        } catch (error) {
+            console.log(error)
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
+            }
+            return res.status(500).json({error: 'Hubo un error al autenticar la cuenta con google'})
         }
     }
 

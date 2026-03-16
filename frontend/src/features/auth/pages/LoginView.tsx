@@ -1,4 +1,5 @@
-import { authenticateAccount } from '@/features/auth/api/authApi'
+import { authenticateAccount, authenticateGoogle } from '@/features/auth/api/authApi'
+import { tokenStore } from '@/lib/token.store'
 import ErrorMessage from '@/shared/components/ErrorMessage'
 import { useMutation } from '@tanstack/react-query'
 
@@ -28,8 +29,27 @@ export default function LoginView() {
         }
     })
 
+    const loginGoogle = useMutation({
+        mutationFn: authenticateGoogle,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            if (data === 'Iniciando sesión') {
+                navigate('/')
+            } else {
+                toast.success(data)
+            }
+        }
+    })
 
-    
+    const handleLoginGoogle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+        loginGoogle.mutate()
+    }
+
+
+    console.log(tokenStore.get())
 
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
@@ -93,6 +113,12 @@ export default function LoginView() {
         value='Iniciar sesión'
         className='w-full p-3 mt-4 cursor-pointer bg-white hover:bg-zinc-200 text-black font-bold rounded-lg transition-colors shadow-lg'
     />
+    <button
+    type='submit'
+    onClick={handleLoginGoogle}
+        className='w-full p-3 mt-4 cursor-pointer bg-white hover:bg-zinc-200 text-black font-bold rounded-lg transition-colors shadow-lg'
+    >Google</button>
+
 
     <nav className='mt-6 flex flex-col items-center'>
         <Link
