@@ -21,7 +21,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
 
     if (isError || !data) return <Navigate to={'/auth/login'} replace />
 
-
+    console.log(data)
     if (data) {
         return (
             <>

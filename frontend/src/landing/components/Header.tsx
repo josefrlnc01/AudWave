@@ -4,7 +4,7 @@ export default function Header() {
   const navigate = useNavigate()
 
   return (
-    <header className='w-screen text-center flex justify-between items-center p-4 border-b border-slate-800'>
+    <header className='w-screen text-center flex justify-between items-center p-4 border-b border-slate-800 grow-0'>
       <h1 className='font-bold text-xl'>Transcriber AI</h1>
         <div className=' flex justify-start'>
           <button
