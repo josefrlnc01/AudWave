@@ -4,6 +4,7 @@ export interface IUser extends Document {
     name: string,
     email: string,
     password: string | null,
+    provider: string
     confirmed: boolean
 }
 
@@ -21,6 +22,11 @@ export const userSchema: Schema = new Schema({
     password: {
         type: String,
         required: false
+    },
+    provider: {
+        type: String,
+        enum: ['local', 'google'],
+        default: 'local'
     },
     confirmed: {
         type: Boolean,

@@ -81,10 +81,11 @@ export class AuthController {
             const accessToken = req.body.token
             console.log('acc', req.body)
             const decodedToken = await admin.auth().verifyIdToken(accessToken)
-            const email = decodedToken.email
+            const email = decodedToken?.email
             const name = decodedToken.name
             console.log(decodedToken)
-            const {refreshToken, user, newUser} = await AuthService.authJWTGoogle({userData, decodedToken})
+            if (!email || !name) return res.status(400).json({error: 'Nombre o email no encontrados'})
+            const {refreshToken, user, newUser} = await AuthService.authJWTGoogle({email, name, decodedToken})
             if (newUser) {
                 return res.status(201).send('Usuario creado correctamente, revisa tu correo para confirmar la cuenta')
             } else if (user) {

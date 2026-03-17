@@ -10,11 +10,8 @@ export type UserRegistrationForm = {
 }
 
 export type UserGoogleRegistration = {
-    userData: {
-        name: string,
+    name: string,
     email: string,
-    token: string
-    },
     decodedToken: string | DecodedIdToken
 }
 

@@ -17,12 +17,12 @@ export class AuthService {
             const userExists = await User.findOne({ email: u.email })
 
             if (userExists) {
-                throw new Error('Este usuario ya está registrado')
+                throw new AppError('Este usuario ya está registrado', 409)
             }
 
             const user = new User(u)
             if (!user.password) {
-                throw new Error('Es necesario introducir uan contraseña')
+                throw new AppError('Es necesario introducir una contraseña', 400)
             }
             user.password = await hashPassword(user.password)
 
@@ -39,7 +39,7 @@ export class AuthService {
 
             return { user, token }
         } catch (error) {
-
+            if (error instanceof AppError) throw error
             throw new Error('Hubo un error al crear el usuario')
         }
     }
@@ -74,7 +74,7 @@ export class AuthService {
             const user = await User.findOne({ email: data.email })
             console.log('user', user)
             if (!user) {
-                throw new AppError('Usuario no registrado', 404)
+                throw new AppError('Credenciales incorrectas', 404)
 
             }
 
@@ -89,6 +89,10 @@ export class AuthService {
                 })
                 await token.save()
                 throw new AppError('La cuenta no está confirmada, se ha enviado un nuevo token de confirmación', 400)
+            }
+
+            if (user.provider === 'google') {
+                throw new AppError('Este usuario está registrado con google', 400)
             }
 
             if (!user.password) {
@@ -126,17 +130,21 @@ export class AuthService {
     }
 
 
-    static authJWTGoogle = async ({ userData, decodedToken}: UserGoogleRegistration) => {
+    static authJWTGoogle = async ({email, name, decodedToken}: UserGoogleRegistration) => {
         try {
             const userExists = await User.findOne({
-                email: userData.email
+                email: email
             })
             let user
             console.log('decoded token', decodedToken)
             //Parte de login
             if (userExists) {
                 user = userExists
-                if (!userExists.confirmed) {
+
+                if (user.provider === 'local') {
+                    throw new AppError('Este usuario está registrado con el método de nombre, correo y contraseña fuera de Google', 400)
+                }
+                if (!user.confirmed) {
                     const token = new Token()
                     token.token = generate6DigitsToken()
                     AuthEmail.sendEmail({
@@ -163,8 +171,9 @@ export class AuthService {
                 return { refreshToken, user }
             } else {
                 const newUser = new User()
-                newUser.name = userData.name
-                newUser.email = userData.email
+                newUser.name = name
+                newUser.email = email
+                newUser.provider = 'google'
                 const token = new Token()
                 token.token = generate6DigitsToken()
                 token.user = newUser._id
@@ -188,7 +197,7 @@ export class AuthService {
             const user = await User.findOne({ email })
 
             if (!user) {
-                throw new AppError('Usuario no registrado', 404)
+                throw new AppError('Credenciales incorrectas', 404)
             }
 
             if (user.confirmed) {
@@ -215,13 +224,13 @@ export class AuthService {
     static decodeAndGenerateTokens = async (refreshToken?: string) => {
         try {
             if (!refreshToken) {
-                throw new AppError('Refresh token no proporcionado', 404)
+                throw new AppError('Refresh token no proporcionado', 401)
             }
 
             const tokenInBD = await RefreshToken.findOne({ token: refreshToken })
 
             if (!tokenInBD) {
-                throw new AppError('Token inválido o expirado', 404)
+                throw new AppError('Token inválido o expirado', 401)
             }
 
             let decoded: string | jwt.JwtPayload
