@@ -77,10 +77,8 @@ export class AuthController {
 
     static authenticateGoogle = async (req: Request, res: Response) => {
         try {
-            const {userData} = req.body
-            const accessToken = req.body.token
-            console.log('acc', req.body)
-            const decodedToken = await admin.auth().verifyIdToken(accessToken)
+            const googleToken = req.body.token
+            const decodedToken = await admin.auth().verifyIdToken(googleToken)
             const email = decodedToken?.email
             const name = decodedToken.name
             console.log(decodedToken)

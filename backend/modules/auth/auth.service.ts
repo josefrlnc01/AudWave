@@ -49,7 +49,7 @@ export class AuthService {
         try {
             const tokenExists = await Token.findOne({ token })
             if (!tokenExists) {
-                throw new AppError('Token no válido', 400)
+                throw new AppError('Token no válido', 401)
             }
 
             //Confirmamos el usuario
@@ -96,7 +96,7 @@ export class AuthService {
             }
 
             if (!user.password) {
-                throw new Error('Es necesario introducir uan contraseña')
+                throw new AppError('Es necesario introducir una contraseña', 400)
             }
             const isValidPassword = await checkPassword(data.password, user.password)
 
@@ -238,11 +238,11 @@ export class AuthService {
                 decoded = jwt.verify(tokenInBD.token, refreshTokenKey)
             } catch {
                 await tokenInBD.deleteOne()
-                throw new AppError('Token inválido o expirado', 404)
+                throw new AppError('Token inválido o expirado', 401)
             }
 
             if (typeof decoded !== 'object') {
-                throw new AppError('No se pudo obtener el cuerpo del token', 404)
+                throw new AppError('No se pudo obtener el cuerpo del token', 401)
             }
 
             const user = await User.findById(decoded.id)

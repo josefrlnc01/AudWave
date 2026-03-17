@@ -26,6 +26,6 @@ export async function authenticate (req: Request, res: Response, next: NextFunct
 
     } catch  {
         const error = new Error('Token inválido o expirado')
-        return res.status(400).json({error: error.message})
+        return res.status(401).json({error: error.message})
     }
 }
