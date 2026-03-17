@@ -1,4 +1,5 @@
 import { getRefreshToken } from "@/features/auth/api/authApi";
+import { tokenStore } from "@/lib/token.store";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -8,9 +9,10 @@ export const useRefreshToken = () => {
     queryFn: getRefreshToken,
     retry: false,
     refetchOnWindowFocus: false,
+    enabled: !tokenStore.get(),
     refetchInterval: () => (localStorage.getItem('isAuth') === 'true' ? 9 * 60 * 1000 : false),
     refetchIntervalInBackground: true,
   });
 
-  return { data, isError, isLoading }
+  return { data: data ?? tokenStore.get(), isError, isLoading }
 };

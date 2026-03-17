@@ -168,7 +168,7 @@ export class AuthService {
                 const refreshTokenInBd = new RefreshToken({token: refreshToken})
                 refreshTokenInBd.user = user._id
                 await Promise.all([user.save(), refreshTokenInBd.save()])
-                return { refreshToken, user }
+                return { refreshToken, accessToken, user }
             } else {
                 const newUser = new User()
                 newUser.name = name

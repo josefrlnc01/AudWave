@@ -3,6 +3,7 @@ import { userReqSchema } from '../schemas/auth.schema'
 import type { RegistrationForm, UserLoginForm } from '../types/auth.types'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '@/firebase'
+import { tokenStore } from '@/lib/token.store'
 
 
 const baseUrl = import.meta.env.VITE_API_URL
@@ -40,7 +41,7 @@ export async function authenticateGoogle() {
         })
         
         if (!data) throw new Error('Error al autenticar con google')
-            console.log('data', data)
+        tokenStore.set(data.accessToken)
         return data
     } catch (error) {
         console.log(error)
@@ -95,6 +96,7 @@ export async function authenticateAccount(formData: UserLoginForm) {
         })
         console.log('data', data)
         localStorage.setItem('isAuth', 'true')
+        tokenStore.set(data)
         return data
     } catch (error) {
         if (isAxiosError(error) && error.response) {

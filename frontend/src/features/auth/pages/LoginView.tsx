@@ -35,7 +35,7 @@ export default function LoginView() {
             toast.error(error.message)
         },
         onSuccess: (data) => {
-            if (data === 'Iniciando sesión') {
+            if (data.success === 'Iniciando sesión') {
                 navigate('/')
             } else {
                 toast.success(data)
