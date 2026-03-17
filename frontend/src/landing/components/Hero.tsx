@@ -10,7 +10,7 @@ export default function Hero() {
             <span className="flex h-2 w-2 rounded-full bg-[#0d59f2]"></span>
             Impulsado por Whisper v3
             </div>
-            <h2 className='text-7xl text-white font-bold tracking-tight mb-6'>Convierte audios y vídeos en texto con <strong className='text-blue-600/80 text-center'>precisión</strong></h2>
+            <h2 className='text-4xl text-center lg:text-7xl text-white font-bold tracking-tight mb-6'>Convierte audios y vídeos en texto con <strong className='text-blue-600/80 text-center'>precisión</strong></h2>
             <p className='max-w-2xl mx-auto text-lg md:text-xl text-center text-gray-400 mb-10 leading-relaxed'>Sube tu archivo y obtén resultados en cuestión de minutos. Soporte de múltiples idiomas, traducción automática.</p>
             <button
             onClick={() => navigate('/auth/register')} 
@@ -20,8 +20,22 @@ export default function Hero() {
         </aside>
         <aside className="w-full">
             <div className="w-2/4 h-64 m-auto  bg-slate-800/20 rounded-md">
-
-            </div>
+    
+<div className="aspect-[16/6] bg-brand-card/50 rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden">
+<div className="flex items-center gap-1 h-32">
+<div className="w-2 bg-brand-primary rounded-full animate-[bounce_1.2s_infinite]"></div>
+<div className="w-2 h-16 bg-brand-primary/80 rounded-full animate-[bounce_1.5s_infinite]"></div>
+<div className="w-2 h-24 bg-brand-primary/60 rounded-full animate-[bounce_1.8s_infinite]"></div>
+<div className="w-2 h-12 bg-brand-primary/40 rounded-full animate-[bounce_1s_infinite]"></div>
+<div className="w-2 h-32 bg-brand-primary rounded-full animate-[bounce_1.3s_infinite]"></div>
+<div className="w-2 h-20 bg-brand-primary/70 rounded-full animate-[bounce_1.6s_infinite]"></div>
+<div className="w-2 h-28 bg-brand-primary/50 rounded-full animate-[bounce_1.1s_infinite]"></div>
+<div className="w-2 h-10 bg-brand-primary/30 rounded-full animate-[bounce_1.4s_infinite]"></div>
+<div className="w-2 h-24 bg-brand-primary/90 rounded-full animate-[bounce_1.7s_infinite]"></div>
+</div>
+</div>
+</div>
+            
         </aside>
     </section>
   )
