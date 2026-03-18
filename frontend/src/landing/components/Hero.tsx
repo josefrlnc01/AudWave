@@ -9,7 +9,7 @@ export default function Hero() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#0d59f2]/30 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 blur-[120px] rounded-full"></div>
       </div>
-      <aside className="w-full flex flex-col justify-center gap-4 items-center">
+      <aside className="w-full flex flex-col justify-center gap-2 items-center mb-4">
         <div className="flex justify-center items-center bg-[#0d59f2]/10 border border-solid border-[#0d59f2]/20 gap-2 px-3 py-1 rounded-full text-xs font-bold text-blue-700/90">
           <span className="flex h-2 w-2 rounded-full bg-[#0d59f2]"></span>
           Impulsado por Whisper v3
@@ -27,14 +27,14 @@ export default function Hero() {
           <div className="bg-brand-card/50 h-full rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden">
             <div className="flex items-center gap-1 h-32">
               <div className="w-2 bg-brand-primary rounded-full animate-[bounce_1.2s_infinite]"></div>
-              <div className="w-2 h-16 bg-brand-primary/80 rounded-full animate-[bounce_1.5s_infinite]"></div>
-              <div className="w-2 h-24 bg-brand-primary/60 rounded-full animate-[bounce_1.8s_infinite]"></div>
-              <div className="w-2 h-12 bg-brand-primary/40 rounded-full animate-[bounce_1s_infinite]"></div>
-              <div className="w-2 h-32 bg-brand-primary rounded-full animate-[bounce_1.3s_infinite]"></div>
-              <div className="w-2 h-20 bg-brand-primary/70 rounded-full animate-[bounce_1.6s_infinite]"></div>
-              <div className="w-2 h-28 bg-brand-primary/50 rounded-full animate-[bounce_1.1s_infinite]"></div>
-              <div className="w-2 h-10 bg-brand-primary/30 rounded-full animate-[bounce_1.4s_infinite]"></div>
-              <div className="w-2 h-24 bg-brand-primary/90 rounded-full animate-[bounce_1.7s_infinite]"></div>
+              <div className="w-2 h-16 bg-[#0d59f2]/80  rounded-full animate-[bounce_1.5s_infinite]"></div>
+              <div className="w-2 h-24 bg-[#0d59f2]/60 rounded-full animate-[bounce_1.8s_infinite]"></div>
+              <div className="w-2 h-12 bg-[#0d59f2]/40 rounded-full animate-[bounce_1.8s_infinite]"></div>
+              <div className="w-2 h-32 bg-[#0d59f2]  rounded-full animate-[bounce_1.3s_infinite]"></div>
+              <div className="w-2 h-20 bg-[#0d59f2]/70 rounded-full animate-[bounce_1.6s_infinite]"></div>
+              <div className="w-2 h-28 bg-[#0d59f2]/50 rounded-full animate-[bounce_1.1s_infinite]"></div>
+              <div className="w-2 h-10 bg-[#0d59f2]/30 rounded-full animate-[bounce_1.4s_infinite]"></div>
+              <div className="w-2 h-24 bg-[#0d59f2]/90 rounded-full animate-[bounce_1.7s_infinite]"></div>
             </div>
           </div>
         </div>
