@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import Hero from '../components/Hero'
 import FeaturesSection from '../components/FeaturesSection'
+import HowItWorks from '../components/HowItWorks'
 
 export default function LandingPage() {
   return (
@@ -9,6 +10,7 @@ export default function LandingPage() {
     <Header/>
     <Hero/>
     <FeaturesSection/>
+    <HowItWorks/>
     </>
     
   )
