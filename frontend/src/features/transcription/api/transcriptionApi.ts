@@ -32,9 +32,10 @@ export async function sendLink(link: string | null, lang: string | null, formDat
             if (!response.ok) {
                 console.log(response.status)
                 if (response.status === 429) {
-                    throw new Error('No puedes realizar más traducciones')
+                    throw new Error('No dispones de minutos de transcripción gratuita suficientes')
+                } else if (response.status === 400) {
+                    throw new Error('No se recibió ningun archivo')
                 }
-                throw new Error(`Server error`)
             }
 
             const data = await response.json()
@@ -54,9 +55,10 @@ export async function sendLink(link: string | null, lang: string | null, formDat
 
             if (!response.ok) {
                 if (response.status === 429) {
-                    throw new Error('No puedes realizar más traducciones')
+                    throw new Error('No dispones de minutos de transcripción gratuita suficientes')
+                } else if (response.status === 400) {
+                    throw new Error('No se recibió ningun archivo')
                 }
-                throw new Error(`Server error`)
             }
 
             const data = await response.json()

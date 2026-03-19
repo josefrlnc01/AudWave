@@ -35,7 +35,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
 
         return (
             <aside className="p-4 text-red-400 md:text-center">
-                No puedes realizar más traducciones
+                {mutation.error.message}
             </aside>
         )
     }
