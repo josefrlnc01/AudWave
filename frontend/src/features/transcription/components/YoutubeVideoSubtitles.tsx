@@ -26,11 +26,24 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             toast.error(error.message)
         }
     })
+    if (mutation.isError) {
 
+        return (
+            <aside className="p-4 text-red-400 md:text-center">
+                {mutation.error.message}
+            </aside>
+        )
+    }
+
+    
     if (!mutation.data) return null
+
+    
 
     if (!("translatedYoutubeVideo" in mutation.data)) return <FileSubtitles mutation={mutation} inputValue={inputValue} fileInputValue={fileInputValue} language={language} />
 
+
+    
     const { translatedYoutubeVideo, youtubeVideoText } = mutation.data
 
     let formatedTranslatedYoutubeVideo
