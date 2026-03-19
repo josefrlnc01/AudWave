@@ -33,13 +33,15 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
     const { translatedYoutubeVideo, youtubeVideoText } = mutation.data
 
-    
+    let formatedTranslatedYoutubeVideo
     const handleGenerateTranscriptionPdf = (subtitles: string) => {
         generatePdf.mutate(subtitles)
     }
 
     const formattedYoutubeVideoText = youtubeVideoText.split('. ').map(s => s.endsWith('.') ? s : s + '.')
-    const formatedTranslatedYoutubeVideo = translatedYoutubeVideo.split('. ').map(s => s.endsWith('.') ? s : s + '.')
+    if (formatedTranslatedYoutubeVideo) {
+        formatedTranslatedYoutubeVideo = translatedYoutubeVideo.split('. ').map(s => s.endsWith('.') ? s : s + '.')
+    }
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
@@ -92,7 +94,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             </h2>
                         </header>
                         <div className='grow bg-slate-800/40 p-8'>
-                        {formatedTranslatedYoutubeVideo.map(p => (
+                        {formatedTranslatedYoutubeVideo && formatedTranslatedYoutubeVideo.map(p => (
                             <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                 {p}
                             </p>
