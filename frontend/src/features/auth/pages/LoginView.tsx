@@ -2,7 +2,6 @@ import { authenticateAccount, authenticateGoogle } from '@/features/auth/api/aut
 import { tokenStore } from '@/lib/token.store'
 import ErrorMessage from '@/shared/components/ErrorMessage'
 import { useMutation } from '@tanstack/react-query'
-
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'react-toastify'

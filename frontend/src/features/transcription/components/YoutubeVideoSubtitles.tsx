@@ -1,12 +1,9 @@
-import React, { useState } from 'react'
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { useMutation } from '@tanstack/react-query'
-import { saveYoutubeTranscription } from '../api/transcriptionApi'
 import { toast } from 'react-toastify'
 import { generatePDF } from '@/features/document/api/documentApi'
 import FileSubtitles from './FileSubtitles'
-import { Link } from 'react-router'
-import { Button } from '@headlessui/react'
+
 
 
 export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {

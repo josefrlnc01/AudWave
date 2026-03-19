@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
@@ -27,12 +27,7 @@ export default function Form() {
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
-    let target
-
-    useEffect(() => {
-        target = document.getElementById('fileUpload')
-    }, [])
-
+    
 
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()

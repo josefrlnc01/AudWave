@@ -3,11 +3,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useState } from "react";
 import { Spinner } from "@/shared/components/ui/spinner";
 import type { SubtitlesViewProps } from "../types/subtitles.types";
-
 import FileSubtitles from '../components/FileSubtitles';
 import YoutubeVideoSubtitles from '../components/YoutubeVideoSubtitles';
-
-
 
 gsap.registerPlugin(ScrollTrigger)
 

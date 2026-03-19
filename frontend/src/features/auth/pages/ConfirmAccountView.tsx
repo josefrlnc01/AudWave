@@ -2,7 +2,6 @@ import { confirmAccount } from "@/features/auth/api/authApi"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { toast } from 'react-toastify'
-
 import type { TokenConfirmation } from "@/features/token/types/token.types"
 import { Link } from "react-router"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/shared/components/ui/input-otp"
