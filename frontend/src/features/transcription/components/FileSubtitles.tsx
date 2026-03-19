@@ -71,7 +71,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     
     
     console.log(fileText.map(s => `${s.start}: ${s.end}`))
-    const formattedFileText = fileText.map(s => `'[${s.start}: ${s.end}]  ${s.text}'`).join(`\n`)
+    const formattedFileText = fileText.map(s => `[${s.start}: ${s.end}]  ${s.text}`).join(`\n`)
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
@@ -96,8 +96,8 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                     </header>
                     <div className='grow bg-slate-800/40 p-8'>
                         {fileText.map(s => (
-                            <p key={s.temperature} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                <span className='text-blue-900 text-sm'>[{s.start}:{s.end}]</span> {s.text}
+                            <p key={s.start} className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                <span className='text-[#0d59f2] text-xs mr-2'>[{s.start.toFixed(2)}:{s.end.toFixed(2)}]</span> {s.text}
                             </p>
                         ))}
                     </div>
