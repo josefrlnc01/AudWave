@@ -4,15 +4,16 @@ import OpenAi from 'openai'
 import fs from 'node:fs'
 import { formatTime } from "../../shared/utils/time.js";
 import { TranscriptionSegment } from "openai/resources/audio/transcriptions.mjs";
+import { AppError } from "../errors/AppError.js";
 
+type TranscriptionFormatt = {
+    end:number,
+    start:number,
+    text:string
+}
 
-
-export async function transcribeWhisperAudio(filePath: string): Promise<TranscriptionSegment[] | null> {
+export async function transcribeWhisperAudio(filePath: string): Promise<TranscriptionFormatt[] | null> {
     try {
-        const __fileName = fileURLToPath(import.meta.url)
-        const __dirname = dirname(__fileName)
-        console.log('transcribe filepath', filePath)
-        console.log('audioPath', filePath)
         const openAi = new OpenAi()
 
         const transcription = await openAi.audio.transcriptions.create({
@@ -24,12 +25,41 @@ export async function transcribeWhisperAudio(filePath: string): Promise<Transcri
 
 
         if (!transcription.segments) throw new Error("Error en la transcripción del audio")
-            console.log('segments', transcription.segments)
-        const segmentText = transcription.segments
-            ?.map(s => `[${formatTime(s.start)}] ${s.text}`)
-            .join('\n')
 
-        return transcription.segments ?? null
+        const segmentsJSON = JSON.stringify(transcription.segments.map(s => ({
+            start: s.start,
+            end: s.end,
+            text: s.text
+        })))
+        const formatted = await openAi.chat.completions.create({
+            model: 'gpt-4o-mini',
+            messages: [
+                {
+                    role: 'system',
+                    content: `Eres un editor de texto. Recibirás un array JSON de segmentos de transcripción de audio.
+            Cada segmento tiene: start (tiempo en segundos) y text (texto del segmento).
+            Tu tarea es:
+            - Corregir errores obvios de transcripción
+            - Añadir puntuación coherente
+            - Corregir errores semánticos
+            - NO cambiar el contenido ni añadir información
+            - NO modificar los valores de start ni end bajo ningún concepto
+            Devuelve ÚNICAMENTE el array JSON con el mismo formato, sin comentarios, sin markdown, sin bloques de código.`
+                },
+                {
+                    role: 'user',
+                    content: segmentsJSON
+                }
+            ]
+        })
+
+        const responseText = formatted.choices[0].message.content
+
+        if (!responseText) throw new AppError('Error al formatear la transcripción', 400)
+
+        const formattedSegments: TranscriptionFormatt[] = JSON.parse(responseText)
+
+        return formattedSegments ?? null
 
     } catch (error) {
         console.error(error)
