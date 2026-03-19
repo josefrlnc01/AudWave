@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
 import { getAbbreviateLanguage } from "@/shared/utils/lang";
 import { useMutation } from "@tanstack/react-query";
 import { ComboboxMultiple } from "./ComboboxMultiple";
+import { minutesStore } from "@/shared/stores/minutes.store";
 
 export type MutationProps = {
     link: string | null
@@ -13,10 +14,23 @@ export type MutationProps = {
 }
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
+    const [minutesUsed, setMinutesUsed] = useState<number | null>(null)
     const [language, setLanguage] = useState<string | null>(null)
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const langForTranslate = getAbbreviateLanguage(language)
     const [formData, setFormData] = useState<FormData | null>(null)
+
+    useEffect(() => {
+        const minutes = minutesStore.get()
+        setMinutesUsed(minutes)
+    })
+
+    function formatMinutes (decimal:number): string {
+        const mins = Math.floor(decimal)
+        const secs = Math.floor((decimal % 1) * 60)
+        return secs > 0 ? `${mins}m ${secs}s` : `${mins}min`
+    }
+
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
         Error,
@@ -27,6 +41,7 @@ export default function Form() {
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
+
     
 
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -68,72 +83,78 @@ export default function Form() {
 
     return (
         <>
-        <section className="p-8 grow flex flex-col justify-start items-center mb-15">
-            <aside className="hidden w-full mx-auto lg:items-center p-4 text-gray-400 lg:flex lg:flex-col lg:gap-4">
-                <h2 className="hidden text-5xl font-bold  text-white text-center lg:block">Transcribe cualquier vídeo o audio en <span className="text-blue-600">segundos</span></h2>
+            <section className="p-8 grow flex flex-col justify-center items-center mb-15">
+                <aside className="hidden w-full mx-auto lg:items-center p-4 text-gray-400 lg:flex lg:flex-col lg:gap-4">
+                    <h2 className="text-xl font-semibold text-white">
+                        Nueva transcripción
+                    </h2>
+                    <p className="text-slate-400 text-sm mt-1">
+                        Sube un archivo de audio/vídeo o introduce un enlace de YouTube
+                    </p>
+                </aside>
+                <div className="w-2/4 flex items-center gap-2 mb-6">
+                    <div className="flex-1 bg-slate-800 rounded-full h-2">
+                        <div
+                            className="bg-blue-500 z-20 h-2 rounded-full transition-all"
+                            style={{ width: `${(minutesUsed! / 10) * 100}%` }}
+                        />
+                    </div>
+                    <span className="text-slate-400 text-sm shrink-0">
+                        {formatMinutes(minutesUsed!)}/10 min usados
+                    </span>
+                </div>
+                <aside className="w-screen mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
 
-                <span className="text-xl">Selecciona un idioma si quieres ver su traducción</span>
-            </aside>
-            <aside className="w-screen mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
+                    <form className="w-full flex flex-col md:flex-row p-2 gap-6">
 
-                <form className="w-full flex flex-col md:flex-row p-2 gap-6">
+                        {!inputValue &&
+                            <div id="targ"
+                                onDrop={handleDrop}
+                                onDragOver={handleDragOver}
+                                className="flex p-12 flex-col grow-2 gap-4 md:gap-1 rounded-xl border-dashed border justify-center items-center border-slate-700 bg-slate-800/20">
+                                <img src={InputIcon} />
+                                <label className="text-2xl font-bold">Sube tu archivo</label>
+                                <p className="text-lg text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
+                                <p className="hidden lg:block text-md text-gray-500 mb-4">Arrastra un archivo de vídeo/audio</p>
+                                <label htmlFor="fileUpload" className="w-full md:w-1/4 md:min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-slate-800 hover:bg-slate-900/80 transition-colors cursor-pointer">
+                                    Seleccionar archivo
+                                </label>
 
-                    {!inputValue &&
-                        <div id="targ" 
-                        onDrop={handleDrop}
-                        onDragOver={handleDragOver}
-                        className="flex p-12 flex-col grow-2 gap-4 md:gap-1 rounded-xl border-dashed border justify-center items-center border-slate-700 bg-slate-800/20">
-                            <img src={InputIcon} />
-                            <label className="text-2xl font-bold">Sube tu archivo</label>
-                            <p className="text-lg text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
-                            <p className="hidden lg:block text-md text-gray-500 mb-4">Arrastra un archivo de vídeo/audio</p>
-                            <label htmlFor="fileUpload" className="w-full md:w-1/4 md:min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-slate-800 hover:bg-slate-900/80 transition-colors cursor-pointer">
-                                Seleccionar archivo
-                            </label>
-
-                            <input type="file"
-                                onChange={handleInputFile}
-                                name="audio"
-                                id="fileUpload"
-                                accept="video/*,audio/*"
-                                formEncType="multipart/form-data"
-                                className="hidden" />
-
-                        </div>}
-                    <div className="grow flex flex-col justify-center items-center gap-15">
-                        {!fileInputValue &&
-                            <div className="w-full flex flex-col justify-around gap-2">
-                                <label className=" text-gray-400 pl-1">Introduce un enlace de youtube</label>
-                                <input onChange={handleInput}
-                                    placeholder="Pega tu enlace aquí"
-                                    type='text'
-                                    className='min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl  bg-slate-800 hover:bg-slate-800/80 transition-colors' />
+                                <input type="file"
+                                    onChange={handleInputFile}
+                                    name="audio"
+                                    id="fileUpload"
+                                    accept="video/*,audio/*"
+                                    formEncType="multipart/form-data"
+                                    className="hidden" />
 
                             </div>}
-                        <div className="w-full flex flex-col justify-around gap-2">
-                            <label className=" text-gray-400 pl-1">Introduce un idioma de traducción </label>
-                            <ComboboxMultiple
-                                language={language}
-                                setLanguage={setLanguage}
+                        <div className="grow flex flex-col justify-center items-center gap-15">
+                            {!fileInputValue &&
+                                <div className="w-full flex flex-col justify-around gap-2">
+                                    <label className=" text-gray-400 pl-1">Introduce un enlace de youtube</label>
+                                    <input onChange={handleInput}
+                                        placeholder="Pega tu enlace aquí"
+                                        type='text'
+                                        className='min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl  bg-slate-800 hover:bg-slate-800/80 transition-colors' />
 
-                            />
+                                </div>}
+                            <button
+                                type="submit"
+                                onClick={handleForm}
+                                className="bg-blue-600 w-full min-w-full pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors cursor-pointer">
+                                Transcribir</button>
                         </div>
-                        <button
-                            type="submit"
-                            onClick={handleForm}
-                            className="bg-blue-600 w-full min-w-full pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors cursor-pointer">
-                            Transcribir</button>
-                    </div>
 
-                </form>
-            </aside>
-            <SubtitlesView
-                mutation={mutation}
-                inputValue={inputValue}
-                fileInputValue={fileInputValue}
-                language={language}
+                    </form>
+                </aside>
+                <SubtitlesView
+                    mutation={mutation}
+                    inputValue={inputValue}
+                    fileInputValue={fileInputValue}
+                    language={language}
 
-            />
+                />
             </section>
         </>
     )

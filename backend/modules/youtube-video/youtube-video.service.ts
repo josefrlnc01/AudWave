@@ -155,7 +155,7 @@ export class YoutubeVideoService {
         await Quota.findOneAndUpdate(
                 {user: user._id, ip},
                 {
-                    $inc: {minutesUsed: minutes}
+                    $inc: {minutesUsed: minutes.toFixed(2)}
                 },
                 {upsert: true, new: true}
             )

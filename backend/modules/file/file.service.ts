@@ -68,7 +68,7 @@ export class FileService {
             await Quota.findOneAndUpdate(
                 {user: user._id, ip},
                 {
-                    $inc: {minutesUsed: audioDuration}
+                    $inc: {minutesUsed: audioDuration.toFixed(2)}
                 },
                 {upsert: true, new: true}
             )

@@ -8,8 +8,11 @@ export const userSchema = z.object({
 })
 
 export const userReqSchema = z.object({
-    name: z.string(),
+    user: z.object({
+        name: z.string(),
     email: z.string()
+    }),
+    minutesUsed: z.number()
 })
 
 export const registrationFormSchema = z.object({

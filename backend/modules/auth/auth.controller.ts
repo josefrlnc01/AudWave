@@ -6,6 +6,7 @@ import { ZodError } from "zod"
 import RefreshToken from "../tokens/refreshToken.model.js"
 import { AppError } from "../errors/AppError.js"
 import admin from 'firebase-admin'
+import Quota from "../quota/quota.schema.js"
 
 declare global {
     namespace Express {
@@ -141,8 +142,13 @@ export class AuthController {
     }
 
 
-    static user = (req: Request, res: Response) => {
-        return res.status(200).json(req.user)
+    static user = async (req: Request, res: Response) => {
+        const ip = (req.headers['x-forwarded-for']?.toString().split(' ')[0] ||
+            req.socket.remoteAddress || 'unknown').trim()
+        const quota = await Quota.findOne({
+            user: req.user._id, ip
+        })
+        return res.status(200).json({user: req.user, minutesUsed: quota?.minutesUsed})
     }
 
 }

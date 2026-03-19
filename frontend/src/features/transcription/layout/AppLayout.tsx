@@ -6,6 +6,9 @@ import { Outlet } from 'react-router'
 import { Spinner } from '@/shared/components/ui/spinner'
 import { SidebarProvider } from '@/shared/components/ui/sidebar'
 import { AppSidebar } from '@/shared/components/AppSidebar'
+import { tokenStore } from '@/lib/token.store'
+import { useEffect } from 'react'
+import { minutesStore } from '@/shared/stores/minutes.store'
 
 export default function AppLayout({ children }: { children?: React.ReactNode }) {
     const { data, isError, isLoading } = useAuth()
@@ -23,6 +26,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
 
     console.log(data)
     if (data) {
+        minutesStore.set(data.minutesUsed ?? null)
         return (
             <>
                 <SidebarProvider
