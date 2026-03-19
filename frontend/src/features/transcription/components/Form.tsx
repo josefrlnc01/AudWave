@@ -68,26 +68,26 @@ export default function Form() {
 
     return (
         <>
-        <section className="w-full grow flex flex-col justify-start items-center mb-15">
+        <section className="p-8 grow flex flex-col justify-start items-center mb-15">
             <aside className="hidden w-full mx-auto lg:items-center p-4 text-gray-400 lg:flex lg:flex-col lg:gap-4">
                 <h2 className="hidden text-5xl font-bold  text-white text-center lg:block">Transcribe cualquier vídeo o audio en <span className="text-blue-600">segundos</span></h2>
 
                 <span className="text-xl">Selecciona un idioma si quieres ver su traducción</span>
             </aside>
-            <section className="w-screen mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
+            <aside className="w-screen mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
 
-                <form className="w-full flex p-2 gap-6">
+                <form className="w-full flex flex-col md:flex-row p-2 gap-6">
 
                     {!inputValue &&
                         <div id="targ" 
                         onDrop={handleDrop}
                         onDragOver={handleDragOver}
-                        className="flex p-12 flex-col grow-2 gap-1 rounded-xl border-dashed border justify-center items-center border-slate-700 bg-slate-800/20">
+                        className="flex p-12 flex-col grow-2 gap-4 md:gap-1 rounded-xl border-dashed border justify-center items-center border-slate-700 bg-slate-800/20">
                             <img src={InputIcon} />
                             <label className="text-2xl font-bold">Sube tu archivo</label>
-                            <p className="text-lg text-gray-400">Selecciona un video o audio de tu dispositivo</p>
+                            <p className="text-lg text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
                             <p className="hidden lg:block text-md text-gray-500 mb-4">Arrastra un archivo de vídeo/audio</p>
-                            <label htmlFor="fileUpload" className="w-1/4 min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-slate-800 hover:bg-slate-900/80 transition-colors cursor-pointer">
+                            <label htmlFor="fileUpload" className="w-full md:w-1/4 md:min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-slate-800 hover:bg-slate-900/80 transition-colors cursor-pointer">
                                 Seleccionar archivo
                             </label>
 
@@ -126,7 +126,7 @@ export default function Form() {
                     </div>
 
                 </form>
-            </section>
+            </aside>
             <SubtitlesView
                 mutation={mutation}
                 inputValue={inputValue}

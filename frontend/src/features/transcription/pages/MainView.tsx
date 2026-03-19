@@ -1,7 +1,7 @@
 import Form from '@/features/transcription/components/Form'
-import Footer from '@/shared/components/Footer'
+import Footer from '@/features/transcription/components/Footer'
 
-import Header from '@/shared/components/Header'
+import Header from '../components/Header'
 
 export default function MainView() {
   
