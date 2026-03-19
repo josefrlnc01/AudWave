@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
-import { transcribeWhisperAudio } from "../transcription/whisper.service.js";
 import { convertVideoToAudio } from "../../shared/utils/video.js";
-import { translateText } from "../translation/translation.service.js";
 import { FileService } from "./file.service.js";
 import { fileTranscriptionSchema, fileTranslationSchema } from "./file.schema.js";
 import { AppError } from "../errors/AppError.js";
-import { getAudioDuration } from "../../shared/utils/audio.js";
 
 
 export class FileController {

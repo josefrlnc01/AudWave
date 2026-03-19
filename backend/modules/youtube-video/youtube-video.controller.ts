@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { YoutubeVideoService } from "./youtube-video.service.js";
 import { youtubeVideoTranscriptionSchema, youtubeVideoTranslationSchema } from "./youtube-video.schema.js";
-import { translateText } from "../translation/translation.service.js";
 
 import { DataOfId, RequestProps } from "../video/video.types.js";
 import fs from "node:fs/promises"
@@ -51,8 +50,8 @@ export class YoutubeVideoController {
             }
 
             //Obtención de traducción del video
-            const translatedYoutubeVideo = await translateText(lang, youtubeVideoText)
-            return res.json({translatedYoutubeVideo, youtubeVideoText })
+            
+            return res.json({ youtubeVideoText })
         } catch (err) {
             console.error('Error processing video:', err)
             return res.status(500).json({ error: 'Failed to process video' })

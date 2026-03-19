@@ -6,7 +6,7 @@ import { formatTime } from "../../shared/utils/time.js";
 import { TranscriptionSegment } from "openai/resources/audio/transcriptions.mjs";
 import { AppError } from "../errors/AppError.js";
 
-type TranscriptionFormatt = {
+export type TranscriptionFormatt = {
     end:number,
     start:number,
     text:string
