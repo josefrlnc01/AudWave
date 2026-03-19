@@ -22,7 +22,7 @@ export const checkQuota = async (req: Request, res: Response, next: NextFunction
         )
 
 
-        if (quota.requestCount > 400) {
+        if (quota.requestCount > 500) {
             return res.status(429).json({error: 'No puedes hacer más de una traducción'})
         }
 

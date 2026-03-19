@@ -5,6 +5,7 @@ import { translateText } from "../translation/translation.service.js";
 import { FileService } from "./file.service.js";
 import { fileTranscriptionSchema, fileTranslationSchema } from "./file.schema.js";
 import { AppError } from "../errors/AppError.js";
+import { getAudioDuration } from "../../shared/utils/audio.js";
 
 
 export class FileController {
@@ -16,10 +17,12 @@ export class FileController {
             if (!file) {
                 return res.status(400).json({ error: 'No se recibio ningun archivo en el campo audio' })
             }
+            
+            const finalFilePath = await convertVideoToAudio(file)
+            const audioDuration = await getAudioDuration(finalFilePath)
+            console.log('duración', audioDuration)
 
-            //Obtención de 
-            const filePath = await FileService.createPathForFile(file)
-            const finalFilePath = await convertVideoToAudio(filePath)
+            
             const fileText = await transcribeWhisperAudio(finalFilePath)
             if (!fileText) return res.status(400).json({ error: 'Error al obtener transcripción' })
             if (lang === 'not') {

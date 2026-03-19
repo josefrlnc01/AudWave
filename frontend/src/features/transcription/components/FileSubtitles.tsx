@@ -59,9 +59,16 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
     }
+    let formattedTranslatedFile
+    console.log('filetext', fileText)
+    console.log('translated file', translatedFile)
 
     const formattedFileText = fileText.split('. ').map(p => p.endsWith('.') ? p : p + '.')
-    const formattedTranslatedFiled = translatedFile.split('. ').map(p => p.endsWith('.') ? p : p + '.')
+
+    if (translatedFile) {
+        formattedTranslatedFile = translatedFile.split('. ').map(p => p.endsWith('.') ? p : p + '.')
+    }
+    
 
 
     return (
@@ -115,7 +122,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                         </header>
                         <div className='grow bg-slate-800/40 p-8'>
 
-                            {formattedTranslatedFiled.map(p => (
+                            {formattedTranslatedFile && formattedTranslatedFile.map(p => (
                                 <p key={p} className='text-xl text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                     {p}
                                 </p>
