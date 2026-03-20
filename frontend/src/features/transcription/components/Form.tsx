@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
@@ -19,10 +19,10 @@ export default function Form() {
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const langForTranslate = getAbbreviateLanguage(language)
     const [formData, setFormData] = useState<FormData | null>(null)
-
+    const [changed, setChanged] = useState(false)
 
     
-
+    console.log('changed', changed)
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
         Error,
@@ -30,12 +30,13 @@ export default function Form() {
     >({
         mutationFn: ({ link, lang, formData }) => sendLink(link, lang, formData),
         onSuccess: (data) => {
-            console.log('data mutation', data)
+            setChanged(false)
             setUsedMinues(data?.usedMinutes!)
         }
     })
     const handleInput = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
         setInputValue(e.target.value)
+        setChanged(true)
     }
 
 
@@ -53,9 +54,9 @@ export default function Form() {
     }
 
     const handleInputFile = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+        setChanged(true)
         const file = e.currentTarget.files?.[0]
         if (!file) return
-
         const formData = new FormData()
         formData.append('audio', file)
         setFormData(formData)
@@ -77,6 +78,8 @@ export default function Form() {
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault()
     }
+
+    console.log(mutation.data)
 
     return (
         <>
@@ -118,17 +121,18 @@ export default function Form() {
                             <div id="targ"
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
-                                className="flex p-12 flex-col grow-2 gap-4 md:gap-1 rounded-xl border-dashed border justify-center items-center border-slate-700 bg-slate-800/20">
+                                className={`flex p-12 flex-col grow-2 gap-4 md:gap-1 rounded-xl border ${!fileInputValue ? 'border-dashed bg-slate-800/20 border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'} justify-center items-center`}>
                                 <img src={InputIcon} />
                                 <label className="text-2xl font-bold">Sube tu archivo</label>
                                 <p className="text-lg text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
                                 <p className="hidden lg:block text-md text-gray-500 mb-4">Arrastra un archivo de vídeo/audio</p>
                                 <label htmlFor="fileUpload" className="w-full md:w-1/4 md:min-w-2/4 lg:w-1/4 p-3 text-center rounded-md font-bold text-white bg-blue-600 hover:bg-blue-500  transition-colors ease duration-300 cursor-pointer">
-                                    Seleccionar archivo
+                                    {fileInputValue ? 'Actualizar archivo' : 'Seleccionar archivo'}
                                 </label>
 
                                 <input type="file"
                                     onChange={handleInputFile}
+                                    onClick={(e) => e.currentTarget.value = ''}
                                     name="audio"
                                     id="fileUpload"
                                     accept="video/*,audio/*"
@@ -152,7 +156,7 @@ export default function Form() {
                         <button
                             type="submit"
                             onClick={handleForm}
-                            className="bg-blue-600 pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors ease duration-300 cursor-pointer">
+                            className={`${(fileInputValue || inputValue) && changed ? 'bg-blue-500/90 animate-pulse' : 'bg-blue-600'} pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors ease duration-300 cursor-pointer`}>
                             Transcribir</button>
 
 
