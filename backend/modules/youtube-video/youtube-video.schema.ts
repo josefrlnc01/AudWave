@@ -14,7 +14,7 @@ export const youtubeVideoTranslationSchema = z.object({
 })
 
 //Esquema de validación de link en controller principal de yt-video
-export const videoSchema = z.object({
+export const youtubeVideoSchema = z.object({
     videoLink: z.string().refine(isSecureLink, {message:'Link seguro'})
 })
 
