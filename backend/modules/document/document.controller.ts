@@ -3,7 +3,7 @@ import { generatePdf } from "../../shared/utils/pdf.js";
 import { AppError } from "../errors/AppError.js";
 
 export class DocumentController {
-    static create = async (req: Request, res: Response) => {
+    static createPDF = async (req: Request, res: Response) => {
         try {
             const {text} = req.body
             console.log('text', text)
