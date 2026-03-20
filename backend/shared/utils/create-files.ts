@@ -1,6 +1,7 @@
 import pdf from 'html-pdf'
 import fs from 'node:fs/promises'
 import { AppError } from '../../modules/errors/AppError.js'
+
 export async function generatePdf (text: string) {
     console.log('text', text)
     const contenido = `<aside>

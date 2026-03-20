@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { generatePdf } from "../../shared/utils/pdf.js";
+import { generatePdf } from "../../shared/utils/create-files.js";
 import { AppError } from "../errors/AppError.js";
 
 export class DocumentController {
