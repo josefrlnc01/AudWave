@@ -9,6 +9,7 @@ import Subtitles from '../pages/SubtitlesView'
 import { Link } from 'react-router'
 import { useState } from 'react'
 import { Button } from '@headlessui/react'
+import type { formatMinutes } from '@/shared/utils/minutes'
 
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
@@ -60,9 +61,13 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     if (translatedFile) {
         formattedTranslatedFile = translatedFile.split('. ').map(p => p.endsWith('.') ? p : p + '.')
     }
-    
-    
+    console.log(mutation.data.usedMinutes)
+
     const formattedFileText = fileText.map(s => `[${s.start}: ${s.end}]  ${s.text}`).join(`\n`)
+
+    function formatTimestamps (timestamp: string) {
+        return `00:00:${timestamp}`
+    }
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
@@ -77,7 +82,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                     <div className='grow bg-slate-800/40 p-8'>
                         {fileText.map(s => (
                             <p key={s.start} className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                <span className='text-[#0d59f2] text-xs mr-2'>[{s.start.toFixed(2)}:{s.end.toFixed(2)}]</span> {s.text}
+                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>[{formatTimestamps(s.end.toFixed())}]</span> {s.text}
                             </p>
                         ))}
                     </div>

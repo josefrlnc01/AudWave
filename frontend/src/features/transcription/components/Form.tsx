@@ -8,6 +8,7 @@ import { ComboboxMultiple } from "./ComboboxMultiple";
 import { minutesStore } from "@/shared/stores/minutes.store";
 import { tokenStore } from "@/lib/token.store";
 import TranscriptionSkeleton from "./TranscriptionSkeleton";
+import { formatMinutes } from "@/shared/utils/minutes";
 
 export type MutationProps = {
     link: string | null
@@ -23,11 +24,7 @@ export default function Form() {
     const [formData, setFormData] = useState<FormData | null>(null)
 
 
-    function formatMinutes(decimal: number): string {
-        const mins = Math.floor(decimal)
-        const secs = Math.floor((decimal % 1) * 60)
-        return secs > 0 ? `${mins}m ${secs}s` : `${mins}min`
-    }
+    
 
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
@@ -86,9 +83,9 @@ export default function Form() {
 
     return (
         <>
-        
+
             <section className="p-8 relative grow flex flex-col justify-center items-center mb-15">
-                
+
                 <aside className="hidden w-full mx-auto lg:items-center p-4 text-gray-400 lg:flex lg:flex-col lg:gap-4">
                     <h2 className="text-xl font-semibold text-white">
                         Nueva transcripción
@@ -97,7 +94,7 @@ export default function Form() {
                         Sube un archivo de audio/vídeo o introduce un enlace de YouTube
                     </p>
                 </aside>
-                <div className= "w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6">
+                <div className="w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6">
                     <div className="relative w-full bg-slate-800 rounded-full h-2">
                         <div
                             className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
@@ -117,8 +114,8 @@ export default function Form() {
                     </span>
                 </div>
                 <aside className="w-screen relative mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
-                   
-                    <form className="w-full flex flex-col md:flex-row p-2 gap-6">
+
+                    <form className="w-full flex flex-col  p-2 gap-6">
 
                         {!inputValue &&
                             <div id="targ"
@@ -142,6 +139,7 @@ export default function Form() {
                                     className="hidden" />
 
                             </div>}
+                            {fileInputValue && inputValue && <span className="text-center text-sm text-gray-300">O</span>}
                         <div className="grow flex flex-col justify-center items-center gap-15">
                             {!fileInputValue &&
                                 <div className="w-full flex flex-col justify-around gap-2">
@@ -152,17 +150,19 @@ export default function Form() {
                                         className='min-w-full w-full lg:w-1/4 p-3 text-gray-300 rounded-xl  bg-slate-800 hover:bg-slate-800/80 transition-colors' />
 
                                 </div>}
-                            <button
-                                type="submit"
-                                onClick={handleForm}
-                                className="bg-blue-600 w-full min-w-full pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors ease duration-300 cursor-pointer">
-                                Transcribir</button>
                         </div>
+                        
+                        <button
+                            type="submit"
+                            onClick={handleForm}
+                            className="bg-blue-600 pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors ease duration-300 cursor-pointer">
+                            Transcribir</button>
+
 
                     </form>
-                    
+
                 </aside>
-                 <SubtitlesView
+                <SubtitlesView
                     mutation={mutation}
                     inputValue={inputValue}
                     fileInputValue={fileInputValue}
