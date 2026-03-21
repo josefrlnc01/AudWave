@@ -33,11 +33,9 @@ admin.initializeApp({
     credential: admin.credential.applicationDefault()
 })
 
-if (!isProd) {
-    app.listen(port, () => {
-        console.log(`Sevidor corriendo en ${port}`)
-    })
-}
 
+app.listen(port, () => {
+    console.log(`Servidor corriendo en ${port}`);
+});
 export default app
 
