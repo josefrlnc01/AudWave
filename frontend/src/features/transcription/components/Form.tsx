@@ -169,7 +169,7 @@ export default function Form() {
                         <button
                             type="submit"
                             onClick={handleForm}
-                            className={`${(fileInputValue || inputValue) && changed ? 'bg-blue-500/90 animate-pulse' : 'bg-blue-600'} pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 transition-colors ease duration-300 cursor-pointer`}>
+                            className={`${(fileInputValue || inputValue) && changed ? 'bg-blue-500/90 animate-pulse' : 'bg-blue-600'} pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 hover:animate-none transition-colors ease duration-300 cursor-pointer`}>
                             Transcribir</button>
 
 
