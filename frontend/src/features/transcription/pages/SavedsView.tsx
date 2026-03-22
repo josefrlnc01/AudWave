@@ -8,10 +8,11 @@ export default function SavedsView() {
     const params = useParams()
 
     const id = params.id
+    console.log(id)
     const { data, error } = useQuery({
         queryKey: ['saveds', id],
         queryFn: () => getSaved(id!),
-        enabled: !id
+        enabled: !!id
     })
 
     if (error) {

@@ -14,8 +14,7 @@ export class SavedsController {
 
             const files = await SavedsService.getFiles(user)
             const youtubeFiles = await SavedsService.getYoutubeFiles(user)
-            console.log('files', files)
-            console.log('yt files', youtubeFiles)
+            
             return res.status(200).json({ files, youtubeFiles })
         } catch (error) {
             if (error instanceof AppError) {

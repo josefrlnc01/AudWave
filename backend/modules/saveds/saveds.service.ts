@@ -51,9 +51,13 @@ export class SavedsService {
 
     static getFile = async (id: string ) => {
         try {
-            const file = await FileModel.findById(id)
+            const file = await FileModel.find({
+                fileId: id
+            })
             if (!file) {
-                const youtubeFile = await YoutubeVideo.findById(id)
+                const youtubeFile = await YoutubeVideo.find({
+                    fileId: id
+                })
                 return youtubeFile
             }
 
