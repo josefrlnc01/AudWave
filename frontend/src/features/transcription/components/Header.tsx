@@ -22,10 +22,10 @@ export default function Header() {
 
 
   return (
-    <header className='w-screen text-center py-4 border-b border-slate-800 flex justify-evenly'>
+    <header className='w-full min-w-full text-center py-4 border-b border-slate-800 flex justify-evenly'>
       <div className="flex items-center gap-2">
 
-        <h1 className="font-bold text-2xl text-white">AudWave</h1>
+        <h1 className="font-bold text-4xl text-white">AudWave</h1>
       </div>
 
      
