@@ -2,7 +2,7 @@
 
 export default function Footer() {
     return (
-        <footer className='w-screen  border-b border-slate-800 grow-0'>
+        <footer className='w-full min-w-full border-b border-slate-800 grow-0'>
             <aside className='w-screen pt-5 pb-7 pr-14 pl-14 flex flex-col gap-8'>
                 <div className='w-full flex flex-wrap justify-between gap-8 text-sm text-gray-400'>
                     <div className='grow-0'>
