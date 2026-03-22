@@ -30,7 +30,7 @@ export class SavedsController {
             const {id} = req.params as {id : string}
             console.log('param id', id)
             const file = await SavedsService.getFile(id)
-
+            console.log('file', file)
             return res.status(200).json(file)
         } catch (error) {
             console.error(error)
@@ -38,6 +38,22 @@ export class SavedsController {
                 return res.status(error.statusCode).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error al obtener el documento por id' })
+        }
+    }
+
+
+    static deleteOne = async (req: Request, res: Response) => {
+        try {
+            const {id} = req.params as {id: string}
+
+            await SavedsService.delete(id)
+
+            return res.status(200).send('Documento eliminado correctamente')
+        } catch (error) {
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
+            }
+            return res.status(500).json({error: 'Hubo un error al eliminar el documento'})
         }
     }
 }

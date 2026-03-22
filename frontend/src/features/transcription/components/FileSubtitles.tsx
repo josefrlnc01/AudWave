@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { Spinner } from '@/shared/components/ui/spinner'
 import Subtitles from '../pages/SubtitlesView'
+import { formatTime } from '@/shared/utils/minutes'
 
 
 
@@ -51,7 +52,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
         generatePdf.mutate(text)
     }
 
-    const handleGenereateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
+    const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
         generateSrt.mutate(segments)
     }
     let formattedTranslatedFile
@@ -67,12 +68,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
 
     const formattedFileText = fileText.map(s => `[${s.start}: ${s.end}]  ${s.text}`).join(`\n`)
 
-    function formatTime(seconds: number) {
-        const hrs = Math.floor(seconds / 3600)
-        const mins = Math.floor((seconds % 3600) / 60)
-        const secs = Math.floor(seconds % 60)
-        return `[${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}]`
-    }
+    
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
@@ -97,7 +93,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>PDF</button>
                         <button
-                            onClick={() => handleGenereateTranscriptionSrt(fileText)}
+                            onClick={() => handleGenerateTranscriptionSrt(fileText)}
                             className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
                             type='button'>SRT</button>
                     </div>

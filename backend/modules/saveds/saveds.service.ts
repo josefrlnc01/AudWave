@@ -67,4 +67,28 @@ export class SavedsService {
             throw new Error('Hubo un error al obtener el documento')
         }
     }
-}
+
+
+    static delete = async (id: string) => {
+        try {
+            const file = await FileModel.findOne({
+                fileId: id
+            })
+
+            if (!file) {
+                const youtubeFile = await YoutubeVideo.findOne({
+                fileId: id
+            })
+                await youtubeFile?.deleteOne()
+                return true
+            }
+            
+
+            await file.deleteOne()
+            return true 
+        } catch (error) {
+            if (error instanceof AppError) throw error
+            throw new Error('Hubo un error al eliminar el documento')
+        }
+    }
+} 

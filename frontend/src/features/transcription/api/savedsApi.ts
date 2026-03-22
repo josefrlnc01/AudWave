@@ -40,3 +40,24 @@ export async function getSaved (id: string) {
         }
     }
 }
+
+
+
+export async function deleteSaved (id: string) {
+    const accessToken = tokenStore.get()
+    try {
+        const {data} = await axios.delete(`${urlBackend}/saveds/${id}`, {
+            withCredentials: true,
+            headers: {
+                "Authorization" : `Bearer ${accessToken}`
+            }
+        })
+
+        return data
+    } catch (error) {
+        console.error(error)
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
