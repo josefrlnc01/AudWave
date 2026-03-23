@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 import { getSaveds } from '../api/savedsApi'
 import { toast } from 'react-toastify'
@@ -21,29 +21,18 @@ export type Saveds = {
 
 
 export default function SavedsList() {
-  const [files, setFiles] = useState<Saveds>([])
   
-  const [youtubeFiles, setYoutubeFiles] = useState<Saveds>([])
-  const getSavedsFN = useMutation({
-    mutationFn: getSaveds,
-    onSuccess: (data) => {
-      setYoutubeFiles(data.youtubeFiles)
-      setFiles(data.files)
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    }
+  const {data, isPending} = useQuery({
+    queryFn: getSaveds,
+    queryKey: ['allSaveds']
   })
+  
 
+  if (!data) return <p>No hay datos</p>
 
-  useEffect(() => {
-    getSavedsFN.mutate()
-  }, [files])
-
-  console.log(files)
-
-
-  return (
+    const files: Saveds = data.files
+    const youtubeFiles: Saveds = data.youtubeFiles
+    return (
     <aside className='w-full min-w-full p-4 md:p-0 md:w-3/4 md:min-w-3/4 lg:1/2 lg:min-w-1/2 m-auto flex flex-col justify-center items-center mb-10'>
 
       <div className='w-full flex flex-col gap-4'>
@@ -67,4 +56,6 @@ export default function SavedsList() {
       </div>
     </aside>
   )
+  
+
 }
