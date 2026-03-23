@@ -1,8 +1,11 @@
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { logOut } from "@/features/auth/api/authApi"
 import { useAuth } from "@/features/auth/hooks/useAuth"
 import { formatMinutes } from "@/shared/utils/minutes"
+
 import { useQueryClient } from "@tanstack/react-query"
-import { LogOut } from "lucide-react"
+import { LogOut, Menu } from "lucide-react"
+import { Menubar } from "radix-ui"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
 
@@ -22,14 +25,13 @@ export default function Header() {
 
 
   return (
-    <header className='w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-evenly'>
+    <header className='w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center'>
       <div className="flex items-center gap-2">
-
         <h1 className="font-bold text-4xl text-white">Aud<span className="text-blue-600/80">Wave</span></h1>
       </div>
 
       {/* derecha - usuario y logout */}
-      <div className="flex items-center gap-8">
+      <div className="hidden md:flex items-center gap-8">
         <span className="text-slate-400 text-sm">{data.user.name}</span>
         <button
           onClick={handleLogOut}
@@ -39,6 +41,27 @@ export default function Header() {
           Salir
         </button>
       </div>
+      <div className="flex justify-center items-center md:hidden">
+        <DropdownMenu>
+            <DropdownMenuTrigger>
+                <Menu className="w-5 h-5 text-slate-400" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+                <DropdownMenuItem className="text-slate-400 text-sm">
+                    {data.user.name}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogOut} className="text-red-400">
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Salir
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-red-400">
+
+                    Eliminar cuenta
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    </div>
     </header>
   )
 }
