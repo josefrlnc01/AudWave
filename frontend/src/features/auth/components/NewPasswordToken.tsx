@@ -36,7 +36,7 @@ export default function NewPasswordToken({ token, setToken, setIsValidToken }: N
                 className="space-y-8 p-10 rounded-lg mt-10"
             >
                 <label
-                    className="font-normal text-2xl text-center block"
+                    className="font-normal text-2xl text-center block text-white"
                 >Código de 6 dígitos</label>
                 <div className="flex justify-center gap-5">
                     <InputOTP value={token} maxLength={6} onChange={handleChange} onComplete={handleComplete}>
@@ -54,9 +54,9 @@ export default function NewPasswordToken({ token, setToken, setIsValidToken }: N
             <nav className="mt-10 flex flex-col space-y-4">
                 <Link
                     to='/auth/forgot-password'
-                    className="text-center text-gray-300 font-normal"
+                    className="text-center text-gray-300 font-normal hover:text-blue-500 transition-colors"
                 >
-                    Solicitar un nuevo Código
+                    Solicitar un nuevo código
                 </Link>
             </nav>
         </>

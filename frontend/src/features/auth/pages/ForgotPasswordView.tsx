@@ -21,6 +21,7 @@ export default function ForgotPasswordView() {
         },
         onSuccess: (data) => {
             toast.success(data)
+            reset()
         }
     })
 
@@ -64,8 +65,7 @@ export default function ForgotPasswordView() {
                             placeholder-slate-400
                             focus:outline-none
                             focus:ring-2
-                            focus:ring-fuchsia-500
-                            focus:border-fuchsia-500
+                        
                             transition"
                             {...register("email", {
                                 required: "El Email de registro es obligatorio",
