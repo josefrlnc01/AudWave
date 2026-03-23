@@ -11,11 +11,13 @@ import { useMutation } from "@tanstack/react-query"
 import { deleteSaved } from "@/features/transcription/api/savedsApi"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
+import { useState } from "react"
 
 type DropdownProps = {
-    id: string
+    id: string,
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
-export function DropdownMenuBasic({ id }: DropdownProps) {
+export function DropdownMenuBasic({ id,  setIsOpen }: DropdownProps) {
     const navigate = useNavigate()
     const deleteFN = useMutation({
         mutationFn: deleteSaved,
@@ -31,6 +33,10 @@ export function DropdownMenuBasic({ id }: DropdownProps) {
     const handleDelete = () => {
         deleteFN.mutate(id)
         navigate('/')
+    }
+
+    const handleEdit = () => {
+        setIsOpen(true)
     }
 
     return (
@@ -53,7 +59,9 @@ export function DropdownMenuBasic({ id }: DropdownProps) {
             <DropdownMenuContent className="bg-white">
                 <DropdownMenuGroup>
                     <DropdownMenuLabel>Archivo</DropdownMenuLabel>
-                    <DropdownMenuItem className="cursor-pointer hover:bg-blue-600/80 hover:text-white transition-colors duration-100 ease-in">Editar</DropdownMenuItem>
+                    <DropdownMenuItem 
+                    onClick={handleEdit}
+                    className="cursor-pointer hover:bg-blue-600/80 hover:text-white transition-colors duration-100 ease-in">Editar título</DropdownMenuItem>
                     <DropdownMenuItem
                         onClick={handleDelete}
                         className="cursor-pointer hover:bg-red-500 hover:text-white transition-colors duration-100 ease-in">Eliminar</DropdownMenuItem>

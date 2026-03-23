@@ -61,3 +61,30 @@ export async function deleteSaved (id: string) {
         }
     }
 }
+
+type EditTitleProps = {
+    
+        id: string,
+    title: string
+    
+}
+
+export async function editTitle ({id, title}: EditTitleProps) {
+    const accessToken = tokenStore.get()
+    try {
+        
+        const {data} = await axios.patch(`${urlBackend}/saveds/${id}`, {title}, {
+            withCredentials: true,
+            headers: {
+                "Authorization" : `Bearer ${accessToken}`
+            }
+        })
+
+        return data
+    } catch (error) {
+        console.error(error)
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}

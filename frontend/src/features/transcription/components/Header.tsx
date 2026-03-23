@@ -15,7 +15,7 @@ export default function Header() {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   if (!data) return
-
+  const [open, setIsOpen] = useState(false)
 
   const handleLogOut = async () => {
     await logOut()

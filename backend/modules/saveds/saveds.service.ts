@@ -49,7 +49,7 @@ export class SavedsService {
     }
 
 
-    static getFile = async (id: string ) => {
+    static getFile = async (id: string) => {
         try {
             const file = await FileModel.find({
                 fileId: id
@@ -77,15 +77,45 @@ export class SavedsService {
 
             if (!file) {
                 const youtubeFile = await YoutubeVideo.findOne({
-                fileId: id
-            })
+                    fileId: id
+                })
                 await youtubeFile?.deleteOne()
                 return true
             }
-            
+
 
             await file.deleteOne()
-            return true 
+            return true
+        } catch (error) {
+            if (error instanceof AppError) throw error
+            throw new Error('Hubo un error al eliminar el documento')
+        }
+    }
+
+
+    static edit = async (title: string, id: string) => {
+        try {
+            console.log('id', id)
+            const file = await FileModel.findOne({
+                fileId: id
+            })
+
+            console.log('file', file)
+            if (!file) {
+                const youtubeFile = await YoutubeVideo.findOne({
+                    fileId: id
+                })
+                if (!youtubeFile) {
+                    throw new AppError('Documento no encontrado', 404)
+                }
+
+                youtubeFile.title = title
+                await youtubeFile?.save()
+
+            } else {
+                file.title = title
+                await file.save()
+            }
         } catch (error) {
             if (error instanceof AppError) throw error
             throw new Error('Hubo un error al eliminar el documento')

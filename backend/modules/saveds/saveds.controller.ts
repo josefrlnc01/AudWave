@@ -56,4 +56,23 @@ export class SavedsController {
             return res.status(500).json({error: 'Hubo un error al eliminar el documento'})
         }
     }
+
+
+    static editTitle = async (req: Request, res: Response) => {
+        try {
+            const {id} = req.params as {id: string}
+            const {title} = req.body
+            console.log(req.body)
+            console.log(title)
+            console.log(id)
+            await SavedsService.edit(title, id)
+
+            return res.status(200).send('Documento editado correctamente')
+        } catch (error) {
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
+            }
+            return res.status(500).json({error: 'Hubo un error al eliminar el documento'})
+        }
+    }
 }

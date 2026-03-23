@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getSaved } from '../api/savedsApi'
 import { toast } from 'react-toastify'
 import { Link, useParams } from 'react-router'
@@ -8,10 +8,11 @@ import { formatTime } from '@/shared/utils/minutes'
 import Footer from '../components/Footer'
 import { generatePDF, generateSRT } from '@/features/document/api/documentApi'
 import { DropdownMenuBasic } from '@/components/ui/DropdownMenuBasic'
+import EditFileDialog from '../components/EditFileDialog'
 
 export default function SavedsView() {
     const params = useParams()
-
+    const [isOpen, setIsOpen] = useState(false)
     const id = params.id
     console.log(id)
     const { data, error } = useQuery({
@@ -58,6 +59,7 @@ export default function SavedsView() {
         }).join('\n')
         return (
             <>
+            {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!}/>}
                 <Header />
                 <section className='w-full min-h-screen flex flex-col items-center justify-center py-12 md:py-20'>
                     <aside className='w-[90%] md:w-2/3 lg:w-1/2 mx-auto flex flex-col rounded-2xl bg-[#ffffff08] shadow-2xl'>
@@ -67,7 +69,7 @@ export default function SavedsView() {
                             </h2>
                             <div className='flex justify-center items-center gap-4'>
 
-                                <DropdownMenuBasic id={data[0].fileId} />
+                                <DropdownMenuBasic id={data[0].fileId}  setIsOpen={setIsOpen} />
                                 <Link className='bg-red-500 pt-2 pb-2 pl-4 pr-4 rounded-xl hover:bg-red-500/80 transition-colors ease duration-200 ' to={`/`}>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <line x1="18" y1="6" x2="6" y2="18"></line>
