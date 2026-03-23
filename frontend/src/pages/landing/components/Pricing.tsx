@@ -1,7 +1,7 @@
 
 export default function Pricing() {
     return (
-        <section className='bg-slate-800/30 w-full min-w-full p-6 flex flex-col justify-center items-center grow gap-8 md:gap-4 py-14 md:py-10 lg:py-4'>
+        <section className='bg-slate-800/30 w-full min-w-full p-6 flex flex-col justify-center items-center grow gap-8 md:gap-4 py-14'>
             <aside>
                 <h3 className='text-3xl text-white font-bold text-center'>Planes diseñados a medida</h3>
                 <p className='max-w-2xl mx-auto text-sm md:text-lg text-gray-500 text-center leading-relaxed'>Escoge lo que mejor se adapte a tus necesidades.</p>
@@ -29,7 +29,7 @@ export default function Pricing() {
                             Solo exportaciones en formato TXT
                         </li>
                     </ul>
-                    <button className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg font-bold transition-all">Empezar ya</button>
+                    <button className="w-full py-3 bg-white/5 border border-white/10 cursor-pointer hover:bg-blue-500/90 rounded-xl font-bold text-lg shadow-xl transition-colors duration-200 ease-in">Empezar ya</button>
                 </div>
 
                 <div className="relative p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid rounded-md scale-105 border-[#0d59f2] transition-all">
@@ -55,8 +55,8 @@ export default function Pricing() {
                             PDF, TXT, SRT, VTT, DOCX 
                         </li>
                     </ul>
-                    <button className="w-full py-3 bg-[#0d59f2] hover:bg-[#0d59f2]/80 border border-white/10 rounded-lg font-bold cursor-pointer transition-all">Mejorar a PRO</button>
-                </div>
+                    <button className="w-full py-3  bg-blue-600 cursor-pointer border border-white/10 hover:bg-blue-500/90 rounded-xl font-bold text-lg shadow-xl transition-colors duration-200 ease-in">Mejorar a PRO</button>
+                </div> 
 
                 <div className="p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid border-transparent rounded-md hover:scale-105 hover:border-[#0d59f2] transition-all">
                     <div className="mb-8">
@@ -84,7 +84,7 @@ export default function Pricing() {
                             Resumen IA 
                         </li>
                     </ul>
-                    <button className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg font-bold transition-all">Empezar ya</button>
+                    <button className="w-full py-3 bg-white/5 border border-white/10 cursor-pointer hover:bg-blue-500/90 rounded-xl font-bold text-lg shadow-xl transition-colors duration-200 ease-in">Empezar ya</button>
                 </div>
             </aside>
         </section>
