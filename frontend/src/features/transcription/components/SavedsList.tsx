@@ -43,7 +43,7 @@ export default function SavedsList() {
 
 
   return (
-    <section className='w-1/2 min-w-1/2 m-auto flex flex-col justify-center items-center mb-10'>
+    <aside className='w-full min-w-full p-4 md:p-0 md:w-3/4 md:min-w-3/4 lg:1/2 lg:min-w-1/2 m-auto flex flex-col justify-center items-center mb-10'>
 
       <div className='w-full flex flex-col gap-4'>
 
@@ -64,6 +64,6 @@ export default function SavedsList() {
 
         ))}
       </div>
-    </section>
+    </aside>
   )
 }

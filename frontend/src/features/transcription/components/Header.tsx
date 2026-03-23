@@ -8,11 +8,11 @@ import { useNavigate } from "react-router"
 
 export default function Header() {
   const [name, setName] = useState<string | null>(null)
-  const {data} = useAuth()
+  const { data } = useAuth()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   if (!data) return
-  
+
 
   const handleLogOut = async () => {
     await logOut()
@@ -22,13 +22,12 @@ export default function Header() {
 
 
   return (
-    <header className='w-full min-w-full text-center py-4 border-b border-slate-800 flex justify-evenly'>
+    <header className='w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-evenly'>
       <div className="flex items-center gap-2">
 
-        <h1 className="font-bold text-4xl text-white">AudWave</h1>
+        <h1 className="font-bold text-4xl text-white">Aud<span className="text-blue-600/80">Wave</span></h1>
       </div>
 
-     
       {/* derecha - usuario y logout */}
       <div className="flex items-center gap-8">
         <span className="text-slate-400 text-sm">{data.user.name}</span>
