@@ -22,7 +22,7 @@ export default function Hero() {
           Empieza gratis
         </button>
       </aside>
-      <aside className="w-full md:w-3/4 lg:w-2/4 h-64">
+      <aside className="w-full h-64">
         <div className="w-full md:w-3/4 lg:w-2/4 h-64 m-auto  bg-slate-800/20 rounded-md">
           <div className="bg-brand-card/50 h-full rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden">
             <div className="flex items-center gap-1 h-32">
