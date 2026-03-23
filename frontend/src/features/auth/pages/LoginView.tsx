@@ -56,8 +56,17 @@ export default function LoginView() {
 
     return (
         <>
+        <section className='w-full min-h-full h-full pt-6 pb-6'>
             <form
-                className='max-w-md mx-auto space-y-6 p-8 bg-zinc-950 border border-zinc-800 rounded-2xl shadow-xl'
+                className='max-w-md 
+                mx-auto 
+                space-y-6 
+                p-8  
+                bg-slate-900/60
+                border border-slate-700
+                rounded-2xl
+                backdrop-blur
+                shadow-xl'
                 onSubmit={handleSubmit(handleLogin)}
                 noValidate
             >
@@ -173,6 +182,7 @@ export default function LoginView() {
                     </Link>
                 </nav>
             </form>
+             </section>
         </>
     )
 }

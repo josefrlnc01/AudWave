@@ -52,7 +52,16 @@ export default function RegisterView() {
 
     return (
         <>
-            <form className="w-full md:max-w-md md:mx-auto  space-y-6 p-8 bg-zinc-950 border border-zinc-800 rounded-2xl shadow-xl" onSubmit={handleSubmit(handleRegister)}>
+        <section className="w-full min-h-full h-full pt-6 pb-6">
+            <form className="max-w-md 
+                mx-auto 
+                space-y-6 
+                p-8  
+                bg-slate-900/60
+                border border-slate-700
+                rounded-2xl
+                backdrop-blur
+                shadow-xl" onSubmit={handleSubmit(handleRegister)}>
 
                 <div className="text-center mb-8 flex flex-col justify-center items-center gap-4">
 
@@ -173,6 +182,7 @@ export default function RegisterView() {
                         to={'/auth/login'}>¿Tienes ya una cuenta? <span className="text-indigo-400 font-medium">Iniciar sesión</span> </Link>
                 </nav>
             </form>
+            </section>
         </>
     )
 }
