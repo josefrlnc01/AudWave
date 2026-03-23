@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { IUser } from "../user/user.model.js"
+import User, { IUser } from "../user/user.model.js"
 import { AuthService } from "./auth.service.js"
 import { loginSchema, registerSchema } from "./auth.schema.js"
 import { ZodError } from "zod"
@@ -78,26 +78,26 @@ export class AuthController {
 
     static authenticateGoogle = async (req: Request, res: Response) => {
         try {
-            const {googleToken} = req.body
+            const { googleToken } = req.body
             const decodedToken = await admin.auth().verifyIdToken(googleToken)
             const email = decodedToken?.email
             const name = decodedToken.name
             console.log(decodedToken)
-            if (!email || !name) return res.status(400).json({error: 'Nombre o email no encontrados'})
-            const {refreshToken, accessToken, user, newUser, } = await AuthService.authJWTGoogle({email, name, decodedToken})
+            if (!email || !name) return res.status(400).json({ error: 'Nombre o email no encontrados' })
+            const { refreshToken, accessToken, user, newUser, } = await AuthService.authJWTGoogle({ email, name, decodedToken })
             if (newUser) {
                 return res.status(201).send('Usuario creado correctamente, revisa tu correo para confirmar la cuenta')
             } else if (user) {
                 res.cookie('refreshToken', refreshToken, AuthController.refreshCookieOptions)
-                return res.status(200).send({success: 'Iniciando sesión', accessToken})
+                return res.status(200).send({ success: 'Iniciando sesión', accessToken })
             }
-            
+
         } catch (error) {
             console.log(error)
             if (error instanceof AppError) {
-                return res.status(error.statusCode).json({error: error.message})
+                return res.status(error.statusCode).json({ error: error.message })
             }
-            return res.status(500).json({error: 'Hubo un error al autenticar la cuenta con google'})
+            return res.status(500).json({ error: 'Hubo un error al autenticar la cuenta con google' })
         }
     }
 
@@ -142,13 +142,67 @@ export class AuthController {
     }
 
 
+    static forgotPassword = async (req: Request, res: Response) => {
+        try {
+            const email = req.body.formData.email
+            console.log('email', email)
+            await AuthService.generateTokenForPassword(email)
+
+            return res.send('Revisa tu email para ver las instrucciones')
+        } catch (error) {
+            console.error(error)
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({ error: error.message })
+            }
+            return res.status(500).json({ error: 'Hubo un error en la solicitud de nueva contraseña' })
+        }
+    }
+
+
+    static validatePasswordToken = async (req: Request, res: Response) => {
+        try {
+            const { token } = req.body
+            console.log('token', token)
+            AuthService.isValidTokenForNewPassword(token)
+
+            return res.send('Token válido, puedes cambiar tu contraseña')
+        } catch (error:any) {
+            console.log(error)
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({ error: error.message })
+            }
+            return res.status(500).json({ error: 'Hubo un error en la solicitud de nueva contraseña' })
+        }
+    }
+
+
+    static updatePassword = async (req: Request, res: Response) => {
+        try {
+            const {token} = req.params as {token: string}
+            console.log('token', token)
+            const { password, password_confirmation } = req.body.formData
+            console.log(req.body)
+            console.log('password', password, 'password confirm', password_confirmation)
+            await AuthService.generateNewPassword(password, password_confirmation, token)
+
+            return res.send('Contraseña cambiada correctamente')
+        } catch (error) {
+            console.error(error)
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({ error: error.message })
+            }
+            return res.status(500).json({ error: 'Hubo un error en la creación de nueva contraseña' })
+        }
+    }
+
+
     static user = async (req: Request, res: Response) => {
         const ip = (req.headers['x-forwarded-for']?.toString().split(' ')[0] ||
             req.socket.remoteAddress || 'unknown').trim()
         const quota = await Quota.findOne({
             user: req.user._id, ip
         })
-        return res.status(200).json({user: req.user, usedMinutes: quota?.usedMinutes})
+        return res.status(200).json({ user: req.user, usedMinutes: quota?.usedMinutes })
     }
 
 }

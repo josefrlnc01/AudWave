@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { AuthEmail } from "../../config/mail/mail.js";
 import RefreshToken from "../tokens/refreshToken.model.js";
 import Token from "../tokens/token.model.js";
-import User from "../user/user.model.js";
+import User, { IUser } from "../user/user.model.js";
 import type { UserGoogleRegistration, UserRegistrationForm } from "../user/user.types.js";
 import { checkPassword, hashPassword } from "../../shared/utils/auth.js";
 import { generate6DigitsToken } from "../../shared/utils/token.js";
@@ -130,7 +130,7 @@ export class AuthService {
     }
 
 
-    static authJWTGoogle = async ({email, name, decodedToken}: UserGoogleRegistration) => {
+    static authJWTGoogle = async ({ email, name, decodedToken }: UserGoogleRegistration) => {
         try {
             const userExists = await User.findOne({
                 email: email
@@ -161,11 +161,11 @@ export class AuthService {
                     expiresIn: '90d'
                 })
 
-                const accessToken = jwt.sign({id: user._id}, accessTokenKey, {
+                const accessToken = jwt.sign({ id: user._id }, accessTokenKey, {
                     expiresIn: '10m'
                 })
 
-                const refreshTokenInBd = new RefreshToken({token: refreshToken})
+                const refreshTokenInBd = new RefreshToken({ token: refreshToken })
                 refreshTokenInBd.user = user._id
                 await Promise.all([user.save(), refreshTokenInBd.save()])
                 return { refreshToken, accessToken, user }
@@ -190,7 +190,79 @@ export class AuthService {
             throw new Error('Hubo un error en la autencticación con google')
         }
     }
+    static generateTokenForPassword = async (email: string) => {
+        try {
+            const user = await User.findOne({email})
+            
+            console.log('user', user)
+            if (!user) {
+                throw new AppError('Credenciales incorrectas', 400)
+            }
 
+            if (user.provider === 'google') {
+                throw new AppError('Usuario registrado con google', 409)
+            }
+
+            const token = new Token()
+            token.token = generate6DigitsToken()
+            token.user = user._id
+            await token.save()
+            AuthEmail.sendPasswordResetToken({
+                name: user.name,
+                email: email,
+                token: token.token
+            })
+
+        } catch (error) {
+            if (error instanceof AppError) throw error
+            throw new Error('Hubo un error al generar el token de reseteo de contraseña')
+        }
+    }
+
+
+    static isValidTokenForNewPassword = async (token: string) => {
+        try {
+            const tokenExists = await Token.findOne({
+                token
+            })
+
+            if (!tokenExists) {
+                throw new AppError('Token no válido', 401)
+            }
+
+        } catch (error) {
+            if (error instanceof AppError) throw error
+            throw new Error('Hubo un error al verificar la cuenta')
+        }
+    }
+
+    static generateNewPassword = async (password: string, password_confirmation: string, token: string) => {
+        try {
+            const tokenExists = await Token.findOne({
+                token
+            })
+
+            if (!tokenExists) {
+                throw new AppError('Token inválido o expirado', 400)
+            }
+
+            if (password !== password_confirmation) {
+                throw new AppError('Las contraseñas no coinciden', 401)
+            }
+
+            const user = await User.findById(tokenExists.user)
+
+            if (!user) {
+                throw new AppError('Usuario no encontrado', 404)
+            }
+            user.password = await hashPassword(password)
+            await Promise.all([user.save(), tokenExists.deleteOne()])
+
+        } catch (error) {
+            if (error instanceof AppError) throw error
+            throw new Error('Hubo un error al verificar la cuenta')
+        }
+    }
 
     static verifyAndSendToken = async (email: string) => {
         try {

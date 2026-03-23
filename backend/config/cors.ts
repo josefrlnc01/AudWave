@@ -7,7 +7,7 @@ let frontendUrl: string | undefined
 if (isProd) {
     frontendUrl = getRequiredEnv('FRONTEND_URL')
 } else {
-    frontendUrl = getRequiredEnv('FONTEND_URL_DEV')
+    frontendUrl = getRequiredEnv('FRONTEND_URL_DEV')
 }
 
 export const corsMiddleware = () => cors({

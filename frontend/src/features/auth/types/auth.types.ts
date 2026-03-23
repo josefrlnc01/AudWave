@@ -6,7 +6,16 @@ export type UserLoginForm = {
     password: string
 }
 
+export type NewPasswordForm = {
+    password: string;
+    password_confirmation: string;
+}
 
+export type TokenConfirmation = {
+    token: string;
+}
 
-
+export type ForgotPasswordForm = {
+    email: string
+}
 export type RegistrationForm = z.infer<typeof registrationFormSchema>

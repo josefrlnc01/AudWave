@@ -1,6 +1,6 @@
 import axios, { isAxiosError } from 'axios'
 import { userReqSchema } from '../schemas/auth.schema'
-import type { RegistrationForm, UserLoginForm } from '../types/auth.types'
+import type { ForgotPasswordForm, NewPasswordForm, RegistrationForm, TokenConfirmation, UserLoginForm } from '../types/auth.types'
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '@/firebase'
 import { tokenStore } from '@/lib/token.store'
@@ -136,6 +136,42 @@ export async function getRefreshToken() {
     }
 }
 
+
+export async function forgotPassword (formData: ForgotPasswordForm) {
+    try {
+        const {data} = await axios.post<string>(`${baseUrl}/auth/forgot-password`, {formData})
+
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+
+export async function validateToken (token: string) {
+    try {
+        const {data} = await axios.post(`${baseUrl}/auth/validate-password-token`, {token})
+        return data
+    } catch (error) {
+        console.error(error)
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
+export async function updatePasswordWithToken ({formData, token}: {formData : NewPasswordForm, token : TokenConfirmation['token']}) {
+    try {
+        const {data} = await axios.post<string>(`${baseUrl}/auth/update-password/${token}`, {formData})
+        return data
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
 
 export async function logOut() {
     try {

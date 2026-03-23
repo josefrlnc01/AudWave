@@ -159,6 +159,13 @@ export default function LoginView() {
                     >
                         ¿No tienes cuenta? <span className="text-indigo-400 font-medium">Crea una aquí</span>
                     </Link>
+
+                    <Link
+                        className="text-sm text-zinc-400 hover:text-white transition-colors"
+                        to={'/auth/forgot-password'}
+                    >
+                        ¿Has olvidado tu contraseña? <span className="text-indigo-400 font-medium">Solicita una nueva</span>
+                    </Link>
                 </nav>
             </form>
         </>
