@@ -29,7 +29,7 @@ export default function ForgotPasswordView() {
 
     return (
         <>
-            <aside className='max-w-xl mx-auto px-6'>
+            <aside className='max-w-xl mx-auto px-6 py-20'>
                 <h1 className="text-4xl md:text-5xl font-bold text-white text-center">Reestablece tu contraseña</h1>
                 <p className="text-lg text-slate-400 mt-4 text-center">
                     ¿Olvidaste tu contraseña? Introduce tu email y{" "}
@@ -98,19 +98,13 @@ export default function ForgotPasswordView() {
                 </form>
 
                 <nav className="mt-10 flex flex-col space-y-4">
-                    <Link
-                        to='/auth/login'
-                        className="text-center text-gray-300 font-normal"
-                    >
-                        ¿Ya tienes cuenta? Iniciar Sesión
-                    </Link>
+                    <p className='text-sm text-center text-zinc-400 transition-colors'>¿Tienes ya una cuenta? <span className="text-indigo-400 font-medium hover:text-indigo-300 cursor-pointer"><Link
+                            to={'/auth/login'}
+                        >Iniciar sesión</Link></span></p>
 
-                    <Link
-                        to='/auth/register'
-                        className="text-center text-gray-300 font-normal"
-                    >
-                        ¿No tienes cuenta? Crea una
-                    </Link>
+                    <p className='text-sm text-center text-zinc-400 transition-colors'>¿No tienes una cuenta aún? <span className="text-indigo-400 font-medium hover:text-indigo-300 cursor-pointer"><Link
+                            to={'/auth/register'}
+                        >Crea una aquí</Link></span></p>
                 </nav>
             </aside>
         </>
