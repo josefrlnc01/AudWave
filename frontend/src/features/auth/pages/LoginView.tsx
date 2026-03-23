@@ -62,9 +62,14 @@ export default function LoginView() {
                 noValidate
             >
                 {/* Header o Título opcional */}
-                <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold text-white">Aud<span className='text-blue-600/80'>Wave</span></h2>
+                <div className="text-center mb-8 flex flex-col justify-center items-center gap-4">
+                    
+                    <div className='flex flex-col'>
+                        <h1 className="text-4xl font-bold text-white">Aud<span className='text-blue-600/80'>Wave</span></h1>
                     <p className="text-zinc-400 mt-2">Transcribe audio con IA</p>
+
+                    </div>
+                    <h2 className='text-3xl font-bold text-white'>Iniciar sesión</h2>
                 </div>
 
                 <button
@@ -152,7 +157,7 @@ export default function LoginView() {
                     hover:scale-[1.02] transition cursor-pointer'
                 />
 
-                <nav className='mt-6 flex flex-col items-center'>
+                <nav className='mt-6 flex flex-col items-center gap-3'>
                     <Link
                         className="text-sm text-zinc-400 hover:text-white transition-colors"
                         to={'/auth/register'}

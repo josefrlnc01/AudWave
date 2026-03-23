@@ -53,10 +53,17 @@ export default function RegisterView() {
     return (
         <>
             <form className="w-full md:max-w-md md:mx-auto  space-y-6 p-8 bg-zinc-950 border border-zinc-800 rounded-2xl shadow-xl" onSubmit={handleSubmit(handleRegister)}>
-                <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold text-white">Aud<span className='text-blue-600/80'>Wave</span></h2>
-                    <p className="text-zinc-400 mt-2">Crea una cuenta y empieza a transcribir tus documentos</p>
+
+                <div className="text-center mb-8 flex flex-col justify-center items-center gap-4">
+
+                    <div className='flex flex-col'>
+                        <h1 className="text-4xl font-bold text-white">Aud<span className='text-blue-600/80'>Wave</span></h1>
+                        <p className="text-zinc-400 mt-2">Crea una cuenta y empieza a transcribir tus documentos</p>
+                    </div>
+                    <h2 className='text-3xl font-bold text-white'>Regístrate</h2>
                 </div>
+
+
 
                 <button
                     type='submit'
@@ -162,7 +169,7 @@ export default function RegisterView() {
 
                 <nav className='mt-10 flex flex-col space-y-3'>
                     <Link
-                        className="text-sm text-zinc-400 hover:text-white transition-colors"
+                        className="text-sm text-center text-zinc-400 hover:text-white transition-colors"
                         to={'/auth/login'}>¿Tienes ya una cuenta? <span className="text-indigo-400 font-medium">Iniciar sesión</span> </Link>
                 </nav>
             </form>
