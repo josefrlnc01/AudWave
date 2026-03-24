@@ -1,7 +1,6 @@
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
-
 import FileSubtitles from './FileSubtitles'
 import { motion } from 'motion/react'
 import { useState } from 'react'
