@@ -7,12 +7,10 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 
 export default function Header() {
-  const [name, setName] = useState<string | null>(null)
   const { data } = useAuth()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   if (!data) return
-  const [open, setIsOpen] = useState(false)
 
   const logout = useMutation({
     mutationFn: logOut,
