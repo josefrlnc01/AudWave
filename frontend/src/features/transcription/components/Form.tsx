@@ -3,7 +3,7 @@ import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcripti
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
 import { getAbbreviateLanguage } from "@/shared/utils/lang";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { minutesStore } from "@/shared/stores/minutes.store";
 import { formatMinutes } from "@/shared/utils/minutes";
 
@@ -20,7 +20,7 @@ export default function Form() {
     const langForTranslate = getAbbreviateLanguage(language)
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
-    const [isOpenFile, setIsOpenFile] = useState(false)
+    const queryClient = useQueryClient()
     
     console.log('changed', changed)
     const mutation = useMutation<
@@ -30,7 +30,7 @@ export default function Form() {
     >({
         mutationFn: ({ link, lang, formData }) => sendLink(link, lang, formData),
         onSuccess: (data) => {
-            
+            queryClient.invalidateQueries({queryKey: ['allSaveds']})
             setUsedMinues(data?.usedMinutes!)
         }
     })
