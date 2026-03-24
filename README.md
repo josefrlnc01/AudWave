@@ -31,11 +31,11 @@ Diseñada para **periodistas, creadores de contenido, traductores y profesionale
 |---|---|
 | 🎙️ **Transcripción con Whisper** | Conversión de audio a texto usando Whisper v1 de OpenAI con timestamps por segmento |
 | 🤖 **Corrección semántica con GPT-4** | GPT-4o-mini mejora la puntuación y corrige errores de transcripción automáticamente |
-| 🌍 **Traducción multiidioma** | Traduce tus segmentos a Español, Inglés, Francés e Italiano manteniendo los timestamps |
+| 🌍 **Traducción multiidioma** | Traduce tus segmentos a Español, Inglés, Francés e Italiano y más manteniendo los timestamps |
 | 📄 **Exportación en múltiples formatos** | Descarga en PDF, SRT (subtítulos), TXT y más |
 | 📺 **Soporte de YouTube** | Pega cualquier enlace de YouTube y transcribe directamente sin descargar nada |
 | 💾 **Historial de transcripciones** | Guarda, gestiona y accede a tus transcripciones anteriores en cualquier momento |
-| 🔐 **Autenticación completa** | Login con email/contraseña o Google (Firebase Auth) |
+| 🔐 **Autenticación completa** | Login con email/contraseña o Google (Firebase Auth) + JWT |
 | ⏱️ **Timestamps por segmento** | Cada segmento incluye su marca de tiempo de inicio y fin |
 
 ---
