@@ -10,10 +10,8 @@ export class YoutubeVideoController {
     static init = async (req: Request, res: Response) => {
         const ip = (req.headers['x-forwarded-for']?.toString().split(' ')[0] ||
         req.socket.remoteAddress || 'unknown').trim()
-        
         const { videoLink }: RequestProps = req.body
         const user = req.user
-        const lang = String(req.params.lang)
 
         //Guardado del link en archivo para usarlo posteriormente
         await fs.writeFile('link.json', JSON.stringify({ key: videoLink }))
@@ -46,12 +44,6 @@ export class YoutubeVideoController {
             }
             const { youtubeVideoText, usedMinutes, title, audioDuration } = data
             await YoutubeVideoService.insertTranscription({ youtubeVideoText, user, title, duration: audioDuration})
-            /*Si el usuario no elige un lenguaje para traducir solo devolvemos la transcripción
-            if (lang === 'not') {
-                return res.json({ youtubeVideoText})
-            }*/
-
-            //Obtención de traducción del video
             
             return res.json({ youtubeVideoText, usedMinutes })
         } catch (err) {

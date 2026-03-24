@@ -1,7 +1,7 @@
 import { authenticateAccount, authenticateGoogle } from '@/features/auth/api/authApi'
 import { tokenStore } from '@/lib/token.store'
 import ErrorMessage from '@/components/ErrorMessage'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
@@ -10,7 +10,7 @@ import type { UserLoginForm } from '../types/auth.types'
 
 
 export default function LoginView() {
-
+    const queryClient = useQueryClient()
     const navigate = useNavigate()
     const initialValues: UserLoginForm = {
         email: '',
@@ -22,6 +22,7 @@ export default function LoginView() {
             toast.error(error.message)
         },
         onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['user']})
             navigate('/')
         }
     })

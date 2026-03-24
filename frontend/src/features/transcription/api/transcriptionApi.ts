@@ -16,13 +16,13 @@ export type PromiseFile = {
 }
 
 const urlBackend = import.meta.env.VITE_API_URL
-export async function sendLink(link: string | null, lang: string | null, formData: FormData | null): Promise<PromiseLink | PromiseFile | undefined> {
+export async function sendLink(link: string | null,  formData: FormData | null): Promise<PromiseLink | PromiseFile | undefined> {
     const accessToken = tokenStore.get()
     try {
 
 
         if (link !== null) {
-            const response = await fetch(`${urlBackend}/yt-video/${lang ? lang : 'not'}`, {
+            const response = await fetch(`${urlBackend}/yt-video}`, {
                 method: 'POST',
                 body: JSON.stringify({ videoLink: link }),
                 headers: {
@@ -47,7 +47,7 @@ export async function sendLink(link: string | null, lang: string | null, formDat
             const { youtubeVideoText, translatedYoutubeVideo, usedMinutes } = data
             return { youtubeVideoText, translatedYoutubeVideo, usedMinutes}
         } else {
-            const response = await fetch(`${urlBackend}/file/${lang ? lang : 'not'}`, {
+            const response = await fetch(`${urlBackend}/file`, {
                 method: 'POST',
                 body: formData,
                 headers: {

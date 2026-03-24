@@ -7,4 +7,4 @@ export const youtubeVideoRoute = Router()
 
 youtubeVideoRoute.post('/save-transcription', authenticate, YoutubeVideoController.saveTranscription)
 youtubeVideoRoute.post('/save-translation', authenticate, YoutubeVideoController.saveTranslation)
-youtubeVideoRoute.post('/:lang', authenticate, checkQuota, YoutubeVideoController.init)
+youtubeVideoRoute.post('/', authenticate, checkQuota, YoutubeVideoController.init)

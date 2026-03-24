@@ -18,5 +18,5 @@ export const fileRoute = Router()
 
 fileRoute.post('/save-transcription', authenticate, FileController.saveTranscription)
 fileRoute.post('/save-translation', authenticate, FileController.saveTranslation)
-fileRoute.post('/:lang', authenticate, checkQuota, upload.single('audio'), FileController.init)
+fileRoute.post('/', authenticate, checkQuota, upload.single('audio'), FileController.init)
 

@@ -9,26 +9,25 @@ import { formatMinutes } from "@/shared/utils/minutes";
 
 export type MutationProps = {
     link: string | null
-    lang: string | null,
     formData: FormData | null
 }
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
     const [usedMinutes, setUsedMinues] = useState<number | null>(minutesStore.get() ?? 0)
-    const [language, setLanguage] = useState<string | null>(null)
+    
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
-    const langForTranslate = getAbbreviateLanguage(language)
+    
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
     const queryClient = useQueryClient()
     
-    console.log('changed', changed)
+    
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
         Error,
         MutationProps
     >({
-        mutationFn: ({ link, lang, formData }) => sendLink(link, lang, formData),
+        mutationFn: ({ link,  formData }) => sendLink(link,  formData),
         onSuccess: (data) => {
             queryClient.invalidateQueries({queryKey: ['allSaveds']})
             setUsedMinues(data?.usedMinutes!)
@@ -40,13 +39,13 @@ export default function Form() {
         e.preventDefault()
 
         if (!inputValue && formData) {
-            mutation.mutate({ link: null, lang: langForTranslate, formData })
+            mutation.mutate({ link: null, formData })
             setFileInputValue(null)
             setChanged(false)
             return
         }
 
-        mutation.mutate({ link: inputValue, lang: langForTranslate, formData: null })
+        mutation.mutate({ link: inputValue, formData: null })
         setInputValue('')
         setChanged(false)
     }
@@ -180,8 +179,6 @@ export default function Form() {
                     mutation={mutation}
                     inputValue={inputValue}
                     fileInputValue={fileInputValue}
-                    language={language}
-
                 />
             </section>
         </>

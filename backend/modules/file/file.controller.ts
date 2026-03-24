@@ -13,7 +13,6 @@ export class FileController {
             const ip = (req.headers['x-forwarded-for']?.toString().split(' ')[0] ||
                     req.socket.remoteAddress ||
                     'unknown').trim()
-            const lang = String(req.params.lang)
             const file = req.file
             const user = req.user
             if (!file) {
@@ -27,10 +26,6 @@ export class FileController {
             if (!fileText && !usedMinutes) return res.status(400).json({ error: 'Error al obtener transcripción' })
 
             await FileService.insertTranscription({ fileText, user, title: file.originalname, duration: formattedAudioDuration })
-            if (lang === 'not') {
-                console.log('usedMinutes', usedMinutes)
-                return res.status(200).json({ fileText, usedMinutes })
-            }
             
             
             return res.status(200).json({ fileText, usedMinutes})

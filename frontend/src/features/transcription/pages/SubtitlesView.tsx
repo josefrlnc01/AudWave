@@ -8,7 +8,7 @@ import TranscriptionSkeleton from '../components/TranscriptionSkeleton';
 gsap.registerPlugin(ScrollTrigger)
 
 
-export default function SubtitlesView({ mutation, inputValue, fileInputValue, language }: SubtitlesViewProps) {
+export default function SubtitlesView({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
     
     if (mutation.isError) {
         return (
@@ -30,7 +30,6 @@ export default function SubtitlesView({ mutation, inputValue, fileInputValue, la
                 mutation={mutation}
                 inputValue={inputValue}
                 fileInputValue={fileInputValue}
-                language={language}
             />
         )
     }
@@ -41,7 +40,6 @@ export default function SubtitlesView({ mutation, inputValue, fileInputValue, la
             mutation={mutation}
             inputValue={inputValue}
             fileInputValue={fileInputValue}
-            language={language}
         />
     )
 }
