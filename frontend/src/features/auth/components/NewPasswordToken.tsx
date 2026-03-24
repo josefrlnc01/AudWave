@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import type { TokenConfirmation } from "../types/auth.types"
 import { toast } from "react-toastify"
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/shared/components/ui/input-otp"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
 import { Link } from "react-router"
 import { validateToken } from "../api/authApi"
 

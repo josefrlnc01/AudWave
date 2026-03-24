@@ -7,17 +7,17 @@ import { Slot } from "radix-ui"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/shared/utils/cn"
-import { Button } from "./button"
-import { Input } from "./input"
-import { Separator } from "@/shared/components/ui/separator"
+import { Button } from "../../../components/ui/button"
+import { Input } from "../../../components/ui/input"
+import { Separator } from "@/components/ui/separator"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/shared/components/ui/sheet"
-import { Skeleton } from "@/shared/components/ui/skeleton"
+} from "@/components/ui/sheet"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
   TooltipContent,

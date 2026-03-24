@@ -3,9 +3,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { Navigate } from 'react-router'
 import { Outlet } from 'react-router'
-import { Spinner } from '@/shared/components/ui/spinner'
+import { Spinner } from '@/components/ui/spinner'
 import { SidebarProvider } from '@/shared/components/ui/sidebar'
-import { AppSidebar } from '@/shared/components/AppSidebar'
+import { AppSidebar } from '@/components/AppSidebar'
 
 
 export default function AppLayout({ children }: { children?: React.ReactNode }) {
