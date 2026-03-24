@@ -111,8 +111,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue, la
     }
 
 
-    console.log('translation', translation)
-
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
 
