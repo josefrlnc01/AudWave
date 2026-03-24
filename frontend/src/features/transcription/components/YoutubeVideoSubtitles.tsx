@@ -9,20 +9,9 @@ import type { Translated } from '../types/translared.types'
 import { languages } from '../stores/languages'
 import { Spinner } from '@/components/ui/spinner'
 import { useDocumentAction } from '../hooks/useDocumentAction'
+import { container, item } from '../stores/motion'
 
-const container = {
-    hidden: {},
-    show: {
-        transition: {
-            staggerChildren: 0.30
-        }
-    }
-}
 
-const item = {
-    hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0 }
-}
 
 export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue}: SubtitlesViewProps) {
     const [lang, setLang] = useState('')
@@ -32,7 +21,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const {generatePdf, generateSrt} = useDocumentAction()
     
 
-    const generateTranslation = useMutation({
+    const generateYoutubeTranslation = useMutation({
         mutationFn: translateYoutubeText,
         onSuccess: (data) => {
             setTranslation(data)
@@ -85,7 +74,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             lang,
             youtubeVideoText
         }
-        generateTranslation.mutate(formData)
+        generateYoutubeTranslation.mutate(formData)
         setIsTranslating(true)
     }
 

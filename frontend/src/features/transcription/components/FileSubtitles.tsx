@@ -9,19 +9,7 @@ import { translateText } from '@/features/translation/translationApi'
 import type { Translated } from '../types/translared.types'
 import { languages } from '../stores/languages'
 import { useDocumentAction } from '../hooks/useDocumentAction'
-const container = {
-    hidden: {},
-    show: {
-        transition: { staggerChildren: 0.30 }
-    }
-}
-
-const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-}
-
-
+import { container, item } from '../stores/motion'
 
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
