@@ -45,7 +45,7 @@ export class YoutubeVideoController {
             }
             const { youtubeVideoText, usedMinutes, title, audioDuration } = data
             const savedYoutubeFile = await YoutubeVideoService.insertTranscription({ youtubeVideoText, user, title, duration: audioDuration})
-            console.log('youtube file saved', )
+            console.log('youtube file saved', savedYoutubeFile )
             return res.json({ youtubeVideoText: savedYoutubeFile, usedMinutes, user })
         } catch (err) {
             console.error('Error processing video:', err)

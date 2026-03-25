@@ -22,11 +22,10 @@ import { useEditFile } from '../hooks/useEditFIle'
 export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
     const [lang, setLang] = useState('')
     const [selectedLang, setSelectedLang] = useState(false)
-    const [isTranslating, setIsTranslating] = useState(false)
+  
     const { generatePdf, generateSrt } = useDocumentAction()
-    const { youtubeTranslation, generateYoutubeTranslation } = useTranslate()
+    const { youtubeTranslation, generateYoutubeTranslation, isTranslating, setIsTranslating } = useTranslate()
     const {summary,  handleGenerateIaSummary, isLoading} = useSummary()
-    const {translation} = useTranslate()
     const {setIsOpen} = useEditFile()
  
     if (mutation.isError) {
@@ -76,7 +75,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         setIsTranslating(true)
     }
 
-    console.log(youtubeVideoText.fileId)
+    console.log('is translating', isTranslating)
 
 
     return (
@@ -98,7 +97,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             >
                                 <option defaultValue={''} disabled>Traducir a...</option>
                                 {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                                    <option key={lang.value}>{lang.label}</option>
+                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
                                 ))}
                                 {user.suscription === 'free' && freeUserLanguages.map(lang => (
                                     <option key={lang.value} value={lang.value}>{lang.label}</option>

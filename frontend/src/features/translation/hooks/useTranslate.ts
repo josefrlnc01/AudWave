@@ -33,5 +33,5 @@ export const useTranslate = () => {
     })
 
 
-    return {translation, isTranslating, generateFileTranslation, youtubeTranslation, generateYoutubeTranslation, selectedLang, setSelectedLang, lang, setLang}
+    return {translation, isTranslating, setIsTranslating, generateFileTranslation, youtubeTranslation, generateYoutubeTranslation, selectedLang, setSelectedLang, lang, setLang}
 }

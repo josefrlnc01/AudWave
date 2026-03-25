@@ -22,12 +22,12 @@ import { useNavigate } from 'react-router'
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
     const navigate = useNavigate()
-    const { isLoading, summary, handleGenerateIaSummary } = useSummary()
-
+    const {  summary, handleGenerateIaSummary } = useSummary()
+    const {isLoading} = useSummary()
     const { setIsOpen } = useEditFile()
     const { generatePdf, generateSrt } = useDocumentAction()
-    const { translation, isTranslating, generateFileTranslation, selectedLang, setSelectedLang, lang, setLang } = useTranslate()
-
+    const { translation, isTranslating, setIsTranslating, generateFileTranslation, selectedLang, setSelectedLang, lang, setLang } = useTranslate()
+    console.log('is translating', isTranslating)
     console.log(open)
 
     if (mutation.isError) {
@@ -81,12 +81,15 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
 
     const handleTranslate = () => {
+        console.log('iniciando traducción')
+        console.log('lang', lang)
+        console.log('segments', fileText.segments)
         const formData = {
             lang,
             fileText: fileText.segments
         }
         generateFileTranslation.mutate(formData)
-
+        setIsTranslating(true)
     }
 
 
@@ -109,7 +112,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                             >
                                 <option defaultValue={''} disabled>Traducir a...</option>
                                 {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                                    <option key={lang.value}>{lang.label}</option>
+                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
                                 ))}
                                 {user.suscription === 'free' && freeUserLanguages.map(lang => (
                                     <option key={lang.value} value={lang.value}>{lang.label}</option>
