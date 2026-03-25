@@ -6,10 +6,11 @@ import { useSummary } from '../hooks/useSummary'
 export type SummaryProps = {
     summary: string,
     isLoading: boolean,
-    handleGenerateIaSummary: () => Promise<void>
+    handleGenerateIaSummary: (id:string) => Promise<void>,
+    id: string
 }
 
-export default function SummarySection({ summary, isLoading, handleGenerateIaSummary }: SummaryProps) {
+export default function SummarySection({ summary, isLoading, handleGenerateIaSummary, id }: SummaryProps) {
     console.log(isLoading)
 
     return (
@@ -28,7 +29,7 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
 
             <div className='flex-1 p-5 flex flex-col gap-4 overflow-y-scroll max-h-4/5'>
                 <button
-                    onClick={handleGenerateIaSummary}
+                    onClick={() => handleGenerateIaSummary(id)}
                     disabled={isLoading}
                     className='w-full py-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition-colors cursor-pointer'
                 >

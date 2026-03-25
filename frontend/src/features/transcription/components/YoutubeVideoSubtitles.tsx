@@ -44,7 +44,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         inputValue={inputValue}
         fileInputValue={fileInputValue}
     />
-
+    console.log(mutation.data)
     const youtubeVideoText = mutation.data.youtubeVideoText
     const user = mutation.data.user
     const handleGenerateTranscriptionPdf = (subtitles: string) => {
@@ -76,7 +76,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         setIsTranslating(true)
     }
 
-
+    console.log(youtubeVideoText.fileId)
 
 
     return (
@@ -182,7 +182,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                         </motion.div>
                     </div>
 
-                    {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={handleGenerateIaSummary} />}
+                    {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={handleGenerateIaSummary} id={youtubeVideoText.fileId} />}
                 </div>
             </aside>
         </section>

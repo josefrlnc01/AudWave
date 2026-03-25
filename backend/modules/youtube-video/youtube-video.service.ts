@@ -23,20 +23,17 @@ export class YoutubeVideoService {
                 user: user._id,
                 title: title
             })
-            if (videoExists) {
-                return null
-            }
 
             const id = uuidv4()
             //Guardado
-            await VideoStored.create({
+            const savedYoutubeFile = await VideoStored.create({
                 title: title,
                 fileId: id,
                 segments: youtubeVideoText,
                 duration: duration,
                 user: user._id
             })
-
+            return savedYoutubeFile
         } catch (error: any) {
             console.error(error)
             if (error instanceof AppError) throw error

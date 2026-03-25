@@ -24,8 +24,9 @@ import { useEditFile } from '../hooks/useEditFIle'
 export default function SavedsView() {
     const {isOpen, setIsOpen} = useEditFile()
     const [isReadySummary, setIsReadySummary] = useState(false)
-    const { id } = useSummary()
-    
+    const params = useParams()
+    const id = params.id
+        console.log(id)
     const { data, error } = useQuery({
         queryKey: ['saveds', id],
         queryFn: () => getSaved(id!),
@@ -51,7 +52,7 @@ export default function SavedsView() {
                 {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} title={data[0].title} />}
                 <Header />
                 <section className='w-full min-h-screen flex flex-col items-center justify-center py-12 md:py-20'>
-                    <SavedFile data={data.file} setIsOpen={setIsOpen} user={data.user}/>
+                    <SavedFile data={data.file} setIsOpen={setIsOpen} user={data.user} id={id!}/>
                 </section>
                 <Footer />
             </>

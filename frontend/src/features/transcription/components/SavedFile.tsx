@@ -33,15 +33,15 @@ type SavedFileProps = {
     data: SavedFile[]
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
     user: User
-
+    id:string
 }
 
 
-export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
+export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps) {
     console.log(user)
     const navigate = useNavigate()
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
-    const { translation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
+    const { translation, youtubeTranslation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
     const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {
@@ -85,6 +85,8 @@ export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
         }
     }
 
+    console.log(translation)
+
     const formattedFileText = data[0].segments.map(s => `${formatTime(Number(s.start.toFixed(2)))}:${formatTime(Number(s.end.toFixed(2)))} ${s.text}`).join('\n')
 
     return (
@@ -104,10 +106,7 @@ export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
                         >
 
                             {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                                <>
                                     <option key={lang.value} defaultValue={'Traducir a...'} value={lang.value}>{lang.label}</option>
-                                </>
-
                             ))}
                             {user.suscription === 'free' && freeUserLanguages.map(lang => (
                                 <option key={lang.value} value={lang.value}>{lang.label}</option>
@@ -177,7 +176,7 @@ export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
                         variants={container}
                         initial='hidden'
                         animate='show'>
-                        {translation.length === 0 && data[0].segments.map((s, i) => (
+                        {(translation.length === 0 && youtubeTranslation.length === 0) && data[0].segments.map((s, i) => (
                             <motion.p
                                 key={i}
                                 whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
@@ -197,10 +196,20 @@ export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                             </motion.p>
                         ))}
+                        {youtubeTranslation.length > 0 && youtubeTranslation.map((s, i) => (
+                            <motion.p
+                                key={i}
+                                whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                transition={{ duration: 0.15 }}
+                                variants={item}
+                                className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
+                            </motion.p>
+                        ))}
                     </motion.div>
                 </div>
 
-                {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={handleGenerateIaSummary} />}
+                {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={() => handleGenerateIaSummary(id)} id={id} />}
             </div>
         </aside>
     )

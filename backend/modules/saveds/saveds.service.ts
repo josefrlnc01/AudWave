@@ -54,7 +54,8 @@ export class SavedsService {
             const file = await FileModel.find({
                 fileId: id
             })
-            if (!file) {
+            if (file.length === 0) {
+                console.log('yt file')
                 const youtubeFile = await YoutubeVideo.find({
                     fileId: id
                 })
@@ -63,6 +64,7 @@ export class SavedsService {
 
             return file
         } catch (error) {
+            console.error(error)
             if (error instanceof AppError) throw error
             throw new Error('Hubo un error al obtener el documento')
         }

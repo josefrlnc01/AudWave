@@ -193,7 +193,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                         </motion.div>
                     </div>
 
-                    {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={handleGenerateIaSummary} />}
+                    {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={handleGenerateIaSummary} id={fileText.fileId} />}
                 </div>
             </aside>
         </section>

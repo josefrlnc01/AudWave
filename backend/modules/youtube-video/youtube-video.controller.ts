@@ -44,9 +44,9 @@ export class YoutubeVideoController {
                 return res.status(400).json({ error: error.message })
             }
             const { youtubeVideoText, usedMinutes, title, audioDuration } = data
-            await YoutubeVideoService.insertTranscription({ youtubeVideoText, user, title, duration: audioDuration})
-            
-            return res.json({ youtubeVideoText, usedMinutes })
+            const savedYoutubeFile = await YoutubeVideoService.insertTranscription({ youtubeVideoText, user, title, duration: audioDuration})
+            console.log('youtube file saved', )
+            return res.json({ youtubeVideoText: savedYoutubeFile, usedMinutes, user })
         } catch (err) {
             console.error('Error processing video:', err)
             return res.status(500).json({ error: 'Failed to process video' })
