@@ -11,6 +11,7 @@ import SummarySection from './SummarySection'
 import { useTranslate } from '@/features/translation/hooks/useTranslate'
 import { Spinner } from '@/components/ui/spinner'
 import { freeUserLanguages, languages } from '../stores/languages'
+import flecha from './../../../assets/apunta-hacia-abajo.webp'
 import type { User } from '../types/user.types'
 
 export type SavedFile = {
@@ -89,16 +90,17 @@ export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
     return (
         <aside className='w-full md:w-3/4 lg:w-2/4 h-96 min-h-96 max-h-96 md:h-3/4 md:max-h-3/4 flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
-            <header className='flex justify-between items-center w-full px-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
+            <header className='flex justify-between items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
                 <div className='grow-0 flex items-center gap-4'>
                     <h2 className='text-sm font-semibold text-gray-100 truncate max-w-xs'>
                         {data[0].title}
                         <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                     </h2>
                     <div className="flex items-center justify-center gap-2">
-                        <select
+                        <div className='relative'>
+                            <select
                             onChange={handleSelect}
-                            className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                            className="bg-slate-800 text-slate-300 text-sm appearance-none px-3 py-1.5 pr-3 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
                         >
 
                             {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
@@ -110,7 +112,12 @@ export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
                             {user.suscription === 'free' && freeUserLanguages.map(lang => (
                                 <option key={lang.value} value={lang.value}>{lang.label}</option>
                             ))}
+                            
                         </select>
+                        <img className='w-4 pointer-events-none absolute right-3 top-1/2 -translate-y-1/2' src={flecha}/>
+                            
+                        </div>
+                        
 
                         <button
                             onClick={handleTranslate}
