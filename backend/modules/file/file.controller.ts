@@ -28,7 +28,7 @@ export class FileController {
             await FileService.insertTranscription({ fileText, user, title: file.originalname, duration: formattedAudioDuration })
             
             
-            return res.status(200).json({ fileText, usedMinutes})
+            return res.status(200).json({ fileText, usedMinutes, user})
         } catch (error) {
             if (error instanceof AppError) {
                 return res.status(error.statusCode).json({error: error.message})

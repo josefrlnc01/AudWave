@@ -6,7 +6,7 @@ import { motion } from 'motion/react'
 import { useState } from 'react'
 import { translateYoutubeText } from '@/features/translation/translationApi'
 import type { Translated } from '../types/translared.types'
-import { languages } from '../stores/languages'
+import { freeUserLanguages, languages } from '../stores/languages'
 import { Spinner } from '@/components/ui/spinner'
 import { useDocumentAction } from '../hooks/useDocumentAction'
 import { container, item } from '../stores/motion'
@@ -15,13 +15,13 @@ import { formatTime } from '@/shared/utils/minutes'
 
 
 
-export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue}: SubtitlesViewProps) {
+export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
     const [lang, setLang] = useState('')
     const [selectedLang, setSelectedLang] = useState(false)
     const [isTranslating, setIsTranslating] = useState(false)
-    const {generatePdf, generateSrt} = useDocumentAction()
-    const {youtubeTranslation, generateYoutubeTranslation} = useTranslate()
-    
+    const { generatePdf, generateSrt } = useDocumentAction()
+    const { youtubeTranslation, generateYoutubeTranslation } = useTranslate()
+
 
 
     if (mutation.isError) {
@@ -41,7 +41,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     />
 
     const youtubeVideoText = mutation.data.youtubeVideoText
-
+    const user = mutation.data.user
     const handleGenerateTranscriptionPdf = (subtitles: string) => {
         generatePdf.mutate(subtitles)
     }
@@ -87,7 +87,10 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                 className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
                             >
                                 <option defaultValue={''} disabled>Traducir a...</option>
-                                {languages.map(lang => (
+                                {user.suscription === 'business' && languages.map(lang => (
+                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                ))}
+                                {(user.suscription === 'free' || user.suscription === 'pro') && freeUserLanguages.map(lang => (
                                     <option key={lang.value} value={lang.value}>{lang.label}</option>
                                 ))}
                             </select>

@@ -10,7 +10,7 @@ import { useSummary } from '../hooks/useSummary'
 import SummarySection from './SummarySection'
 import { useTranslate } from '@/features/translation/hooks/useTranslate'
 import { Spinner } from '@/components/ui/spinner'
-import { languages } from '../stores/languages'
+import { freeUserLanguages, languages } from '../stores/languages'
 
 type SavedFile = {
     duration: string
@@ -29,11 +29,19 @@ type SavedFile = {
 
 type SavedFileProps = {
     data: SavedFile[]
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    user: {
+        _id: () => string,
+        suscription: string,
+        name: string,
+        email: string
+    }
+
 }
 
 
-export default function SavedFile({ data, setIsOpen }: SavedFileProps) {
+export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
+    console.log(user)
     const navigate = useNavigate()
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
     const { translation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
@@ -59,7 +67,7 @@ export default function SavedFile({ data, setIsOpen }: SavedFileProps) {
         generateSrt.mutate(segments)
     }
 
-     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedLang(true)
         setLang(e.target.value)
     }
@@ -67,19 +75,19 @@ export default function SavedFile({ data, setIsOpen }: SavedFileProps) {
     const handleTranslate = () => {
         if (data[0].origin === 'file') {
             const formData = {
-            lang,
-            fileText: data[0].segments
-        }
-        generateFileTranslation.mutate(formData)
+                lang,
+                fileText: data[0].segments
+            }
+            generateFileTranslation.mutate(formData)
         } else {
             const formData = {
-            lang,
-            youtubeVideoText: data[0].segments
-        }
-        generateYoutubeTranslation.mutate(formData)
+                lang,
+                youtubeVideoText: data[0].segments
+            }
+            generateYoutubeTranslation.mutate(formData)
         }
     }
-    
+
     const formattedFileText = data[0].segments.map(s => `${formatTime(Number(s.start.toFixed(2)))}:${formatTime(Number(s.end.toFixed(2)))} ${s.text}`).join('\n')
 
     return (
@@ -96,7 +104,10 @@ export default function SavedFile({ data, setIsOpen }: SavedFileProps) {
                         className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
                     >
                         <option defaultValue={''} disabled>Traducir a...</option>
-                        {languages.map(lang => (
+                        {user.suscription === 'business' && languages.map(lang => (
+                            <option key={lang.value} value={lang.value}>{lang.label}</option>
+                        ))}
+                        {(user.suscription === 'free' || user.suscription === 'pro' )&& freeUserLanguages.map(lang => (
                             <option key={lang.value} value={lang.value}>{lang.label}</option>
                         ))}
                     </select>
@@ -181,7 +192,7 @@ export default function SavedFile({ data, setIsOpen }: SavedFileProps) {
                     </motion.div>
                 </div>
 
-                <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={handleGenerateIaSummary} />
+                {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={handleGenerateIaSummary} />}
             </div>
         </aside>
     )

@@ -50,7 +50,7 @@ export default function SavedsView() {
                 {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} title={data[0].title} />}
                 <Header />
                 <section className='w-full min-h-screen flex flex-col items-center justify-center py-12 md:py-20'>
-                    <SavedFile data={data} setIsOpen={setIsOpen}/>
+                    <SavedFile data={data.file} setIsOpen={setIsOpen} user={data.user}/>
                 </section>
                 <Footer />
             </>

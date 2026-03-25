@@ -16,3 +16,11 @@ export const languages = [
     { value: 'tr', label: 'Turco' },
     { value: 'id', label: 'Indonesio' },
 ]
+
+export const freeUserLanguages = [
+    { value: 'en', label: 'Inglés' },
+    { value: 'es', label: 'Español' },
+    { value: 'fr', label: 'Francés' },
+    { value: 'de', label: 'Alemán' },
+    { value: 'it', label: 'Italiano' },
+]

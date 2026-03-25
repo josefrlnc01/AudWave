@@ -7,7 +7,7 @@ import { motion } from 'motion/react'
 import { useState } from 'react'
 import { translateText } from '@/features/translation/translationApi'
 import type { Translated } from '../types/translared.types'
-import { languages } from '../stores/languages'
+import { freeUserLanguages, languages } from '../stores/languages'
 import { useDocumentAction } from '../hooks/useDocumentAction'
 import { container, item } from '../stores/motion'
 import { generateIaSummary } from '../api/savedsApi'
@@ -52,6 +52,8 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
         inputValue={inputValue}
         fileInputValue={fileInputValue} />
     const fileText = mutation.data.fileText
+    const user = mutation.data.user
+    
 
 
     const handleGenerateTranscriptionPdf = (text: string) => {
@@ -97,7 +99,10 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                                 className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
                             >
                                 <option defaultValue={''} disabled>Traducir a...</option>
-                                {languages.map(lang => (
+                                {user.suscription === 'business' && languages.map(lang => (
+                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                ))}
+                                {(user.suscription === 'free' || user.suscription === 'pro') && freeUserLanguages.map(lang => (
                                     <option key={lang.value} value={lang.value}>{lang.label}</option>
                                 ))}
                             </select>

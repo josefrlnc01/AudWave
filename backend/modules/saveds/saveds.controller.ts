@@ -29,8 +29,10 @@ export class SavedsController {
     static getSavedById = async (req: Request, res: Response) => {
         try {
             const { id } = req.params as { id: string }
+            const user = req.user
+            console.log('user', user)
             const file = await SavedsService.getFile(id)
-            return res.status(200).json(file)
+            return res.status(200).json({file, user})
         } catch (error) {
             console.error(error)
             if (error instanceof AppError) {
