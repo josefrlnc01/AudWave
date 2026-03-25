@@ -26,7 +26,7 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
                 </div>
             </div>
 
-            <div className='flex-1 p-5 flex flex-col gap-4'>
+            <div className='flex-1 p-5 flex flex-col gap-4 overflow-y-scroll max-h-4/5'>
                 <button
                     onClick={handleGenerateIaSummary}
                     disabled={isLoading}
