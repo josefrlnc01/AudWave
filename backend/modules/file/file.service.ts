@@ -78,8 +78,16 @@ export class FileService {
                 user: user._id, ip
             })
 
-            if (quota?.usedMinutes! > 6) {
+            if (user.suscription === 'free' && quota?.usedMinutes! > 6) {
                 throw new AppError('No dispones de minutos de transcripción gratuita suficientes', 429)
+            }
+
+            if (user.suscription === 'pro' && quota?.usedMinutes! > 180) {
+                throw new AppError('No dispones de más minutos de transcripción', 429)
+            }
+
+            if (user.suscription === 'business' && quota?.usedMinutes! > 600) {
+                throw new AppError('No dispones de más minutos de transcripción', 429)
             }
             const fileText = await transcribeWhisperAudio(finalFilePath)
 
