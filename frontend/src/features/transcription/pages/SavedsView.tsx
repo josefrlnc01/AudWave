@@ -2,12 +2,12 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { generateIaSummary, getSaved } from '../api/savedsApi'
 import { toast } from 'react-toastify'
-import { Link, useParams } from 'react-router'
+import { Link, useNavigate, useParams } from 'react-router'
 import Header from '../components/Header'
 import { formatTime } from '@/shared/utils/minutes'
 import Footer from '../components/Footer'
 import { generatePDF, generateSRT } from '@/features/document/api/documentApi'
-import { DropdownMenuBasic } from '@/components/ui/DropdownMenuBasic'
+import { DropdownMenuBasic } from '@/components/DropdownMenuBasic'
 import EditFileDialog from '../components/EditFileDialog'
 import { motion } from 'motion/react'
 import Summary from '../components/SummarySection'
@@ -15,21 +15,22 @@ import SummarySection from '../components/SummarySection'
 import { isAxiosError } from 'axios'
 import { tokenStore } from '@/lib/token.store'
 import { useSummary } from '../hooks/useSummary'
+import { container, item } from '../stores/motion'
 
 
 
 export default function SavedsView() {
     const [isOpen, setIsOpen] = useState(false)
     const [isReadySummary, setIsReadySummary] = useState(false)
-    const {summary, isLoading, handleGenerateIaSummary, id} = useSummary()
-    
+    const { summary, isLoading, id, handleGenerateIaSummary } = useSummary()
+    const navigate = useNavigate()
     const { data, error } = useQuery({
         queryKey: ['saveds', id],
         queryFn: () => getSaved(id!),
         enabled: !!id
     })
 
-    
+
 
 
     const generatePdf = useMutation({
@@ -54,10 +55,6 @@ export default function SavedsView() {
         generateSrt.mutate(segments)
     }
 
-    
-    
-   
-
 
 
 
@@ -75,59 +72,80 @@ export default function SavedsView() {
         }).join('\n')
         return (
             <>
-                {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} />}
+                {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} title={data[0].title} />}
                 <Header />
                 <section className='w-full min-h-screen flex flex-col items-center justify-center py-12 md:py-20'>
-                    <motion.aside
-                        initial={{ opacity: 0, scale: 0.97 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3, ease: 'easeOut' }}
-                        className='w-[90%] md:w-2/3 lg:w-1/2 mx-auto flex flex-col rounded-2xl bg-[#ffffff08] shadow-2xl'>
-                        <header className='flex justify-between items-center w-full rounded-tl-xl rounded-tr-xl px-5 py-4 bg-linear-to-r from-slate-800/80 to-slate-700/40 border-b border-slate-700/50'>
-                            <h2 className='text-xl font-bold tracking-tight text-gray-100 leading-tight'>
-                                {data[0].title}<span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
-                            </h2>
-                            <div className='flex justify-center items-center gap-4'>
+                    <aside className='w-full md:w-3/4 lg:w-2/4 flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
-                                <DropdownMenuBasic id={data[0].fileId} setIsOpen={setIsOpen} />
-                                <Link className='bg-red-500 pt-2 pb-2 pl-4 pr-4 rounded-xl hover:bg-red-500/80 transition-colors ease duration-200 ' to={`/`}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                        {/* Header */}
+                        <header className='flex justify-between items-center w-full px-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
+                            <h2 className='text-sm font-semibold text-gray-100 truncate max-w-xs'>
+                                {data[0].title}
+                                <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
+                            </h2>
+                            <div className='flex items-center justify-center gap-2'>
+                                <button
+                                    onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}
+                                    className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2zM13 3v6h6" />
                                     </svg>
-                                </Link>
+                                    PDF
+                                </button>
+                                <button
+                                    onClick={() => handleGenerateTranscriptionSrt(data[0].segments)}
+                                    className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    SRT
+                                </button>
+                                
+                                    <DropdownMenuBasic id={data[0].fileId} setIsOpen={setIsOpen} />
+
+                                <button onClick={() => navigate('/')} className='p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors cursor-pointer'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </header>
+
+                        {/* Body - dos columnas */}
+                        <div className='flex flex-col lg:flex-row flex-1 min-h-0'>
+
+                            {/* columna izquierda - transcripción */}
+                            <div className='flex flex-col flex-1 border-r border-slate-700/50'>
+                                <div className='px-5 py-3 border-b border-slate-700/30'>
+                                    <h3 className='text-xs font-semibold text-slate-400 uppercase tracking-widest'>Transcripción</h3>
+                                </div>
+                                <motion.div
+                                    className='flex-1 overflow-y-auto p-5 space-y-1 max-h-96'
+                                    variants={container}
+                                    initial='hidden'
+                                    animate='show'
+                                >
+                                    {data[0].segments.map((s: { start: number, end: number, text: string }) => (
+                                        <motion.p
+                                            key={s.start}
+                                            variants={item}
+                                            whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                            transition={{ duration: 0.15 }}
+                                            className='text-sm text-gray-200 leading-relaxed rounded-md px-2 py-1'
+                                        >
+                                            <span className='text-[#0d59f2] text-xs mr-2 font-mono'>[{s.start.toFixed(2)}:{s.end.toFixed(2)}]</span>
+                                            {s.text}
+                                        </motion.p>
+                                    ))}
+                                </motion.div>
                             </div>
 
-                        </header>
-                        <motion.div
-                            className='grow bg-slate-800/40 p-8'>
-                            {data[0].segments.map((s: { start: number, end: number, text: string }) => (
-                                <motion.p
-                                    whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
-                                    transition={{ duration: 0.15 }}
-                                    key={s.start}
-                                    className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                    <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.end.toFixed()))}</span> {s.text}
-                                </motion.p>
-                            ))}
-                        </motion.div>
-                        <div className='w-full min-w-full flex justify-between gap-2 bg-[#101622] rounded-b-2xl p-3'>
-                            <button
-                                onClick={() => handleGenerateTranscriptionPdf(formattedFileText)}
-                                className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                                type='button'>PDF</button>
-                            <button
-                                onClick={() => handleGenerateTranscriptionSrt(data[0].segments)}
-                                className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                                type='button'>SRT</button>
-                                <button
-                                onClick={handleGenerateIaSummary}
-                                className='p-3 pl-4 pr-4 grow bg-blue-700 text-white font-bold rounded-md hover:bg-blue-900 transition-colors cursor-pointer'
-                                type='button'>Resumen</button>
+                            <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={handleGenerateIaSummary} />
                         </div>
-
-                    </motion.aside>
-                    {<SummarySection summary={summary} isLoading={isLoading}/>}
+                    </aside>
                 </section>
                 <Footer />
             </>

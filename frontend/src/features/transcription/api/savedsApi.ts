@@ -65,15 +65,15 @@ export async function deleteSaved(id: string) {
 type EditTitleProps = {
 
     id: string,
-    title: string
+    newTitle: string
 
 }
 
-export async function editTitle({ id, title }: EditTitleProps) {
+export async function editTitle({ id, newTitle }: EditTitleProps) {
     const accessToken = tokenStore.get()
     try {
 
-        const { data } = await axios.patch(`${urlBackend}/saveds/${id}`, { title }, {
+        const { data } = await axios.patch(`${urlBackend}/saveds/${id}`, { newTitle }, {
             withCredentials: true,
             headers: {
                 "Authorization": `Bearer ${accessToken}`

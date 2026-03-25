@@ -93,7 +93,7 @@ export class SavedsService {
     }
 
 
-    static edit = async (title: string, id: string) => {
+    static edit = async (newTitle: string, id: string) => {
         try {
             const file = await FileModel.findOne({
                 fileId: id
@@ -106,11 +106,11 @@ export class SavedsService {
                     throw new AppError('Documento no encontrado', 404)
                 }
 
-                youtubeFile.title = title
+                youtubeFile.title = newTitle
                 await youtubeFile?.save()
 
             } else {
-                file.title = title
+                file.title = newTitle
                 await file.save()
             }
         } catch (error) {

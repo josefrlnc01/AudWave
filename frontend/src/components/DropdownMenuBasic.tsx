@@ -44,13 +44,13 @@ export function DropdownMenuBasic({ id,  setIsOpen }: DropdownProps) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button size="icon" className="bg-slate-800 text-gray-100 p-2 hover:bg-slate-700 transition-colors border-mone  cursor-pointer">
+                <Button size="icon" className="bg-slate-800 px-3 py-1.5 text-gray-100 hover:bg-slate-700 transition-colors border-mone  cursor-pointer">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
                         fill="currentColor"
                         // Corregido: w-10 (40px), sin comillas raras y clases válidas
-                        className="!w-10 !h-10 !p-2 text-gray-400"
+                        className="!w-5 !h-5 !p-1 text-gray-400"
                     >
                         <circle cx="5" cy="12" r="2.5"></circle>
                         <circle cx="12" cy="12" r="2.5"></circle>

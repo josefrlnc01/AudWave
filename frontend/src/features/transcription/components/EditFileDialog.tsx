@@ -15,9 +15,10 @@ import { toast } from 'react-toastify'
 type EditFileDialogProps = {
     isOpen: boolean,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    id: string
+    id: string,
+    title: string
 }
-export default function EditFileDialog({isOpen, setIsOpen, id}: EditFileDialogProps) {
+export default function EditFileDialog({isOpen, setIsOpen, id, title}: EditFileDialogProps) {
     const queryClient = useQueryClient()
     const editTitleFN = useMutation({
         mutationFn:editTitle,
@@ -29,15 +30,15 @@ export default function EditFileDialog({isOpen, setIsOpen, id}: EditFileDialogPr
             toast.error(error.message)
         }
     }) 
-    const [title, setTitle] = useState('')
+    const [newTitle, setNewTitle] = useState('')
     const handleTitle = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-        setTitle(e.target.value)
+        setNewTitle(e.target.value)
     }
 
     const handleEdit = () => {
         const formData = {
             id,
-            title
+            newTitle
         }
         editTitleFN.mutate(formData)
         setIsOpen(false)
@@ -52,12 +53,12 @@ export default function EditFileDialog({isOpen, setIsOpen, id}: EditFileDialogPr
         <DialogHeader>
             <DialogTitle>Nuevo título</DialogTitle>
             <DialogDescription>
-                <input onChange={handleTitle} type='text' className='w-full p-2'/>
+                <input onChange={handleTitle} type='text' value={title} className='w-full p-2'/>
             </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-            <button onClick={() => setIsOpen(false)}>Cancelar</button>
-            <button onClick={handleEdit}>Actualizar</button>
+            <button className='flex items-center gap-1.5 px-3 py-1.5 bg-red-600/90 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer' onClick={() => setIsOpen(false)}>Cancelar</button>
+            <button className='flex items-center gap-1.5 px-3 py-1.5 bg-blue-700/90 text-slate-300 hover:text-white hover:bg-blue-600 text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer' onClick={handleEdit}>Actualizar</button>
         </DialogFooter>
     </DialogContent>
 </Dialog>

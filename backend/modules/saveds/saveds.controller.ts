@@ -60,8 +60,8 @@ export class SavedsController {
     static editTitle = async (req: Request, res: Response) => {
         try {
             const { id } = req.params as { id: string }
-            const { title } = req.body
-            await SavedsService.edit(title, id)
+            const { newTitle } = req.body
+            await SavedsService.edit(newTitle, id)
 
             return res.status(200).send('Documento editado correctamente')
         } catch (error) {
