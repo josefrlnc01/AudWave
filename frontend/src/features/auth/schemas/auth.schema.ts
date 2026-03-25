@@ -10,7 +10,8 @@ export const userSchema = z.object({
 export const userReqSchema = z.object({
     user: z.object({
         name: z.string(),
-    email: z.string()
+    email: z.string(),
+    suscription:z.string()
     }),
     usedMinutes: z.number().optional()
 })

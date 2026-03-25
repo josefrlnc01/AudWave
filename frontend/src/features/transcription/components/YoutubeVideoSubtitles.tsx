@@ -87,10 +87,10 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                 className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
                             >
                                 <option defaultValue={''} disabled>Traducir a...</option>
-                                {user.suscription === 'business' && languages.map(lang => (
+                                {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
                                     <option key={lang.value} value={lang.value}>{lang.label}</option>
                                 ))}
-                                {(user.suscription === 'free' || user.suscription === 'pro') && freeUserLanguages.map(lang => (
+                                {user.suscription === 'free' && freeUserLanguages.map(lang => (
                                     <option key={lang.value} value={lang.value}>{lang.label}</option>
                                 ))}
                             </select>

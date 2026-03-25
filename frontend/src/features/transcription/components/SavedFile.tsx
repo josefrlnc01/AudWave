@@ -11,6 +11,7 @@ import SummarySection from './SummarySection'
 import { useTranslate } from '@/features/translation/hooks/useTranslate'
 import { Spinner } from '@/components/ui/spinner'
 import { freeUserLanguages, languages } from '../stores/languages'
+import type { User } from '../types/user.types'
 
 type SavedFile = {
     duration: string
@@ -30,12 +31,7 @@ type SavedFile = {
 type SavedFileProps = {
     data: SavedFile[]
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    user: {
-        _id: () => string,
-        suscription: string,
-        name: string,
-        email: string
-    }
+    user: User
 
 }
 
@@ -104,10 +100,10 @@ export default function SavedFile({ data, setIsOpen, user }: SavedFileProps) {
                         className="bg-slate-800 text-slate-300 text-sm px-3 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
                     >
                         <option defaultValue={''} disabled>Traducir a...</option>
-                        {user.suscription === 'business' && languages.map(lang => (
+                        {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
                             <option key={lang.value} value={lang.value}>{lang.label}</option>
                         ))}
-                        {(user.suscription === 'free' || user.suscription === 'pro' )&& freeUserLanguages.map(lang => (
+                        {user.suscription === 'free' && freeUserLanguages.map(lang => (
                             <option key={lang.value} value={lang.value}>{lang.label}</option>
                         ))}
                     </select>

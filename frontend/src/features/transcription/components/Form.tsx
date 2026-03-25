@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { minutesStore } from "@/shared/stores/minutes.store";
 import { formatMinutes } from "@/shared/utils/minutes";
+import type { User } from "../types/user.types";
+import { suscriptionStore } from "@/shared/stores/user-suscription.store";
+import { tokenStore } from "@/lib/token.store";
 
 export type MutationProps = {
     link: string | null
@@ -17,7 +20,7 @@ export default function Form() {
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
     const queryClient = useQueryClient()
-    
+    const [user, setUser] = useState<User>()
     console.log(inputValue)
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
@@ -28,8 +31,13 @@ export default function Form() {
         onSuccess: (data) => {
             queryClient.invalidateQueries({queryKey: ['allSaveds']})
             setUsedMinues(data?.usedMinutes!)
+            setUser(data?.user)
         }
     })
+
+   
+    const suscription = suscriptionStore.get()
+    
     
 
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -89,7 +97,7 @@ export default function Form() {
                         Sube un archivo de audio/vídeo o introduce un enlace de YouTube
                     </p>
                 </aside>
-                <div className="w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6">
+                {suscription === 'free' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6">
                     <div className="relative w-full bg-slate-800 rounded-full h-2">
                         <div
                             className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
@@ -107,7 +115,46 @@ export default function Form() {
                     <span className="text-slate-400 text-sm shrink-0">
                         <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 6 min usados
                     </span>
-                </div>
+                </div>}
+                {suscription === 'pro' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6">
+                    <div className="relative w-full bg-slate-800 rounded-full h-2">
+                        <div
+                            className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
+                            style={{ width: `${(usedMinutes! / 180) * 100}%` }}
+                        >
+                            <div
+                                className="shimmer absolute inset-y-0 h-full w-1/3"
+                                style={{
+                                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)',
+                                    left: 0
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <span className="text-slate-400 text-sm shrink-0">
+                        <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 3h usados
+                    </span>
+                </div>}
+                {suscription === 'pro' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6">
+                    <div className="relative w-full bg-slate-800 rounded-full h-2">
+                        <div
+                            className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
+                            style={{ width: `${(usedMinutes! / 600) * 100}%` }}
+                        >
+                            <div
+                                className="shimmer absolute inset-y-0 h-full w-1/3"
+                                style={{
+                                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)',
+                                    left: 0
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <span className="text-slate-400 text-sm shrink-0">
+                        <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 10h usados
+                    </span>
+                </div>}
+
                 <aside className="w-screen relative mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
 
                     <form className="w-full flex flex-col  p-2 gap-6">
