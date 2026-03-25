@@ -10,10 +10,10 @@ import { getVideoMinutes } from "../../shared/utils/video.js";
 import { formatMinutes, getAudioDuration } from "../../shared/utils/audio.js";
 import { IUser } from "../user/user.model.js";
 import Quota from "../quota/quota.schema.js";
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 type YoutubeInfo = {
-  title: string
+    title: string
 }
 export class YoutubeVideoService {
     static insertTranscription = async ({ youtubeVideoText, user, title, duration }: InsertTranscriptionProps) => {
@@ -159,10 +159,18 @@ export class YoutubeVideoService {
             user: user._id, ip
         })
 
-        if (quota?.usedMinutes! > 6) {
+        if (user.suscription === 'free' && quota?.usedMinutes! > 6) {
             throw new AppError('No dispones de minutos de transcripción gratuita suficientes', 429)
         }
-        const {title} = await this.downloadAudio(videoLink)
+
+        if (user.suscription === 'pro' && quota?.usedMinutes! > 180) {
+            throw new AppError('No dispones de más minutos de transcripción', 429)
+        }
+
+        if (user.suscription === 'business' && quota?.usedMinutes! > 600) {
+            throw new AppError('No dispones de más minutos de transcripción', 429)
+        }
+        const { title } = await this.downloadAudio(videoLink)
 
         const youtubeVideoText = await transcribeWhisperAudio(filepath)
         if (!youtubeVideoText) throw new Error('No se pudo transcribir el audio')
