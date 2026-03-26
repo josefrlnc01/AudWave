@@ -8,5 +8,7 @@ documentRoute.post('/create-pdf', authenticate, DocumentController.createPDF)
 documentRoute.post('/create-srt', authenticate, DocumentController.createSRT)
 documentRoute.post('/create-vtt', authenticate, DocumentController.createVTT)
 documentRoute.post('/create-txt', authenticate, DocumentController.createTXT)
-documentRoute.post('/create-docx', authenticate, DocumentController.createTXT)
+documentRoute.post('/create-json', authenticate, DocumentController.createJSON)
+documentRoute.post('/create-docx', authenticate, DocumentController.createDOCX)
+
 

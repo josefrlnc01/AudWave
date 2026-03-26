@@ -75,7 +75,7 @@ export class DocumentController {
             )
 
             res.setHeader("Content-Disposition",
-                "attachment, filename='archivo.docx'")
+                "attachment; filename='archivo.docx'")
 
             return res.status(201).send(buffer)
         } catch (error) {
@@ -84,6 +84,23 @@ export class DocumentController {
                 return res.status(error.statusCode).json({ error: error.message })
             }
             return res.status(500).json({ error: 'Hubo un error al crear el archivo DOCX' })
+        }
+    }
+
+
+    static createJSON = async (req: Request, res: Response) => {
+        try {
+            const {segments} = req.body
+            const json = await DocumentService.generateJson(segments)
+            res.setHeader("Content-Type", "application/json")
+            res.setHeader("Content-Disposition", 
+                "attachment; filename='archivo.json'")
+            return res.send(json)
+        } catch (error) {
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({error: error.message})
+            }
+            return res.status(500).json({error: 'Hubo un error al crear el archivo JSON'})
         }
     }
 

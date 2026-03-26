@@ -18,7 +18,7 @@ import type { MutationProps } from "@/features/transcription/components/Form"
 type DropdownProps = {
     id: string,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-    mutation: UseMutationResult<PromiseLink  | PromiseFile | undefined, Error, MutationProps, unknown>
+    mutation: UseMutationResult<PromiseLink  | PromiseFile | undefined, Error, MutationProps, unknown> | null
 }
 export function DropdownMenuBasic({ id,  setIsOpen, mutation }: DropdownProps) {
     const queryClient = useQueryClient()
@@ -27,7 +27,7 @@ export function DropdownMenuBasic({ id,  setIsOpen, mutation }: DropdownProps) {
         mutationFn: deleteSaved,
         onSuccess: (data) => {
             queryClient.invalidateQueries({queryKey: ['allSaveds']})
-            mutation.reset()
+            mutation?.reset()
             toast.success(data)
         },
         onError: (error) => {

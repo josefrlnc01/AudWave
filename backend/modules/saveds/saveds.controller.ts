@@ -33,7 +33,6 @@ export class SavedsController {
             console.log('user', user)
             console.log('id', id)
             const file = await SavedsService.getFile(id)
-            console.log('file', file)
             return res.status(200).json({file, user})
         } catch (error) {
             console.error(error)
@@ -82,7 +81,7 @@ export class SavedsController {
             const { id } = req.params as { id: string }
             const file = await SavedsService.getFile(id)
             console.log('id', id)
-            console.log('file', file)
+    
             const textSegments = file[0].segments.map(s => {
                 return {
                     text: s.text

@@ -43,7 +43,12 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     const navigate = useNavigate()
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
     const { translation, youtubeTranslation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
-    const { generatePdf, generateSrt, generateTxt, generateVtt, generateDocX } = useDocumentAction()
+    const { generatePdf,
+        generateSrt,
+        generateTxt,
+        generateVtt,
+        generateDocX,
+        generateJson } = useDocumentAction()
 
     const handleGenerateTranscriptionPdf = (text: string) => {
         generatePdf.mutate(text)
@@ -75,6 +80,14 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
             title: data[0].title
         }
         generateDocX.mutate(formData)
+    }
+
+    const handleGenerateTranscriptionJson = (segments: { start: number, end: number, text: string }[]) => {
+        const formData = {
+            segments,
+            title: data[0].title
+        }
+        generateJson.mutate(formData)
     }
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -160,7 +173,17 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                         DOCX
                     </button>
 
-                    <DropdownMenuBasic id={data[0].fileId} setIsOpen={setIsOpen} />
+                    <button
+                        onClick={() => handleGenerateTranscriptionJson(data[0].segments)}
+                        className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                    >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>
+                        JSON
+                    </button>
+
+                    <DropdownMenuBasic id={data[0].fileId} setIsOpen={setIsOpen} mutation={null} />
 
                     <button onClick={() => navigate('/')} className='p-1.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors cursor-pointer'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

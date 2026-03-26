@@ -77,4 +77,20 @@ export class DocumentService {
 
         return buffer
     }
+
+
+    static generateJson = async (segments:{start:number, end:number, text:string}[]) => {
+        const document = segments.map(s => {
+            const start = s.start
+            const end = s.end
+            return {
+                start,
+                end,
+                text: s.text
+            }
+        })
+
+        const jsonDocument = JSON.stringify(document, null, 2)
+        return jsonDocument
+    }
 }

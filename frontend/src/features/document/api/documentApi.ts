@@ -141,3 +141,30 @@ export async function generateDOCX({segments, title}: DocumentProps) {
     }
 }
 
+
+
+export async function generateJSON({segments, title}: DocumentProps) {
+    const accessToken = tokenStore.get()
+    try {
+        console.log('petición iniciada')
+        const {data} = await axios.post(`${baseUrl}/document/create-json`, {segments}, {
+            headers: {
+                "Authorization" : `Bearer ${accessToken}`
+            },
+            withCredentials: true,
+            responseType: 'blob'
+        })
+
+        const url = URL.createObjectURL(data)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${title.replace('.mp4', '')}.json`
+        a.click()
+    } catch (error) {
+        console.error(error)
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error)
+        }
+    }
+}
+
