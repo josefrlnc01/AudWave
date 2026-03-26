@@ -101,19 +101,19 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                             <div className='relative'>
                                 <select
                                     onChange={handleSelect}
-                                    className="bg-slate-800 text-slate-300 text-sm appearance-none px-3 py-1.5 pr-3 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                                    defaultValue=''
+                                    className="bg-slate-800 text-slate-300 text-sm text-start  px-3 py-1.5 pr-3 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
                                 >
-
+                                    <option value="" className='text-sm' disabled>Traducir a...</option>
                                     {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                                        <option key={lang.value} defaultValue={'Traducir a...'} value={lang.value}>{lang.label}</option>
+                                        <option key={lang.value} value={lang.value}>{lang.label}</option>
                                     ))}
                                     {user.suscription === 'free' && freeUserLanguages.map(lang => (
                                         <option key={lang.value} value={lang.value}>{lang.label}</option>
                                     ))}
 
                                 </select>
-                                <img className='w-4 pointer-events-none absolute right-3 top-1/2 -translate-y-1/2' src={flecha} />
-
+                                
                             </div>
 
 
