@@ -111,41 +111,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                         {data[0].title}
                         <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                     </h2>
-                    <div className="flex items-center justify-center gap-2">
-                        <div className='relative'>
-                            <select
-                                onChange={handleSelect}
-                                className="bg-slate-800 text-slate-300 text-sm appearance-none px-3 py-1.5 pr-3 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
-                            >
 
-                                {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                                    <option key={lang.value} defaultValue={'Traducir a...'} value={lang.value}>{lang.label}</option>
-                                ))}
-                                {user.suscription === 'free' && freeUserLanguages.map(lang => (
-                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
-                                ))}
-
-                            </select>
-                            <img className='w-4 pointer-events-none absolute right-3 top-1/2 -translate-y-1/2' src={flecha} />
-
-                        </div>
-
-
-                        <button
-                            onClick={handleTranslate}
-                            disabled={!selectedLang || isTranslating}
-                            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
-                        >
-                            {isTranslating ? (
-                                <>
-                                    <Spinner className="size-3" />
-                                    Traduciendo
-                                </>
-                            ) : (
-                                'Traducir'
-                            )}
-                        </button>
-                    </div>
                 </div>
                 <div className='flex items-center justify-center gap-2'>
                     <button
@@ -208,8 +174,43 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
             <div className='flex flex-col lg:flex-row flex-1 min-h-0'>
 
                 <div className='flex flex-col flex-1 border-r border-slate-700/50'>
-                    <div className='px-5 py-3 border-b border-slate-700/30'>
+                    <div className='px-5 py-3 border-b border-slate-700/30 flex items-center justify-between gap-4'>
                         <h3 className='text-xs font-semibold text-slate-400 uppercase tracking-widest'>Transcripción</h3>
+                        <div className="flex items-center justify-center gap-2">
+                            <div className='relative'>
+                                <select
+                                    onChange={handleSelect}
+                                    className="bg-slate-800 text-slate-300 text-sm appearance-none px-3 py-1.5 pr-3 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                                >
+
+                                    {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
+                                        <option key={lang.value} defaultValue={'Traducir a...'} value={lang.value}>{lang.label}</option>
+                                    ))}
+                                    {user.suscription === 'free' && freeUserLanguages.map(lang => (
+                                        <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                    ))}
+
+                                </select>
+                                <img className='w-4 pointer-events-none absolute right-3 top-1/2 -translate-y-1/2' src={flecha} />
+
+                            </div>
+
+
+                            <button
+                                onClick={handleTranslate}
+                                disabled={!selectedLang || isTranslating}
+                                className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                            >
+                                {isTranslating ? (
+                                    <>
+                                        <Spinner className="size-3" />
+                                        Traduciendo
+                                    </>
+                                ) : (
+                                    'Traducir'
+                                )}
+                            </button>
+                        </div>
                     </div>
                     <motion.div
                         className='grow bg-slate-800/40 p-8'
