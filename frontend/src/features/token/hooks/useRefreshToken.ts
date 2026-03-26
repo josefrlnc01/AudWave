@@ -8,7 +8,8 @@ export const useRefreshToken = () => {
     queryKey: ['refresh-token'],
     queryFn:getRefreshToken,
     retry:false,
-    refetchOnWindowFocus: false
+    refetchOnWindowFocus: false,
+    refetchOnMount:false
   })
 
   return {data, isError, isLoading}
