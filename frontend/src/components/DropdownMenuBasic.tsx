@@ -7,23 +7,27 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
 import { deleteSaved } from "@/features/transcription/api/savedsApi"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
 import { useState } from "react"
+import type { PromiseFile, PromiseLink } from "@/features/transcription/api/transcriptionApi"
+import type { MutationProps } from "@/features/transcription/components/Form"
 
 type DropdownProps = {
     id: string,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+    mutation: UseMutationResult<PromiseLink  | PromiseFile | undefined, Error, MutationProps, unknown>
 }
-export function DropdownMenuBasic({ id,  setIsOpen }: DropdownProps) {
+export function DropdownMenuBasic({ id,  setIsOpen, mutation }: DropdownProps) {
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const deleteFN = useMutation({
         mutationFn: deleteSaved,
         onSuccess: (data) => {
             queryClient.invalidateQueries({queryKey: ['allSaveds']})
+            mutation.reset()
             toast.success(data)
         },
         onError: (error) => {

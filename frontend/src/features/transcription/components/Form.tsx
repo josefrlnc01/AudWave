@@ -34,6 +34,7 @@ export default function Form() {
             setUser(data?.user)
         }
     })
+    
 
    
     const suscription = suscriptionStore.get()

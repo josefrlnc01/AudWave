@@ -178,7 +178,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                             DOCX
                         </button>
 
-                        <DropdownMenuBasic id={fileText.fileId} setIsOpen={setIsOpen} />
+                        <DropdownMenuBasic id={fileText.fileId} setIsOpen={setIsOpen} mutation={mutation} />
 
 
                     </div>

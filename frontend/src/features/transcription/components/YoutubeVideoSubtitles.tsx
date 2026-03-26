@@ -167,7 +167,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                     </button>
 
 
-                        <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} />
+                        <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={mutation} />
 
 
                     </div>
