@@ -11,8 +11,8 @@ export const useRefreshToken = () => {
     retry: false,
     refetchOnWindowFocus: false,
     enabled:isAuth,
-    staleTime: 1 * 60 * 1000,
-    refetchInterval:isAuth ?  1 * 60 * 1000 : false ,
+    staleTime: 9 * 60 * 1000,
+    refetchInterval:isAuth ?  9 * 60 * 1000 : false ,
     refetchIntervalInBackground: true,
   });
 
