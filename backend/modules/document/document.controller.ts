@@ -21,12 +21,13 @@ export class DocumentController {
     static createSRT = async (req: Request, res: Response) => {
         try {
             const {segments} = req.body
-
+            console.log('body', req.body)
             const srt = await DocumentService.generateSrt(segments)
             res.setHeader("Content-Type", "text/plain")
             res.setHeader("Content-Disposition", "attachment; filename='archivo.srt'")
             return res.status(201).send(srt)
         } catch (error) {
+            console.log(error)
             return res.status(500).json({error: 'Hubo un error al generar el SRT'})
         }
     }

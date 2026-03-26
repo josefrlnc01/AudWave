@@ -2,6 +2,7 @@ import { getUser } from "@/features/auth/api/authApi";
 import { useQuery } from "@tanstack/react-query";
 import { useRefreshToken } from "@/features/token/hooks/useRefreshToken";
 import { tokenStore } from "@/lib/token.store";
+import { useEffect } from "react";
 
 export const useAuth = () => {
     const {
@@ -9,9 +10,11 @@ export const useAuth = () => {
         isLoading: isRefreshLoading,
         isError: isRefreshError,
     } = useRefreshToken();
-    if (accessToken) {
-        tokenStore.set(accessToken)
-    }
+    useEffect(() => {
+        if (accessToken) {
+            tokenStore.set(accessToken)
+        }
+    }, [accessToken])
     const { data, isError, isLoading } = useQuery({
         queryFn: () => getUser(accessToken!),
         queryKey: ["user", accessToken],

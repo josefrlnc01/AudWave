@@ -1,6 +1,17 @@
 import { tokenStore } from "@/lib/token.store";
 import axios, { isAxiosError } from "axios";
 const baseUrl = import.meta.env.VITE_API_URL
+
+type DocumentProps = {
+    segments: {
+        start: number,
+        end: number,
+        text: string
+    }[],
+    title: string
+}
+
+
 export async function generatePDF(text: string) {
     const accessToken = tokenStore.get()
     try {
@@ -27,7 +38,7 @@ export async function generatePDF(text: string) {
 }
 
 
-export async function generateSRT(segments: { start: number, end: number, text: string }[]) {
+export async function generateSRT({segments, title}: DocumentProps) {
     const accessToken = tokenStore.get()
     try {
         const { data } = await axios.post(`${baseUrl}/document/create-srt`, { segments }, {
@@ -44,21 +55,13 @@ export async function generateSRT(segments: { start: number, end: number, text: 
         const url = URL.createObjectURL(data)
         const a = document.createElement('a')
         a.href = url
-        a.download = 'transcripción.srt'
+        a.download = `${title.replace('.mp4', '')}.srt`
         a.click()
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error)
         }
     }
-}
-type DocumentProps = {
-    segments: {
-        start: number,
-        end: number,
-        text: string
-    }[],
-    title: string
 }
 
 export async function generateVTT({segments, title}: DocumentProps) {

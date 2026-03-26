@@ -66,7 +66,11 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
     }
 
     const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
-        generateSrt.mutate(segments)
+        const formData = {
+            segments,
+            title: fileText.title
+        }
+        generateSrt.mutate(formData)
     }
 
     const handleGenerateTranscriptionTxt = (segments: { start: number, end: number, text: string }[]) => {

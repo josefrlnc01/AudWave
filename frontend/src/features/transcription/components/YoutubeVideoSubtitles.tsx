@@ -51,7 +51,11 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     }
 
     const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
-        generateSrt.mutate(segments)
+        const formData = {
+            segments,
+            title: youtubeVideoText.title
+        }
+        generateSrt.mutate(formData)
     }
 
     const handleGenerateTranscriptionTxt = (segments: { start: number, end: number, text: string }[]) => {

@@ -50,7 +50,11 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     }
 
     const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
-        generateSrt.mutate(segments)
+        const formData = {
+            segments,
+            title: data[0].title
+        }
+        generateSrt.mutate(formData)
     }
 
     const handleGenerateTranscriptionTxt = (segments: { start: number, end: number, text: string }[]) => {
