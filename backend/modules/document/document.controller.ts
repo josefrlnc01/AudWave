@@ -8,7 +8,7 @@ export class DocumentController {
             const { text } = req.body
             const buffer = await DocumentService.generatePdf(text)
             res.setHeader("Content-Type", "application/pdf")
-            res.setHeader("Content-Disposition", "attachment; filename=archivo.pdf")
+            res.setHeader("Content-Disposition", 'attachment; filename="archivo.pdf"')
             return res.status(201).send(buffer)
         } catch (error) {
             if (error instanceof AppError) {
@@ -24,7 +24,7 @@ export class DocumentController {
             console.log('body', req.body)
             const srt = await DocumentService.generateSrt(segments)
             res.setHeader("Content-Type", "text/plain")
-            res.setHeader("Content-Disposition", "attachment; filename=archivo.srt")
+            res.setHeader("Content-Disposition", 'attachment; filename="archivo.srt"')
             return res.status(201).send(srt)
         } catch (error) {
             console.log(error)
@@ -40,7 +40,7 @@ export class DocumentController {
 
             console.log('vtt', vtt)
             res.setHeader("Content-Type", "text/vtt; charset=utf-8")
-            res.setHeader("Content-Disposition", "attachment; filename=archivo.vtt")
+            res.setHeader("Content-Disposition", 'attachment; filename="archivo.vtt"')
             return res.status(201).send(vtt)
         } catch (error) {
             return res.status(500).json({ error: 'Hubo un error al generar el SRT' })
@@ -55,7 +55,7 @@ export class DocumentController {
             const txt = await DocumentService.generateTxt(segments)
 
             res.setHeader("Content-Type", "text/plain")
-            res.setHeader("Content-Disposition", "attachment; filename=archivo.txt")
+            res.setHeader("Content-Disposition", 'attachment; filename="archivo.txt"')
             return res.status(201).send(txt)
         } catch (error) {
             console.error(error)
@@ -77,7 +77,7 @@ export class DocumentController {
             )
 
             res.setHeader("Content-Disposition",
-                "attachment; filename=archivo.docx")
+                'attachment; filename="archivo.docx"')
 
             return res.status(201).send(buffer)
         } catch (error) {
@@ -96,7 +96,7 @@ export class DocumentController {
             const json = await DocumentService.generateJson(segments)
             res.setHeader("Content-Type", "application/json")
             res.setHeader("Content-Disposition", 
-                "attachment; filename=archivo.json")
+                'attachment; filename="archivo.json"')
             return res.send(json)
         } catch (error) {
             if (error instanceof AppError) {
