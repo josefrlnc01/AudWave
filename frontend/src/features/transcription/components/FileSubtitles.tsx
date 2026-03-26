@@ -26,8 +26,22 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
     const { summary, handleGenerateIaSummary } = useSummary()
     const { isLoading } = useSummary()
     const { isOpen, setIsOpen } = useEditFile()
-    const { generatePdf, generateSrt, generateTxt, generateVtt, generateDocX, generateJson } = useDocumentAction()
-    const { translation, isTranslating, setIsTranslating, generateFileTranslation, selectedLang, setSelectedLang, lang, setLang } = useTranslate()
+    const { generatePdf,
+        generateSrt,
+        generateTxt,
+        generateVtt,
+        generateDocX,
+        generateJson,
+        generateCsv } = useDocumentAction()
+
+    const { translation,
+        isTranslating,
+        setIsTranslating,
+        generateFileTranslation,
+        selectedLang,
+        setSelectedLang,
+        lang,
+        setLang } = useTranslate()
 
 
     if (mutation.isError) {
@@ -102,6 +116,14 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
         generateJson.mutate(formData)
     }
 
+    const handleGenerateTranscriptionCsv = (segments: { start: number, end: number, text: string }[]) => {
+        const formData = {
+            segments,
+            title: fileText.title
+        }
+        generateCsv.mutate(formData)
+    }
+
 
 
     const formattedFileText = fileText.segments.map(s => `[${s.start}: ${s.end}]  ${s.text}`).join(`\n`)
@@ -127,7 +149,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
     return (
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
-             {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.fileText.fileId} title={mutation.data?.fileText.title} />}
+            {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.fileText.fileId} title={mutation.data?.fileText.title} />}
 
             <aside className='w-full md:w-3/4  h-96 min-h-96 max-h-96 md:h-3/4 md:max-h-3/4 flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
@@ -186,16 +208,25 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                             </svg>
                             DOCX
                         </button>
+                        <button
+                            onClick={() => handleGenerateTranscriptionCsv(fileText.segments)}
+                            className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                        >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            CSV
+                        </button>
 
                         <button
-                        onClick={() => handleGenerateTranscriptionJson(fileText.segments)}
-                        className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
-                    >
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                        </svg>
-                        JSON
-                    </button>
+                            onClick={() => handleGenerateTranscriptionJson(fileText.segments)}
+                            className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                        >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            JSON
+                        </button>
 
                         <DropdownMenuBasic id={fileText.fileId} setIsOpen={setIsOpen} mutation={mutation} />
 

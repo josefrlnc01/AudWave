@@ -24,7 +24,13 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const [lang, setLang] = useState('')
     const [selectedLang, setSelectedLang] = useState(false)
 
-    const { generatePdf, generateSrt, generateTxt, generateVtt, generateDocX, generateJson } = useDocumentAction()
+    const { generatePdf, 
+        generateSrt, 
+        generateTxt, 
+        generateVtt, 
+        generateDocX, 
+        generateJson,
+        generateCsv } = useDocumentAction()
     const { youtubeTranslation, generateYoutubeTranslation, isTranslating, setIsTranslating } = useTranslate()
     const { summary, handleGenerateIaSummary, isLoading } = useSummary()
     const { isOpen, setIsOpen } = useEditFile()
@@ -85,6 +91,14 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             title: youtubeVideoText.title
         }
         generateDocX.mutate(formData)
+    }
+
+    const handleGenerateTranscriptionCsv = (segments: { start: number, end: number, text: string }[]) => {
+        const formData = {
+            segments,
+            title: youtubeVideoText.title
+        }
+        generateCsv.mutate(formData)
     }
 
 
@@ -173,6 +187,15 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                             </svg>
                             DOCX
+                        </button>
+                        <button
+                            onClick={() => handleGenerateTranscriptionCsv(youtubeVideoText.segments)}
+                            className='flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer'
+                        >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11h8M8 14h6M8 17h7M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                            JSON
                         </button>
                         <button
                             onClick={() => handleGenerateTranscriptionJson(youtubeVideoText.segments)}
