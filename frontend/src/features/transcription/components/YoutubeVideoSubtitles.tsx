@@ -90,7 +90,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             segments,
             title: youtubeVideoText.title
         }
-        generateDocX.mutate(formData)
+        generateJson.mutate(formData)
     }
 
     const handleGenerateTranscriptionCsv = (segments: { start: number, end: number, text: string }[]) => {
