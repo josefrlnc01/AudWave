@@ -43,62 +43,6 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     const navigate = useNavigate()
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
     const { translation, youtubeTranslation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
-    const { generatePdf,
-        generateSrt,
-        generateTxt,
-        generateVtt,
-        generateDocX,
-        generateJson,
-        generateCsv } = useDocumentAction()
-
-    const handleGenerateTranscriptionPdf = (text: string) => {
-        generatePdf.mutate(text)
-    }
-
-    const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: data.title
-        }
-        generateSrt.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionTxt = (segments: { start: number, end: number, text: string }[]) => {
-        generateTxt.mutate(segments)
-    }
-
-    const handleGenerateTranscriptionVtt = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: data.title
-        }
-        generateVtt.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionDocX = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: data.title
-        }
-        generateDocX.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionJson = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: data.title
-        }
-        generateJson.mutate(formData)
-    }
-
-    const handleGenerateTranscriptionCsv =  (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
-            segments,
-            title: data.title
-        }
-        generateCsv.mutate(formData)
-    }
-
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedLang(true)
         setLang(e.target.value)
