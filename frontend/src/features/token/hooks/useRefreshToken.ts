@@ -4,17 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 
 
 export const useRefreshToken = () => {
-  const isAuth = localStorage.getItem('isAuth') === 'true'
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["refresh-token"],
-    queryFn: getRefreshToken,
-    retry: false,
-    refetchOnWindowFocus: false,
-    enabled:isAuth,
-    staleTime: 9 * 60 * 1000,
-    refetchInterval:isAuth ?  9 * 60 * 1000 : false ,
-    refetchIntervalInBackground: true,
-  });
+  const {data, isError, isLoading} = useQuery({
+    queryKey: ['refresh-token'],
+    queryFn:getRefreshToken,
+    retry:false,
+    refetchOnWindowFocus: false
+  })
 
-  return { data: data ?? tokenStore.get(), isError, isLoading }
+  return {data, isError, isLoading}
 };
