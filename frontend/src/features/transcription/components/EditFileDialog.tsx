@@ -52,7 +52,7 @@ export default function EditFileDialog({ isOpen, setIsOpen, id, title }: EditFil
                 <DialogTrigger asChild>
                     <button>Abrir</button>
                 </DialogTrigger>
-                <DialogContent className='bg-slate-800'>
+                <DialogContent className='bg-slate-900'>
                     <DialogHeader>
                         <DialogTitle className='text-white mb-3'>Nuevo título</DialogTitle>
                         <DialogDescription>

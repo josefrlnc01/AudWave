@@ -5,6 +5,7 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
@@ -18,6 +19,7 @@ import { useDocumentAction } from "@/features/transcription/hooks/useDocumentAct
 import type { SavedFile } from "@/features/transcription/components/SavedFile"
 import { formatTime } from "@/shared/utils/minutes"
 import type { User } from "@/features/transcription/types/user.types"
+import { disabled } from "node_modules/@base-ui/react/esm/utils/reason-parts"
 
 type DropdownProps = {
     id: string,
@@ -134,50 +136,150 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                     </svg>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white grid grid-cols-2">
-                <DropdownMenuGroup>
-                    <DropdownMenuLabel>Archivo</DropdownMenuLabel>
-                    <DropdownMenuItem
-                        onClick={handleEdit}
-                        className="cursor-pointer hover:bg-blue-600/80 hover:text-white transition-colors duration-100 ease-in">Editar título</DropdownMenuItem>
-                    <DropdownMenuItem
-                        onClick={handleDelete}
-                        className="cursor-pointer hover:bg-red-500 hover:text-white transition-colors duration-100 ease-in">Eliminar</DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuGroup>
-                    <DropdownMenuLabel>Descarga</DropdownMenuLabel>
-                    <DropdownMenuItem
-                        onClick={() => handleGenerateTranscriptionTxt(data.segments)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">TXT</DropdownMenuItem>
-                    {(user.suscription === 'pro' || user.suscription === 'business') &&
-                        <>
-                            <DropdownMenuItem
-                                onClick={() => handleGenerateTranscriptionPdf(data.segments)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">PDF</DropdownMenuItem>
-                            <DropdownMenuItem
-                                onClick={() => handleGenerateTranscriptionSrt(data.segments)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">SRT</DropdownMenuItem>
-                            <DropdownMenuItem
-                                onClick={() => handleGenerateTranscriptionVtt(data.segments)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">VTT</DropdownMenuItem>
-                        </>
-                    }
-                    {user.suscription === 'business' &&
-                        <>
-                            <DropdownMenuItem
-                                onClick={() => handleGenerateTranscriptionDocX(data.segments)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">DOCX</DropdownMenuItem>
-                            <DropdownMenuItem
-                                onClick={() => handleGenerateTranscriptionJson(data.segments)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">JSON</DropdownMenuItem>
-                            <DropdownMenuItem
-                                onClick={() => handleGenerateTranscriptionCsv(data.segments)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">CSV</DropdownMenuItem>
+         <DropdownMenuContent className="bg-slate-900 border border-slate-700/50 shadow-xl shadow-black/40 p-2 min-w-48">
+    
+    {/* Acciones */}
+    <DropdownMenuGroup>
+        <DropdownMenuLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2 pb-1">
+            Archivo
+        </DropdownMenuLabel>
+        <DropdownMenuItem
+            onClick={handleEdit}
+            className="flex items-center gap-2 px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
+        >
+            <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+            Editar título
+        </DropdownMenuItem>
+        <DropdownMenuItem
+            onClick={handleDelete}
+            className="flex items-center gap-2 px-2 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg cursor-pointer transition-colors focus:bg-red-500/10 focus:text-red-300"
+        >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+            </svg>
+            Eliminar
+        </DropdownMenuItem>
+    </DropdownMenuGroup>
 
-                        </>
-                    }
-                </DropdownMenuGroup>
-            </DropdownMenuContent>
+    <DropdownMenuSeparator className="bg-slate-700/50 my-2"/>
+
+    {/* Descargas */}
+    <DropdownMenuGroup>
+        <DropdownMenuLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest px-2 pb-1">
+            Descargar como
+        </DropdownMenuLabel>
+
+        {/* TXT - disponible para todos */}
+        <DropdownMenuItem
+            onClick={() => handleGenerateTranscriptionTxt(data.segments)}
+            className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
+        >
+            <div className="flex items-center gap-2">
+                <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                TXT
+            </div>
+            <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded">Free</span>
+        </DropdownMenuItem>
+
+        {/* PRO y BUSINESS */}
+        {(user.suscription === 'pro' || user.suscription === 'business') && (
+            <>
+                <DropdownMenuItem
+                    onClick={() => handleGenerateTranscriptionPdf(data.segments)}
+                    disabled={(user.suscription !== 'business' && user.suscription !== 'pro')} 
+                    className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
+                >
+                    <div className="flex items-center gap-2">
+                        <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2zM13 3v6h6"/>
+                        </svg>
+                        PDF
+                    </div>
+                    <span className="text-xs text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20">Pro</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    onClick={() => handleGenerateTranscriptionSrt(data.segments)}
+                    disabled={(user.suscription !== 'business' && user.suscription !== 'pro')} 
+                    className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
+                >
+                    <div className="flex items-center gap-2">
+                        <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                        </svg>
+                        SRT
+                    </div>
+                    <span className="text-xs text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20">Pro</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    onClick={() => handleGenerateTranscriptionVtt(data.segments)}
+                    disabled={(user.suscription !== 'business' && user.suscription !== 'pro')} 
+                    className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
+                >
+                    <div className="flex items-center gap-2">
+                        <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                        </svg>
+                        VTT
+                    </div>
+                    <span className="text-xs text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20">Pro</span>
+                </DropdownMenuItem>
+            </>
+        )}
+
+        {/* Solo BUSINESS */}
+        {user.suscription === 'business' && (
+            <>
+                <DropdownMenuSeparator className="bg-slate-700/30 my-1"/>
+                <DropdownMenuLabel className="text-xs font-semibold text-purple-400/70 uppercase tracking-widest px-2 pb-1">
+                    Business
+                </DropdownMenuLabel>
+                <DropdownMenuItem
+                    onClick={() => handleGenerateTranscriptionDocX(data.segments)}
+                    disabled={user.suscription !== 'business'} 
+                    className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
+                >
+                    <div className="flex items-center gap-2">
+                        <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        DOCX
+                    </div>
+                    <span className="text-xs text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">Business</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    onClick={() => handleGenerateTranscriptionJson(data.segments)}
+                    disabled={user.suscription !== 'business'} 
+                    className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
+                >
+                    <div className="flex items-center gap-2">
+                        <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                        JSON
+                    </div>
+                    <span className="text-xs text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">Business</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    onClick={() => handleGenerateTranscriptionCsv(data.segments)}
+                    disabled={user.suscription !== 'business'} 
+                    className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
+                >
+                    <div className="flex items-center gap-2">
+                        <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M3 14h18M10 3v18M14 3v18"/>
+                        </svg>
+                        CSV
+                    </div>
+                    <span className="text-xs text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">Business</span>
+                </DropdownMenuItem>
+            </>
+        )}
+    </DropdownMenuGroup>
+</DropdownMenuContent>  
         </DropdownMenu>
     )
 }
