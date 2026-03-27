@@ -54,11 +54,11 @@ export default function Pricing() {
                         </li>
                         <li className="flex items-center gap-3 text-sm text-gray-300">
                             <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-                            PDF, TXT, SRT, VTT, DOCX
+                            TXT, PDF SRT, VTT
                         </li>
                     </ul>
                     <button className="w-full py-3 rounded-xl font-semibold text-white
-                        bg-gradient-to-r from-blue-600 to-indigo-800
+                        bg-linear-to-r from-blue-600 to-indigo-800
                         hover:from-blue-400 hover:to-indigo-400
                         transition-all duration-200 shadow-lg cursor-pointer ease-in">Mejorar a PRO</button>
                 </div>
@@ -82,7 +82,7 @@ export default function Pricing() {
                         </li>
                         <li className="flex items-center gap-3 text-sm text-gray-300">
                             <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-                            Todos los formatos
+                            TXT, PDF SRT, VTT, DOCX, CSV, JSON
                         </li>
                         <li className="flex items-center gap-3 text-sm text-gray-300">
                             <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
