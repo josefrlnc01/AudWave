@@ -63,7 +63,7 @@ export default function TranscriptionSkeleton() {
                 className={`mt-8 text-slate-300 transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'
                     }`}
             >
-                {awaitPhrases[index]}
+                {phrase}
             </small>
 
         </section>
