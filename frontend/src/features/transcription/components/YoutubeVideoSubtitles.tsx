@@ -81,7 +81,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             
                             </div>
                             <div className='flex grow items-center justify-end gap-2 self-start'>
-                                <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={null} data={youtubeVideoText} />
+                                <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={null} data={youtubeVideoText} user={mutation.data.user} />
                             </div>
                         </header>
             

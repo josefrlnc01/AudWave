@@ -17,21 +17,23 @@ import type { MutationProps } from "@/features/transcription/components/Form"
 import { useDocumentAction } from "@/features/transcription/hooks/useDocumentAction"
 import type { SavedFile } from "@/features/transcription/components/SavedFile"
 import { formatTime } from "@/shared/utils/minutes"
+import type { User } from "@/features/transcription/types/user.types"
 
 type DropdownProps = {
     id: string,
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-    mutation: UseMutationResult<PromiseLink  | PromiseFile | undefined, Error, MutationProps, unknown> | null,
-    data: SavedFile
+    mutation: UseMutationResult<PromiseLink | PromiseFile | undefined, Error, MutationProps, unknown> | null,
+    data: SavedFile,
+    user: User
 }
-export function DropdownMenuBasic({ id,  setIsOpen, mutation, data }: DropdownProps) {
+export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: DropdownProps) {
     console.log('id', id)
     const queryClient = useQueryClient()
     const navigate = useNavigate()
     const deleteFN = useMutation({
         mutationFn: deleteSaved,
         onSuccess: (data) => {
-            queryClient.invalidateQueries({queryKey: ['allSaveds']})
+            queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
             mutation?.reset()
             toast.success(data)
         },
@@ -96,7 +98,7 @@ export function DropdownMenuBasic({ id,  setIsOpen, mutation, data }: DropdownPr
         generateJson.mutate(formData)
     }
 
-    const handleGenerateTranscriptionCsv =  (segments: { start: number, end: number, text: string }[]) => {
+    const handleGenerateTranscriptionCsv = (segments: { start: number, end: number, text: string }[]) => {
         const formData = {
             segments,
             title: data.title
@@ -112,7 +114,7 @@ export function DropdownMenuBasic({ id,  setIsOpen, mutation, data }: DropdownPr
     const handleEdit = () => {
         setIsOpen(true)
     }
-
+    console.log('user', user)
     const formattedText = data.segments.map(s => `${formatTime(s.start)}:${formatTime(s.end)} ${s.text}`).join('\n')
 
     return (
@@ -124,7 +126,7 @@ export function DropdownMenuBasic({ id,  setIsOpen, mutation, data }: DropdownPr
                         viewBox="0 0 24 24"
                         fill="currentColor"
                         // Corregido: w-10 (40px), sin comillas raras y clases válidas
-                        className="!w-5 !h-5 !p-1 text-gray-400"
+                        className="w-5! h-5! p-1! text-gray-400"
                     >
                         <circle cx="5" cy="12" r="2.5"></circle>
                         <circle cx="12" cy="12" r="2.5"></circle>
@@ -135,37 +137,45 @@ export function DropdownMenuBasic({ id,  setIsOpen, mutation, data }: DropdownPr
             <DropdownMenuContent className="bg-white">
                 <DropdownMenuGroup>
                     <DropdownMenuLabel>Archivo</DropdownMenuLabel>
-                    <DropdownMenuItem 
-                    onClick={handleEdit}
-                    className="cursor-pointer hover:bg-blue-600/80 hover:text-white transition-colors duration-100 ease-in">Editar título</DropdownMenuItem>
+                    <DropdownMenuItem
+                        onClick={handleEdit}
+                        className="cursor-pointer hover:bg-blue-600/80 hover:text-white transition-colors duration-100 ease-in">Editar título</DropdownMenuItem>
                     <DropdownMenuItem
                         onClick={handleDelete}
                         className="cursor-pointer hover:bg-red-500 hover:text-white transition-colors duration-100 ease-in">Eliminar</DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuGroup>
                     <DropdownMenuLabel>Descarga</DropdownMenuLabel>
-                    <DropdownMenuItem 
-                    onClick={() => handleGenerateTranscriptionTxt(data.segments)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">TXT</DropdownMenuItem>
-                    <DropdownMenuItem 
-                    onClick={() => handleGenerateTranscriptionPdf(data.segments)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">PDF</DropdownMenuItem>
-                    <DropdownMenuItem 
-                    onClick={() => handleGenerateTranscriptionSrt(data.segments)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">SRT</DropdownMenuItem>
-                    <DropdownMenuItem 
-                    onClick={() => handleGenerateTranscriptionVtt(data.segments)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">VTT</DropdownMenuItem>
-                    <DropdownMenuItem 
-                    onClick={() => handleGenerateTranscriptionDocX(data.segments)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">DOCX</DropdownMenuItem>
-                    <DropdownMenuItem 
-                    onClick={() => handleGenerateTranscriptionJson(data.segments)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">JSON</DropdownMenuItem>
-                    <DropdownMenuItem 
-                    onClick={() => handleGenerateTranscriptionCsv(data.segments)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">CSV</DropdownMenuItem>
-                    
+                    <DropdownMenuItem
+                        onClick={() => handleGenerateTranscriptionTxt(data.segments)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">TXT</DropdownMenuItem>
+                    {(user.suscription === 'pro' || user.suscription === 'business') &&
+                        <>
+                            <DropdownMenuItem
+                                onClick={() => handleGenerateTranscriptionPdf(data.segments)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">PDF</DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => handleGenerateTranscriptionSrt(data.segments)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">SRT</DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => handleGenerateTranscriptionVtt(data.segments)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">VTT</DropdownMenuItem>
+                        </>
+                    }
+                    {user.suscription === 'business' &&
+                        <>
+                            <DropdownMenuItem
+                                onClick={() => handleGenerateTranscriptionDocX(data.segments)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">DOCX</DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => handleGenerateTranscriptionJson(data.segments)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">JSON</DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => handleGenerateTranscriptionCsv(data.segments)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">CSV</DropdownMenuItem>
+
+                        </>
+                    }
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
