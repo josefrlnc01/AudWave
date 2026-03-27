@@ -90,14 +90,7 @@ export default function Form() {
 
             <section className="p-2 lg:p-8 relative grow flex flex-col justify-center items-center mb-15">
 
-                <aside className="hidden w-full mx-auto lg:items-center p-4 text-gray-400 lg:flex lg:flex-col lg:gap-4">
-                    <h2 className="text-xl font-semibold text-white">
-                        Nueva transcripción
-                    </h2>
-                    <p className="text-slate-400 text-sm mt-1">
-                        Sube un archivo de audio/vídeo o introduce un enlace de YouTube
-                    </p>
-                </aside>
+                
                 {suscription === 'free' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6 mt-4">
                     <div className="relative w-full bg-slate-800 rounded-full h-2">
                         <div
