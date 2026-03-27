@@ -70,93 +70,97 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         <section className='w-screen flex flex-col lg:flex lg:max-w-3/4 lg:w-3/4  md:items-center rounded-xl'>
 
             {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.youtubeVideoText.fileId} title={mutation.data?.youtubeVideoText.title} />}
-            <aside className='w-full md:w-3/4  h-96 min-h-96 max-h-96 md:h-3/4 md:max-h-3/4 flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
-
-                <header className='flex items-center w-full px-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
-                    <div className='grow-0 flex items-center gap-4'>
-                        <h2 className='text-sm font-semibold text-gray-100 truncate max-w-xs'>
-                            {youtubeVideoText.title}
-                            <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
-                        </h2>
-                    </div>
-
-                    <div className='flex items-center justify-end gap-2 grow'>
-                        <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={mutation} data={mutation.data.youtubeVideoText} />
-                    </div>
-                </header>
-
-                <div className='flex flex-col lg:flex-row flex-1 min-h-0'>
-
-                    <div className='flex flex-col flex-1 border-r border-slate-700/50'>
-                        <div className='px-5 py-3 border-b border-slate-700/30 flex items-center justify-between'>
-                            <h3 className='text-xs font-semibold text-slate-400 uppercase tracking-widest'>Transcripción</h3>
-                            <div className="flex items-center justify-center gap-2">
-                                <div className='relative'>
-                                    <select
-                                        onChange={handleSelect}
-                                        className="bg-slate-800 text-slate-300 text-sm appearance-none px-3 py-1.5 pr-3 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
-                                    >
-
-                                        {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
-                                            <option key={lang.value} defaultValue={'Traducir a...'} value={lang.value}>{lang.label}</option>
-                                        ))}
-                                        {user.suscription === 'free' && freeUserLanguages.map(lang => (
-                                            <option key={lang.value} value={lang.value}>{lang.label}</option>
-                                        ))}
-
-                                    </select>
-                                    <img className='w-4 pointer-events-none absolute right-3 top-1/2 -translate-y-1/2' src={flecha} />
-
-                                </div>
-
-
-                                <button
-                                    onClick={handleTranslate}
-                                    disabled={!selectedLang || isTranslating}
-                                    className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
-                                >
-                                    {isTranslating ? (
-                                        <>
-                                            <Spinner className="size-3" />
-                                            Traduciendo
-                                        </>
-                                    ) : (
-                                        'Traducir'
-                                    )}
-                                </button>
+            <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4 h-auto grow md:h-3/4 md:max-h-3/4 flex flex-col items-center bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
+            
+                        <header className='flex items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
+                            <div className='grow-0 flex items-center gap-4 min-w-0'>
+                                <h2 title={youtubeVideoText.title} className='text-md font-semibold text-gray-100 wrap-break-word leading-tight'>
+                                    {youtubeVideoText.title}
+                                    <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
+                                </h2>
+            
                             </div>
+                            <div className='flex grow items-center justify-end gap-2'>
+                                
+                                <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={null} data={youtubeVideoText} />
+            
+                                
+                            </div>
+                        </header>
+            
+                        <div className='flex flex-col lg:flex-row flex-1 min-h-0'>
+            
+                            <div className='flex flex-col flex-1 border-r border-slate-700/50'>
+                                <div className='px-5 py-3 border-b border-slate-700/30 flex items-center justify-between gap-4'>
+                                    <h3 className='text-xs font-semibold text-slate-400 uppercase tracking-widest'>Transcripción</h3>
+                                    <div className="flex items-center justify-center gap-2">
+                                        <div className='relative'>
+                                            <select
+                                                onChange={handleSelect}
+                                                defaultValue=''
+                                                className="bg-slate-800 text-slate-300 text-sm text-start  px-3 py-1.5 pr-3 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                                            >
+                                                <option value="" className='text-sm' disabled>Traducir a...</option>
+                                                {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
+                                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                                ))}
+                                                {user.suscription === 'free' && freeUserLanguages.map(lang => (
+                                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                                ))}
+            
+                                            </select>
+                                            
+                                        </div>
+            
+            
+                                        <button
+                                            onClick={handleTranslate}
+                                            disabled={!selectedLang || isTranslating}
+                                            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                                        >
+                                            {isTranslating ? (
+                                                <>
+                                                    <Spinner className="size-3" />
+                                                    Traduciendo
+                                                </>
+                                            ) : (
+                                                'Traducir'
+                                            )}
+                                        </button>
+                                    </div>
+                                </div>
+                                <motion.div
+                                    className='grow bg-slate-800/40 p-8'
+                                    variants={container}
+                                    initial='hidden'
+                                    animate='show'>
+                                    {youtubeTranslation.length === 0 && youtubeVideoText.segments.map((s, i) => (
+                                        <motion.p
+                                            key={i}
+                                            whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                            transition={{ duration: 0.15 }}
+                                            variants={item}
+                                            className='text-start text-sm md:text-md wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                            <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
+                                        </motion.p>
+                                    ))}
+                                    
+                                    {youtubeTranslation.length > 0 && youtubeTranslation.map((s, i) => (
+                                        <motion.p
+                                            key={i}
+                                            whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
+                                            transition={{ duration: 0.15 }}
+                                            variants={item}
+                                            className='text-start text-sm wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                            <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
+                                        </motion.p>
+                                    ))}
+                                </motion.div>
+                            </div>
+            
+                            {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={() => handleGenerateIaSummary(youtubeVideoText.fileId)} id={youtubeVideoText.fileId} />}
                         </div>
-                        <motion.div
-                            className='grow bg-slate-800/40 p-8'
-                            variants={container}
-                            initial='hidden'
-                            animate='show'>
-                            {youtubeTranslation.length === 0 && youtubeVideoText.segments.map((s, i) => (
-                                <motion.p
-                                    key={i}
-                                    whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
-                                    transition={{ duration: 0.15 }}
-                                    variants={item}
-                                    className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                    <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
-                                </motion.p>
-                            ))}
-                            {youtubeTranslation.length > 0 && youtubeTranslation.map((s, i) => (
-                                <motion.p
-                                    key={i}
-                                    whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
-                                    transition={{ duration: 0.15 }}
-                                    variants={item}
-                                    className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
-                                    <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
-                                </motion.p>
-                            ))}
-                        </motion.div>
-                    </div>
-
-                    {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={handleGenerateIaSummary} id={youtubeVideoText.fileId} />}
-                </div>
-            </aside>
+                    </aside>
         </section>
     )
 }
