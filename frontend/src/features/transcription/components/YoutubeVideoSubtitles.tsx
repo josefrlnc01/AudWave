@@ -70,7 +70,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         <>
 
             {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.youtubeVideoText.fileId} title={mutation.data?.youtubeVideoText.title} />}
-            <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4 flex flex-col items-center bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
+            <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4   flex flex-col bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
                 <header className='flex items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
                     <div className='grow-0 flex items-center gap-4 min-w-0'>
@@ -81,7 +81,8 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
                     </div>
                     <div className='flex grow items-center justify-end gap-2 self-start'>
-                        <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={null} data={youtubeVideoText} user={mutation.data.user} />
+
+                        <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={null} data={youtubeVideoText} user={user} />
                     </div>
                 </header>
 
@@ -141,7 +142,6 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                     <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                                 </motion.p>
                             ))}
-
                             {youtubeTranslation.length > 0 && youtubeTranslation.map((s, i) => (
                                 <motion.p
                                     key={i}
@@ -152,6 +152,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                     <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                                 </motion.p>
                             ))}
+
                         </motion.div>
                     </div>
 
