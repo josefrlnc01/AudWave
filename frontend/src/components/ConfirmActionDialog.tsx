@@ -13,9 +13,8 @@ type ConfirmActionDialogProps = {
     title: string,
     onConfirm: () => void,
     confirmText: string,
-    children: React.ReactNode
 }
-export default function ConfirmActionDialog({ isOpen, setIsOpen, title, onConfirm, confirmText = 'Confirmar', children }: ConfirmActionDialogProps) {
+export default function ConfirmActionDialog({ isOpen, setIsOpen, title, onConfirm, confirmText = 'Confirmar'}: ConfirmActionDialogProps) {
     const handleConfirm = () => {
         onConfirm()
         setIsOpen(false)
@@ -23,11 +22,7 @@ export default function ConfirmActionDialog({ isOpen, setIsOpen, title, onConfir
     return (
         <>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                {/* El children es el trigger (el botón de "Eliminar", "Logout", etc.) */}
-                <DialogTrigger asChild>
-                    {children}
-                </DialogTrigger>
-
+                
                 <DialogContent className='bg-slate-800 border-slate-700'>
                     <DialogHeader>
                         <DialogTitle className='text-white mb-3'>
