@@ -74,7 +74,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
 
             <header className='flex items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
                 <div className='grow-0 flex items-center gap-4 min-w-0'>
-                    <h2 title={data.title} className='text-sm font-semibold text-gray-100 truncate max-w-[200px]'>
+                    <h2 title={data.title} className='text-sm font-semibold text-gray-100 truncate max-w-50 lg:max-w-none'>
                         {data.title}
                         <span className="text-xs font-normal text-slate-500 ml-1">(Original)</span>
                     </h2>

@@ -74,7 +74,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             
                         <header className='flex items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
                             <div className='grow-0 flex items-center gap-4 min-w-0'>
-                                <h2 title={youtubeVideoText.title} className='text-md font-semibold text-gray-100 wrap-break-word leading-tight'>
+                                <h2 title={youtubeVideoText.title} className='text-md font-semibold text-gray-100 truncate max-w-50 lg:max-w-none'>
                                     {youtubeVideoText.title}
                                     <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                                 </h2>
