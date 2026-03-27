@@ -127,7 +127,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                     </div>
                                 </div>
                                 <motion.div
-                                    className='grow bg-slate-800/40 p-8'
+                                    className='grow bg-slate-800/40 p-4 md:p-8'
                                     variants={container}
                                     initial='hidden'
                                     animate='show'>

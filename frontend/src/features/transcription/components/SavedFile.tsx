@@ -14,6 +14,7 @@ import { freeUserLanguages, languages } from '../stores/languages'
 import flecha from './../../../assets/apunta-hacia-abajo.webp'
 import type { User } from '../types/user.types'
 import { useDocumentAction } from '../hooks/useDocumentAction'
+import { useState } from 'react'
 
 export type SavedFile = {
     duration: string
@@ -41,6 +42,7 @@ type SavedFileProps = {
 export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps) {
     console.log(user)
     const navigate = useNavigate()
+    const [showSummary, setShowSummary] = useState(false)
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
     const { translation, youtubeTranslation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -69,13 +71,13 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     
 
     return (
-        <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4 grow h-auto md:grow-0 md:h-96 md:min-h-96 md:max-h-96  flex flex-col items-center bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
+        <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4 h-auto md:grow-0 md:h-96 md:min-h-96 md:max-h-96  flex flex-col items-center bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
             <header className='flex items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
                 <div className='grow-0 flex items-center gap-4 min-w-0'>
-                    <h2 title={data.title} className='text-md font-semibold text-gray-100 wrap-break-word leading-tight'>
+                    <h2 title={data.title} className='text-sm font-semibold text-gray-100 truncate max-w-[200px]'>
                         {data.title}
-                        <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
+                        <span className="text-xs font-normal text-slate-500 ml-1">(Original)</span>
                     </h2>
 
                 </div>
@@ -102,7 +104,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                                 <select
                                     onChange={handleSelect}
                                     defaultValue=''
-                                    className="bg-slate-800 text-slate-300 text-sm text-start  px-3 py-1.5 pr-3 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                                    className="flex-1 bg-slate-800 text-slate-300 text-xs px-2 py-1.5 rounded-lg border border-slate-700 focus:outline-none focus:border-blue-500"
                                 >
                                     <option value="" className='text-sm' disabled>Traducir a...</option>
                                     {(user.suscription === 'business' || user.suscription === 'pro') && languages.map(lang => (
@@ -134,7 +136,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                         </div>
                     </div>
                     <motion.div
-                        className='grow bg-slate-800/40 p-8'
+                        className='grow bg-slate-800/40 p-4 md:p-8'
                         variants={container}
                         initial='hidden'
                         animate='show'>
@@ -171,7 +173,42 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                     </motion.div>
                 </div>
 
-                {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={() => handleGenerateIaSummary(id)} id={id} />}
+                {user.suscription === 'business' && (
+    <div className='border-t border-slate-700/50'>
+        <button
+            onClick={() => setShowSummary(!showSummary)}
+            className='w-full flex items-center justify-between px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-slate-800/40 transition-colors'
+        >
+            <div className='flex items-center gap-2'>
+                <svg className='w-4 h-4 text-blue-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'/>
+                </svg>
+                <span className='text-xs font-semibold uppercase tracking-widest'>Resumen IA</span>
+            </div>
+            <svg
+                className={`w-4 h-4 transition-transform ${showSummary ? 'rotate-180' : ''}`}
+                fill='none' stroke='currentColor' viewBox='0 0 24 24'
+            >
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7'/>
+            </svg>
+        </button>
+
+        {showSummary && (
+            <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className='px-4 pb-4'
+            >
+                <SummarySection
+                    summary={summary}
+                    isLoading={isLoading}
+                    handleGenerateIaSummary={() => handleGenerateIaSummary(id)}
+                    id={id}
+                />
+            </motion.div>
+        )}
+    </div>
+)}
             </div>
         </aside>
     )
