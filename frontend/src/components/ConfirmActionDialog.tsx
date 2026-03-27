@@ -23,7 +23,7 @@ export default function ConfirmActionDialog({ isOpen, setIsOpen, title, onConfir
         <>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 
-                <DialogContent className='bg-slate-900 border border-slate-700/50'>
+                <DialogContent className='bg-slate-900 border border-slate-700/50 text-white'>
                     <DialogHeader>
                         <DialogTitle className='text-white mb-3'>
                             {title}
