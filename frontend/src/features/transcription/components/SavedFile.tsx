@@ -69,11 +69,11 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
     
 
     return (
-        <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4 h-96 min-h-96 max-h-96 md:h-3/4 md:max-h-3/4 flex flex-col items-center bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
+        <aside className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4 h-auto grow md:h-3/4 md:max-h-3/4 flex flex-col items-center bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
 
             <header className='flex items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
-                <div className='grow-0 flex items-center gap-4'>
-                    <h2 className='text-sm font-semibold text-gray-100 truncate'>
+                <div className='grow-0 flex items-center gap-4 min-w-0'>
+                    <h2 title={data.title} className='text-md font-semibold text-gray-100 wrap-break-word leading-tight'>
                         {data.title}
                         <span className="text-xs font-normal text-slate-500 ml-2">(Original)</span>
                     </h2>
@@ -144,7 +144,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                                 whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
                                 transition={{ duration: 0.15 }}
                                 variants={item}
-                                className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                className='text-start text-sm md:text-md wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                             </motion.p>
                         ))}
@@ -154,7 +154,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                                 whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
                                 transition={{ duration: 0.15 }}
                                 variants={item}
-                                className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                className='text-start text-sm wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                             </motion.p>
                         ))}
@@ -164,7 +164,7 @@ export default function SavedFile({ data, setIsOpen, user, id }: SavedFileProps)
                                 whileHover={{ backgroundColor: 'rgba(30, 41, 59, 0.8)' }}
                                 transition={{ duration: 0.15 }}
                                 variants={item}
-                                className='text-start wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
+                                className='text-start text-sm wrap-anywhere font-semibold text-gray-200 leading-relaxed'>
                                 <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                             </motion.p>
                         ))}
