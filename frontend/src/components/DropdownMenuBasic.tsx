@@ -162,7 +162,9 @@ export function DropdownMenuBasic({ id,  setIsOpen, mutation, data }: DropdownPr
                     <DropdownMenuItem 
                     onClick={() => handleGenerateTranscriptionJson(data.segments)}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">JSON</DropdownMenuItem>
-                    
+                    <DropdownMenuItem 
+                    onClick={() => handleGenerateTranscriptionCsv(data.segments)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-600/50 cursor-pointer">CSV</DropdownMenuItem>
                     
                 </DropdownMenuGroup>
             </DropdownMenuContent>
