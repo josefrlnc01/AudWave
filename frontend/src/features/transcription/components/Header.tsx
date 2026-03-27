@@ -1,5 +1,5 @@
 import ConfirmActionDialog from "@/components/ConfirmActionDialog"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { logOut } from "@/features/auth/api/authApi"
 import { useAuth } from "@/features/auth/hooks/useAuth"
 import { deleteUser } from "@/features/user/userApi"
@@ -47,16 +47,22 @@ export default function Header() {
       </div>
 
 
-      <div className="flex justify-center items-center hover:scale-110 transition-transform duration-100 ease-in focus:outline-none focus-visible:outline-none">
+      <div className="flex justify-center  items-center hover:scale-110 transition-transform duration-100 ease-in focus:outline-none focus-visible:outline-none">
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Menu className="w-5 h-5 text-slate-400 cursor-pointer " />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="bg-slate-900 border border-slate-700/50">
+          <DropdownMenuLabel className="text-xs font-bold text-white">
+            Cuenta
+          </DropdownMenuLabel>
             <DropdownMenuItem className="text-slate-400 text-sm">
               {data.user.name}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuLabel className="text-xs font-bold text-white">
+            Acciones
+          </DropdownMenuLabel>
             <DropdownMenuItem onClick={handleLogOut} className="text-red-400 hover:bg-slate-800 cursor-pointer transition-colors ease duration-100">
               <LogOut className="w-4 h-4 mr-2" />
               Salir
@@ -66,7 +72,7 @@ export default function Header() {
                 e.preventDefault()
                 setIsOpenForDelete(true)
               }}
-              className="text-red-400 hover:bg-slate-800 cursor-pointer transition-colors ease duration-100"
+              className="text-red-400 hover:bg-red-600/40 hover:text-white cursor-pointer transition-colors ease duration-100"
             >
               Eliminar cuenta
             </DropdownMenuItem>
