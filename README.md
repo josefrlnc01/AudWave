@@ -1,5 +1,7 @@
 <div align="center">
 
+Para la hackaton de CubePath NodeMailer estará desactivado por falta de tiempo para su implementación final, pero en el flujo final de producción real estará presente para su uso en autenticación del usuario en registro y cambio de contraseña.
+
 # 🎵 AudWave
 
 ### Transcripción y traducción de audio con IA de precisión profesional
