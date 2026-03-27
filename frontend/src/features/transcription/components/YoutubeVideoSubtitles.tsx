@@ -26,7 +26,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const { youtubeTranslation, generateYoutubeTranslation, isTranslating, setIsTranslating } = useTranslate()
     const { summary, handleGenerateIaSummary, isLoading } = useSummary()
     const { isOpen, setIsOpen } = useEditFile()
-
+    const [showSummary, setShowSummary] = useState(false)
     if (mutation.isError) {
         return (
             <aside className="p-4 text-red-400 md:text-center">
@@ -155,7 +155,42 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                 </motion.div>
                             </div>
             
-                            {user.suscription === 'business' && <SummarySection summary={summary} isLoading={isLoading} handleGenerateIaSummary={() => handleGenerateIaSummary(youtubeVideoText.fileId)} id={youtubeVideoText.fileId} />}
+                            {user.suscription === 'business' && (
+                                                <div className='border-t border-slate-700/50'>
+                                                    <button
+                                                        onClick={() => setShowSummary(!showSummary)}
+                                                        className='w-full flex items-center justify-between px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-slate-800/40 transition-colors'
+                                                    >
+                                                        <div className='flex items-center gap-2'>
+                                                            <svg className='w-4 h-4 text-blue-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                                                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z' />
+                                                            </svg>
+                                                            <span className='text-xs font-semibold uppercase tracking-widest'>Resumen IA</span>
+                                                        </div>
+                                                        <svg
+                                                            className={`w-4 h-4 transition-transform ${showSummary ? 'rotate-180' : ''}`}
+                                                            fill='none' stroke='currentColor' viewBox='0 0 24 24'
+                                                        >
+                                                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
+                                                        </svg>
+                                                    </button>
+                            
+                                                    {showSummary && (
+                                                        <motion.div
+                                                            initial={{ opacity: 0, height: 0 }}
+                                                            animate={{ opacity: 1, height: 'auto' }}
+                                                            className='px-4 pb-4'
+                                                        >
+                                                            <SummarySection
+                                                                summary={summary}
+                                                                isLoading={isLoading}
+                                                                handleGenerateIaSummary={() => handleGenerateIaSummary(youtubeVideoText.fileId)}
+                                                                id={youtubeVideoText.fileId}
+                                                            />
+                                                        </motion.div>
+                                                    )}
+                                                </div>
+                                            )}
                         </div>
                     </aside>
         </section>
