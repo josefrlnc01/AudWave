@@ -15,15 +15,10 @@ export default function NewPasswordView() {
                     <span className=" text-blue-600 font-bold"> por email</span>
                 </p>
 
-                {!isValidToken ?
-                    <NewPasswordToken
-                        token={token}
-                        setToken={setToken}
-                        setIsValidToken={setIsValidToken} />
-                    :
+                
                     <NewPasswordFormComponent
-                        token={token}
-                    />}
+                        token={token}/>
+                    
             </aside>
         </>
     )

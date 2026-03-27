@@ -25,23 +25,25 @@ export class AuthService {
                 throw new AppError('Es necesario introducir una contraseña', 400)
             }
             user.password = await hashPassword(user.password)
-
-            const token = new Token()
-            token.token = generate6DigitsToken()
-            token.user = user._id
-
-            /*await AuthEmail.sendEmail({
-                name: user.name,
-                email: user.email,
-                token: token.token
-            })*/
-
             if (process.env.AUTO_CONFIRM === 'true') {
                 user.confirmed = true
-            }
-            await Promise.all([user.save(), token.save()])
+                await user.save()
+                return user
+            } else {
+                const token = new Token()
+                token.token = generate6DigitsToken()
+                token.user = user._id
 
-            return { user, token }
+                await AuthEmail.sendEmail({
+                    name: user.name,
+                    email: user.email,
+                    token: token.token
+                })
+                await Promise.all([user.save(), token.save()])
+
+                return { user, token }
+            }
+
         } catch (error) {
             if (error instanceof AppError) throw error
             throw new Error('Hubo un error al crear el usuario')
@@ -175,19 +177,23 @@ export class AuthService {
                 newUser.name = name
                 newUser.email = email
                 newUser.provider = 'google'
-                /*const token = new Token()
+                if (process.env.AUTO_CONFIRM === 'true') {
+                    newUser.confirmed = true
+                    newUser.save()
+                    return {newUser}
+                } else {
+                    const token = new Token()
                 token.token = generate6DigitsToken()
                 token.user = newUser._id
                 AuthEmail.sendEmail({
                     email: newUser.email,
                     name: newUser.name,
                     token: token.token
-                })*/
-                if (process.env.AUTO_CONFIRM === 'true') {
-                    newUser.confirmed = true
-                }
-                await Promise.all([newUser.save()])
+                })
+                await Promise.all([newUser.save(), token.save()])
                 return { newUser }
+                }
+                
             }
         } catch (error) {
             if (error instanceof AppError) throw error
