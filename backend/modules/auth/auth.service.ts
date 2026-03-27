@@ -30,11 +30,15 @@ export class AuthService {
             token.token = generate6DigitsToken()
             token.user = user._id
 
-            await AuthEmail.sendEmail({
+            /*await AuthEmail.sendEmail({
                 name: user.name,
                 email: user.email,
                 token: token.token
-            })
+            })*/
+
+            if (process.env.AUTO_CONFIRM === 'true') {
+                user.confirmed = true
+            }
             await Promise.all([user.save(), token.save()])
 
             return { user, token }
@@ -171,15 +175,18 @@ export class AuthService {
                 newUser.name = name
                 newUser.email = email
                 newUser.provider = 'google'
-                const token = new Token()
+                /*const token = new Token()
                 token.token = generate6DigitsToken()
                 token.user = newUser._id
                 AuthEmail.sendEmail({
                     email: newUser.email,
                     name: newUser.name,
                     token: token.token
-                })
-                await Promise.all([newUser.save(), token.save()])
+                })*/
+                if (process.env.AUTO_CONFIRM === 'true') {
+                    newUser.confirmed = true
+                }
+                await Promise.all([newUser.save()])
                 return { newUser }
             }
         } catch (error) {
@@ -189,7 +196,7 @@ export class AuthService {
     }
     static generateTokenForPassword = async (email: string) => {
         try {
-            const user = await User.findOne({email})
+            const user = await User.findOne({ email })
             if (!user) {
                 throw new AppError('Credenciales incorrectas', 400)
             }

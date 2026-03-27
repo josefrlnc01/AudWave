@@ -31,12 +31,8 @@ export default function RegisterView() {
         onError: (error) => {
             toast.error(error.message)
         },
-        onSuccess: (data) => {
-            if (data.success === 'Iniciando sesión') {
-                navigate('/')
-            } else {
-                toast.success(data)
-            }
+        onSuccess: () => {
+            navigate('/')
         }
     })
 
