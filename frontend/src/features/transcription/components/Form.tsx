@@ -88,7 +88,7 @@ export default function Form() {
     return (
         <>
 
-            <section className="p-8 relative grow flex flex-col justify-center items-center mb-15">
+            <section className="p-2 lg:p-8 relative grow flex flex-col justify-center items-center mb-15">
 
                 <aside className="hidden w-full mx-auto lg:items-center p-4 text-gray-400 lg:flex lg:flex-col lg:gap-4">
                     <h2 className="text-xl font-semibold text-white">
@@ -156,15 +156,15 @@ export default function Form() {
                     </span>
                 </div>}
 
-                <aside className="w-screen relative mt-0 lg:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-8 mb-12 shadow-2xl backdrop-blur">
+                <aside className="w-full relative mt-0 lg:w-3/4 md:w-2/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur">
 
-                    <form className="w-full flex flex-col  p-2 gap-6">
+                    <form className="w-full flex flex-col  lg:p-2 gap-6">
 
                         {!inputValue &&
                             <div id="targ"
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
-                                className={`flex p-12 flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${!fileInputValue ? 'border-dashed bg-slate-800/20 border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'} justify-center items-center`}>
+                                className={`flex p-12 w-full flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${!fileInputValue ? 'border-dashed bg-slate-800/20 border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'} justify-center items-center`}>
                                 <img src={InputIcon} />
                                 <label className="text-2xl font-bold">Sube tu archivo</label>
                                 <p className="text-lg text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
