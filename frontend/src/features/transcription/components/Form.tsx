@@ -186,11 +186,11 @@ export default function Form() {
                                     className="hidden" />
 
                             </div>}
-                            {(!fileInputValue && !inputValue) && <span className="text-center text-sm text-gray-300">O</span>}
+                            {(!fileInputValue && !inputValue) && <span className="text-center text-sm md:text-xl text-gray-300 ">O</span>}
                         <div className="grow flex flex-col justify-center items-center gap-15">
                             {!fileInputValue &&
                                 <div className="w-full flex flex-col justify-around gap-2">
-                                    <label className=" text-gray-400 pl-1">Introduce un enlace de youtube</label>
+                                    <label className=" text-gray-400 pl-1 text-sm md:text-xl">Introduce un enlace de youtube</label>
                                     <input onChange={handleInput}
                                         onClick={(e) => {
                                             e.currentTarget.value = ''
@@ -198,7 +198,7 @@ export default function Form() {
                                         }}
                                         placeholder="Pega tu enlace aquí"
                                         type='text'
-                                        className='min-w-full w-full lg:w-1/4 p-3 hover:backdrop-blur-md text-gray-300 rounded-xl focus:outline-none  bg-slate-800 hover:bg-slate-800/80 transition-colors duration-100 ease-in' />
+                                        className='min-w-full w-full lg:w-1/4 p-3 hover:backdrop-blur-md text-sm text-gray-300 rounded-xl focus:outline-none  bg-slate-800 hover:bg-slate-800/80 transition-colors duration-100 ease-in' />
 
                                 </div>}
                         </div>
