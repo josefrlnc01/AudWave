@@ -1,7 +1,9 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { logOut } from "@/features/auth/api/authApi"
 import { useAuth } from "@/features/auth/hooks/useAuth"
+import { deleteUser } from "@/features/user/userApi"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+
 import { LogOut, Menu } from "lucide-react"
 import { useNavigate } from "react-router"
 
@@ -22,6 +24,13 @@ export default function Header() {
     logout.mutate()
   }
 
+
+  const deleteAccount = useMutation({
+    mutationFn: deleteUser
+  })
+  const handleDelete = () => {
+    deleteAccount.mutate()
+  }
 
   return (
     <header className='w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center'>
@@ -44,7 +53,7 @@ export default function Header() {
                     <LogOut className="w-4 h-4 mr-2" />
                     Salir
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-400 hover:bg-slate-800 cursor-pointer transition-colors ease duration-100">
+                <DropdownMenuItem onClick={handleDelete} className="text-red-400 hover:bg-slate-800 cursor-pointer transition-colors ease duration-100">
                     Eliminar cuenta
                 </DropdownMenuItem>
             </DropdownMenuContent>
