@@ -45,7 +45,7 @@ export default function FeaturesSection() {
                     </div>
                     <div className="w-full">
                         <h4 className='text-xl font-bold mb-3'>Guarda y gestiona tu historial</h4>
-                        <p className='text-gray-400 text-sm leading-relaxed'>Almacena tus transcripciones y traducciones con título y comentarios para acceder a ellas cuando quieras.</p>
+                        <p className='text-gray-400 text-sm leading-relaxed'>Almacena tus transcripciones y traducciones para acceder a ellas cuando quieras.</p>
                     </div>
                 </div>
             </aside>
