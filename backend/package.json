@@ -24,6 +24,7 @@
     "music-metadata": "^11.12.3",
     "nodemailer": "^8.0.1",
     "subtitle": "^4.2.2",
+    "ts-jest": "^29.4.6",
     "uuid": "^13.0.0",
     "youtube-captions-scraper": "^2.0.3",
     "yt-dlp-exec": "^1.0.2",
@@ -35,17 +36,20 @@
   "scripts": {
     "build": "tsc",
     "server": "tsx watch ./api/server.ts",
-    "dev": "tsx ./api/server.ts"
+    "dev": "tsx ./api/server.ts",
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^25.5.0",
     "@types/youtube-captions-scraper": "^1.0.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.2"
   }
 }
