@@ -21,8 +21,8 @@ export class DocumentService {
 
             const chunks: Buffer[] = []
 
-            doc.on('data', (chunks) => {
-                chunks.push(chunks)
+            doc.on('data', (chunk: Buffer) => {
+                chunks.push(chunk)
             })
 
             doc.on('end', () => {
