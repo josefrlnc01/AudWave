@@ -16,7 +16,7 @@ export class DocumentService {
             throw new AppError('No hay contenido con el que generar el pdf', 400)
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise<Buffer>((resolve, reject) => {
             pdf.create(contenido).toBuffer((err, buffer) => {
                 if (err) return reject(err)
                 if (!buffer) return reject(new Error('No se pudo generar el buffer del PDF'))

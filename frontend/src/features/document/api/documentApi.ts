@@ -32,6 +32,9 @@ export async function generatePDF({segments, title}: DocumentProps) {
         URL.revokeObjectURL(url)
     } catch (error) {
         if (isAxiosError(error) && error.response) {
+            if (error.response.data instanceof Blob) {
+                throw new Error('Hubo un error al generar el pdf')
+            }
             throw new Error(error.response.data.error)
         }
     }
