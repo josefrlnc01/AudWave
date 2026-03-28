@@ -37,6 +37,7 @@ export default function LoginView() {
     })
 
     const handleLoginGoogle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
         loginGoogle.mutate()
     }
 
