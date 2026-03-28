@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
@@ -11,7 +11,6 @@ export type MutationProps = {
     formData: FormData | null
 }
 export default function Form() {
-    const resultRef = useRef<HTMLDivElement>(null)
     const [inputValue, setInputValue] = useState('')
     const [usedMinutes, setUsedMinues] = useState<number | null>(Number(localStorage.getItem('usedMinutes')) ?? 0)
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)

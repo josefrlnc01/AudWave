@@ -4,7 +4,6 @@ import type { ForgotPasswordForm, NewPasswordForm, RegistrationForm, TokenConfir
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth } from '@/firebase'
 import { tokenStore } from '@/lib/token.store'
-import { minutesStore } from '@/shared/stores/minutes.store'
 import { suscriptionStore } from '@/shared/stores/user-suscription.store'
 
 
