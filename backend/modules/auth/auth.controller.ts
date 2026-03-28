@@ -78,6 +78,9 @@ export class AuthController {
     static authenticateGoogle = async (req: Request, res: Response) => {
         try {
             const { googleToken } = req.body
+            if (!googleToken) {
+                return res.status(400).json({ error: 'Google token no proporcionado' })
+            }
             const decodedToken = await admin.auth().verifyIdToken(googleToken)
             const email = decodedToken?.email
             const name = decodedToken.name

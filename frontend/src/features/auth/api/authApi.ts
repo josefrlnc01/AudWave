@@ -33,8 +33,11 @@ export async function authenticateGoogle() {
         if (!credential) {
             throw new Error('No se pudieron obtener las credenciales de Google');
         }
-        const user = auth.currentUser
-        const googleToken = await user?.getIdToken()
+        const googleToken = await result.user.getIdToken()
+
+        if (!googleToken) {
+            throw new Error('No se pudo obtener el token de Google')
+        }
 
         const { data } = await axios.post(`${baseUrl}/auth/authenticate-google`, {
             googleToken
