@@ -89,7 +89,3 @@ export async function editTitle({ id, newTitle }: EditTitleProps) {
     }
 }
 
-
-export async function generateIaSummary(id: string) {
-    
-}

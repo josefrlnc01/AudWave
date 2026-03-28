@@ -32,7 +32,7 @@ export default function LoginForm() {
         onError: (error) => {
             toast.error(error.message)
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             navigate('/dashboard')
         }
     })
