@@ -47,58 +47,68 @@ export default function SavedsList() {
   const filteredsYoutube = youtubeFiles.filter(file => file.title.toLowerCase().includes(inputValue))
   const filtereds = filteredsFile.concat(filteredsYoutube)
   return (
-    <section className='w-full p-2 md:p-0'>
-    <aside className='w-full relative mt-0 bg-slate-800/30 lg:w-2/4 md:w-3/4 p-4 md:p-6 rounded-xl  m-auto flex flex-col justify-center items-center mb-10'>
-      <div className='flex flex-col gap-2 justify-center items-center mb-6'>
-        <h2 className='font-bold text-lg md:text-xl lg:text-2xl'>Archivos transcritos</h2>
-      <span className='text-sm md:text-lg text-gray-400'>Pulsa sobre uno para acceder a su contenido</span>
-      </div>
-      <div className='w-full flex flex-col gap-4'>
-        
-        {filtereds.length === 0  &&
-          <>
-      
-            {files.map(file => (
-              <button key={file._id}>
-                <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
-                  <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
-                  <span className='text-white min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl'>{file.duration}</span>
-                </Link>
-              </button>
-            ))}
-            {youtubeFiles.map(file => (
-              <button key={file._id}>
-                <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
-                  <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
-                  <span className='text-white min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl'>{file.duration}</span>
-                </Link>
-              </button>
-            ))}
-          </>}
-        {(filtereds.length > 0 && (filteredsFile.length > 0 || filteredsYoutube.length > 0)) &&
-          <>
-            <div className="w-full mb-6">
+    <>
 
-              <input
-                value={inputValue}
-                onChange={handleInputValue}
-                placeholder="Buscar archivo..."
-                className="w-full pl-9 pr-3 py-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-400 focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            {filtereds.map(file => (
-              <button key={file._id}>
-                <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
-                  <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
-                  <span className='text-white min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl'>{file.duration}</span>
-                </Link>
-              </button>
-            ))}
-          </>
-        }
-      </div>
-    </aside>
-    </section>
+
+      {(filteredsFile.length > 0 || filteredsYoutube.length > 0) &&
+        <>
+          <section className='w-full p-2 md:p-0'>
+            <aside className='w-full relative mt-0 bg-slate-800/30 lg:w-2/4 md:w-3/4 p-4 rounded-xl  m-auto flex flex-col justify-center items-center mb-10'>
+              <div className='flex flex-col gap-2 justify-center items-center mb-6'>
+                <h2 className='font-bold text-lg md:text-xl lg:text-2xl'>Archivos transcritos</h2>
+                <span className='text-sm md:text-lg text-gray-400'>Pulsa sobre uno para acceder a su contenido</span>
+              </div>
+              <div className='w-full flex flex-col gap-4'>
+
+                {filtereds.length === 0 &&
+                  <>
+
+                    {files.map(file => (
+                      <button key={file._id}>
+                        <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
+                          <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
+                          <span className='text-white min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl'>{file.duration}</span>
+                        </Link>
+                      </button>
+                    ))}
+                    {youtubeFiles.map(file => (
+                      <button key={file._id}>
+                        <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
+                          <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
+                          <span className='text-white min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl'>{file.duration}</span>
+                        </Link>
+                      </button>
+                    ))}
+                  </>}
+                {(filtereds.length > 0 && (filteredsFile.length > 0 || filteredsYoutube.length > 0)) &&
+                  <>
+                    <div className="w-full mb-6">
+
+                      <input
+                        value={inputValue}
+                        onChange={handleInputValue}
+                        placeholder="Buscar archivo..."
+                        className="w-full pl-9 pr-3 py-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    {filtereds.map(file => (
+                      <button key={file._id}>
+                        <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
+                          <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
+                          <span className='text-white min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl'>{file.duration}</span>
+                        </Link>
+                      </button>
+                    ))}
+                  </>
+                }
+              </div>
+            </aside>
+          </section>
+        </>
+
+      }
+    </>
+
   )
 
 
