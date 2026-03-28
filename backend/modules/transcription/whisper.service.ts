@@ -23,7 +23,7 @@ export async function transcribeWhisperAudio(filePath: string): Promise<Transcri
 
         if (!transcription.segments) throw new Error("Error en la transcripción del audio")
 
-        const segmentsJSON = JSON.stringify(transcription.segments.map(s => ({
+        const segmentsJSON = JSON.stringify(transcription.segments.map((s:{start:number,end:number,text:string}) => ({
             start: s.start,
             end: s.end,
             text: s.text
