@@ -5,11 +5,11 @@ import User from "../../modules/user/user.model.js";
 
 
 export async function authenticate (req: Request, res: Response, next: NextFunction) {
-    const authHeaders = req.headers.authorization
+    const authHeaders = req.headers?.authorization
 
     if (!authHeaders || !authHeaders.startsWith('Bearer ')) {
         const error = new Error('No se ha encontrado token en los headers')
-        return res.status(400).json({error: error.message})
+        return res.status(401).json({error: error.message})
     }
     
     const token = authHeaders.split(' ')[1]
