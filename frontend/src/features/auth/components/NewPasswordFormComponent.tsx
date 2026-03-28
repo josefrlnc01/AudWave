@@ -116,7 +116,7 @@ export default function NewPasswordFormComponent({token} : NewPasswordFormCompon
                         rounded-xl
                         font-semibold
                         text-white
-                        bg-gradient-to-r
+                        bg-linear-to-r
                         from-blue-500 
                         to-indigo-500
                         hover:from-blue-600
