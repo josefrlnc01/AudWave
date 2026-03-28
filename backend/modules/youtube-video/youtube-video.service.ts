@@ -146,6 +146,8 @@ export class YoutubeVideoService {
         if (!videoLink) throw new Error("No se encontró el link del video")
 
 
+        const { title } = await this.downloadAudio(videoLink)
+
         const minutes = await getAudioDuration(filepath)
         const formattedAudioDuration = formatMinutes(minutes)
         await Quota.findOneAndUpdate(
@@ -170,8 +172,6 @@ export class YoutubeVideoService {
         if (user.suscription === 'business' && quota?.usedMinutes! > 600) {
             throw new AppError('No dispones de más minutos de transcripción', 429)
         }
-        const { title } = await this.downloadAudio(videoLink)
-
         const youtubeVideoText = await transcribeWhisperAudio(filepath)
         if (!youtubeVideoText) throw new Error('No se pudo transcribir el audio')
 

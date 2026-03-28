@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const useManagedServers = process.env.PW_MANAGED_SERVERS === 'true';
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -19,11 +21,23 @@ export default defineConfig({
     baseURL: 'http://localhost:5173', // tu frontend
     trace: 'on-first-retry',
   },
-  webServer: {
-    command: 'npm run dev',            // arranca frontend
-    url: 'http://localhost:5173',
-    reuseExistingServer: true,
-  },
+  ...(useManagedServers
+    ? {
+        webServer: [
+          {
+            command: 'npm run server',
+            cwd: '../backend',
+            url: 'http://127.0.0.1:8000',
+            reuseExistingServer: true,
+          },
+          {
+            command: 'npm run dev',
+            url: 'http://localhost:5173',
+            reuseExistingServer: true,
+          },
+        ],
+      }
+    : {}),
   projects: [
     {
       name: 'chromium',

@@ -5,7 +5,7 @@ import Header from '../components/Header'
 import SavedsList from '../components/SavedsList'
 
 export default function MainView() {
-  
+
   return (
     <>
     

@@ -48,6 +48,9 @@ export class YoutubeVideoController {
             console.log('youtube file saved', savedYoutubeFile )
             return res.json({ youtubeVideoText: savedYoutubeFile, usedMinutes, user })
         } catch (err) {
+            if (err instanceof AppError) {
+                return res.status(err.statusCode).json({ error: err.message })
+            }
             console.error('Error processing video:', err)
             return res.status(500).json({ error: 'Failed to process video' })
         }

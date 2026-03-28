@@ -10,25 +10,34 @@ export const useAuth = () => {
         isLoading: isRefreshLoading,
         isError: isRefreshError,
     } = useRefreshToken();
+    const storedToken = tokenStore.get()
+    const activeToken = accessToken ?? storedToken
+
     useEffect(() => {
         if (accessToken) {
             tokenStore.set(accessToken)
         }
     }, [accessToken])
+
     const { data, isError, isLoading } = useQuery({
-        queryFn: () => getUser(accessToken!),
-        queryKey: ["user", accessToken],
+        queryFn: () => getUser(activeToken!),
+        queryKey: ["user", activeToken],
         retry: 1,
         refetchOnWindowFocus: false,
-        enabled: !!accessToken
+        enabled: !!activeToken
     });
 
-    if (isRefreshLoading) {
+    if (isRefreshLoading && !storedToken) {
         return { data: null, isError: false, isLoading: true };
     }
 
-    if (isRefreshError || !accessToken) {
+    if (!activeToken && isRefreshError) {
         return { data: null, isError: true, isLoading: false };
     }
+
+    if (!activeToken) {
+        return { data: null, isError: true, isLoading: false };
+    }
+
     return { data, isError, isLoading };
 };
