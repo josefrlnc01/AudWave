@@ -20,7 +20,8 @@ declare global {
 export class AuthController {
     private static refreshCookieOptions = {
         httpOnly: true as const,
-        sameSite: 'strict' as const,
+        sameSite: 'lax' as const,
+        secure: process.env.NODE_ENV === 'production',
         maxAge: 90 * 24 * 60 * 60 * 1000
     }
 

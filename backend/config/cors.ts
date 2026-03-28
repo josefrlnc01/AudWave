@@ -1,32 +1,43 @@
 import cors from 'cors'
-export const isProd = process.env.NODE_ENV === 'production'
-import { getRequiredEnv } from '../shared/utils/variables.js'
 
-let frontendUrl: string | undefined
+const isProd = process.env.NODE_ENV === 'production'
 
-if (isProd) {
-    frontendUrl = getRequiredEnv('FRONTEND_URL')
-} else {
-    frontendUrl = getRequiredEnv('FRONTEND_URL_DEV')
+const normalizeOrigin = (value?: string) => value?.trim().replace(/\/$/, '')
+
+const getAcceptedOrigins = () => {
+    const origins = [
+        isProd ? process.env.FRONTEND_URL : process.env.FRONTEND_URL_DEV,
+        process.env.FRONTEND_URL,
+        process.env.FRONTEND_URL_WWW,
+        ...(process.env.ALLOWED_ORIGINS?.split(',') ?? [])
+    ]
+
+    return origins
+        .map(normalizeOrigin)
+        .filter((origin): origin is string => Boolean(origin))
 }
 
-export const corsMiddleware = () => cors({
-    credentials:true,
-    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-        console.log('origin', origin)
-        const ACCEPTED_ORIGINS:string[] | undefined = [
-        frontendUrl,
-        getRequiredEnv('FRONTEND_URL_WWW')
-    ]
-    
-    if (!origin) return callback(null, true)
-    if (ACCEPTED_ORIGINS.includes(origin as string)) {
-        callback(null, true)
-    } else {
-        callback(new Error('No permitido por cors'))
-    }
-    }
-})
+export const corsMiddleware = () =>
+    cors({
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        optionsSuccessStatus: 204,
+        origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+            const acceptedOrigins = getAcceptedOrigins()
+            const normalizedOrigin = normalizeOrigin(origin)
+
+            console.log('CORS origin:', origin, 'accepted:', acceptedOrigins)
+
+            if (!normalizedOrigin) return callback(null, true)
+
+            if (acceptedOrigins.includes(normalizedOrigin)) {
+                return callback(null, true)
+            }
+
+            return callback(new Error(`No permitido por CORS para el origen ${normalizedOrigin}`))
+        }
+    })
 
 
 

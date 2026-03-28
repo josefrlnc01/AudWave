@@ -1,19 +1,22 @@
 import Quota from "../../modules/quota/quota.schema.js";
 export const checkQuota = async (req, res, next) => {
     const user = req.user;
+    //Obtención de la ip del dispositivo
     const ip = (req.headers['x-forwarded-for']?.toString().split(' ')[0] ||
         req.socket.remoteAddress ||
         'unknown').trim();
     try {
-        //operación atómica
-        const quota = await Quota.findOneAndUpdate({ user: user._id, ip }, {
-            $inc: { requestCount: 1 },
-            $setOnInsert: {
-                resetAt: new Date(Date.now() + 24 * 60 * 60 * 1000)
-            }
-        }, { upsert: true, new: true });
-        if (quota.requestCount > 50) {
-            return res.status(429).json({ error: 'No puedes hacer más de una traducción' });
+        const quota = await Quota.findOne({
+            user: user._id, ip
+        });
+        if (quota && user.suscription === 'free' && quota.usedMinutes >= 6) {
+            return res.status(429).json({ error: `No dispones de minutos de transcripción gratuita suficientes.` });
+        }
+        if (quota && user.suscription === 'pro' && quota.usedMinutes >= 180) {
+            return res.status(429).json({ error: `No dispones de minutos de transcripción suficientes.` });
+        }
+        if (quota && user.suscription === 'business' && quota.usedMinutes >= 600) {
+            return res.status(429).json({ error: `Ya has gastado todos los minutos de transcripción.` });
         }
         next();
     }

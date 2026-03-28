@@ -1,3 +1,6 @@
+import ffmpeg from 'fluent-ffmpeg';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 export function getVideoMinutes(data) {
     const indexM = data.indexOf("M");
     const minute = data[indexM - 1];
@@ -8,4 +11,20 @@ export function getVideoMinutes(data) {
     else {
         return minute;
     }
+}
+//Conversión de formatos de audio/video a audio.mp3
+export async function convertVideoToAudio(file) {
+    const finalFilePath = file.path.replace(path.extname(file.path), '_converted.mp3');
+    return new Promise((resolve, reject) => {
+        ffmpeg(file.path)
+            .toFormat("mp3")
+            .on('end', async () => {
+            await fs.unlink(file.path);
+            resolve(finalFilePath);
+        })
+            .on('error', (err) => {
+            reject(err);
+        })
+            .saveToFile(finalFilePath);
+    });
 }

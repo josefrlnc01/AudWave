@@ -9,16 +9,16 @@ const quotaSchema = new Schema({
         type: String,
         required: true
     },
-    requestCount: {
+    usedMinutes: {
         type: Number,
         default: 0
     },
-    resetAt: {
+    createdAt: {
         type: Date,
-        default: () => new Date(Date.now() + 24 * 60 * 60 * 1000),
-        expires: 0
+        default: Date.now,
+        expires: '30d'
     }
-});
+}, { timestamps: false });
 quotaSchema.index({ user: 1, ip: 1 }, { unique: true });
 const Quota = mongoose.model('Quota', quotaSchema);
 export default Quota;

@@ -1,30 +1,31 @@
 import cors from 'cors';
-export const isProd = process.env.NODE_ENV === 'production';
-import { getRequiredEnv } from '../shared/utils/variables.js';
-let frontendUrl;
-if (isProd) {
-    frontendUrl = getRequiredEnv('FRONTEND_URL');
-}
-else {
-    frontendUrl = 'http://localhost:5173';
-}
+const isProd = process.env.NODE_ENV === 'production';
+const normalizeOrigin = (value) => value?.trim().replace(/\/$/, '');
+const getAcceptedOrigins = () => {
+    const origins = [
+        isProd ? process.env.FRONTEND_URL : process.env.FRONTEND_URL_DEV,
+        process.env.FRONTEND_URL,
+        process.env.FRONTEND_URL_WWW,
+        ...(process.env.ALLOWED_ORIGINS?.split(',') ?? [])
+    ];
+    return origins
+        .map(normalizeOrigin)
+        .filter((origin) => Boolean(origin));
+};
 export const corsMiddleware = () => cors({
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 204,
     origin: (origin, callback) => {
-        const ACCEPTED_ORIGINS = [
-            frontendUrl
-        ];
-        if (process.env.NODE_ENV === 'production' && ACCEPTED_ORIGINS.length === 0) {
-            console.warn('Faltan las variables de produccion por definir');
+        const acceptedOrigins = getAcceptedOrigins();
+        const normalizedOrigin = normalizeOrigin(origin);
+        console.log('CORS origin:', origin, 'accepted:', acceptedOrigins);
+        if (!normalizedOrigin)
+            return callback(null, true);
+        if (acceptedOrigins.includes(normalizedOrigin)) {
             return callback(null, true);
         }
-        if (!origin)
-            return callback(null, true);
-        if (ACCEPTED_ORIGINS.includes(origin)) {
-            callback(null, true);
-        }
-        else {
-            callback(new Error('No permitido por cors'));
-        }
+        return callback(new Error(`No permitido por CORS para el origen ${normalizedOrigin}`));
     }
 });

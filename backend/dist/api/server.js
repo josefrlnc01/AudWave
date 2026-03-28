@@ -1,13 +1,17 @@
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
-import { mainRoute } from '../modules/main/main.routes.js';
 import { corsMiddleware } from '../config/cors.js';
 import { authRoute } from '../modules/auth/auth.routes.js';
 import { connectToDb } from '../config/db.js';
 import cookieParser from 'cookie-parser';
-import { storedRoute } from '../modules/stored/stored.routes.js';
+import { youtubeVideoRoute } from '../modules/youtube-video/youtube-video.routes.js';
 import { fileRoute } from '../modules/file/file.routes.js';
+import { documentRoute } from '../modules/document/document.routes.js';
+import { savedsRoute } from '../modules/saveds/saveds.routes.js';
+import admin from 'firebase-admin';
+import { userRoutes } from '../modules/user/user.routes.js';
+import { translationRoutes } from '../modules/translation/translation.routes.js';
 await connectToDb();
 const isProd = process.env.NODE_ENV === 'production';
 const port = process.env.PORT;
@@ -16,13 +20,17 @@ app.use(cookieParser());
 app.use(corsMiddleware());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/link', mainRoute);
 app.use('/auth', authRoute);
-app.use('/storeds', storedRoute);
+app.use('/yt-video', youtubeVideoRoute);
 app.use('/file', fileRoute);
-if (!isProd) {
-    app.listen(port, () => {
-        console.log(`Sevidor corriendo en ${port}`);
-    });
-}
+app.use('/document', documentRoute);
+app.use('/saveds', savedsRoute);
+app.use('/translation', translationRoutes);
+app.use('/user', userRoutes);
+admin.initializeApp({
+    credential: admin.credential.applicationDefault()
+});
+app.listen(port, () => {
+    console.log(`Servidor corriendo en ${port}`);
+});
 export default app;

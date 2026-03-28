@@ -1,13 +1,31 @@
 import { v2 } from "@google-cloud/translate";
+import { AppError } from "../errors/AppError.js";
 const { Translate } = v2;
 const translate = new Translate({
     projectId: process.env.PROJECT_ID
 });
-export async function translateText(lang, text) {
-    if (!lang)
-        return "Debes especificar un lenguaje";
-    const [translation] = await translate.translate(text, lang);
-    if (!translation)
-        return "Hubo un error durante la traducción";
-    return translation;
+export class TranslationService {
+    static translateText = async (lang = null, segments) => {
+        try {
+            if (!lang)
+                throw new AppError('Debes especificar un lenguaje', 400);
+            const translatedSegments = await Promise.all(segments.map(async (s) => {
+                const [translation] = await translate.translate(s.text, lang);
+                return {
+                    start: s.start,
+                    end: s.end,
+                    text: translation
+                };
+            }));
+            if (!translatedSegments)
+                throw new AppError('No se pudo obtener la traducción', 400);
+            return translatedSegments;
+        }
+        catch (error) {
+            console.error(error);
+            if (error instanceof AppError)
+                throw error;
+            throw new Error('Hubo un error durante la traducción');
+        }
+    };
 }
