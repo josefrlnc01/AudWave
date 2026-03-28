@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { DocumentService } from "./document.service.js";
 import { AppError } from "../errors/AppError.js";
-import { formatTime } from "../../shared/utils/time.js";
 
 export class DocumentController {
     static createPDF = async (req: Request, res: Response) => {
