@@ -67,7 +67,7 @@ export async function getUser(accessToken: string) {
 
         if (!response.success) throw new Error('Respuesta inválida del servidor');
         suscriptionStore.set(response.data.user.suscription)
-        minutesStore.set(response.data.usedMinutes!)
+        localStorage.setItem('usedMinutes', String(response.data?.usedMinutes!))
         return response.data
     
 }
