@@ -1,9 +1,11 @@
 import { AppError } from "../errors/AppError.js"
-import pdf from 'html-pdf'
+import PDFDocument from 'pdfkit'
 import { formatSRTTime, formatTime, formatVTTTime } from "../../shared/utils/time.js"
 import { Document, Packer, Paragraph, TextRun } from "docx"
 import {stringify} from 'csv-stringify/sync'
 import fsSync from 'node:fs'
+import blobstream from 'blob-stream'
+
 
 export class DocumentService {
     static generatePdf = async (segments:{start: number, end:number, text: string}[]) => {
@@ -11,17 +13,49 @@ export class DocumentService {
         const contenido = `<aside>
                 ${text}
                 </aside>`
-
+        
         if (!segments?.length) {
             throw new AppError('No hay contenido con el que generar el pdf', 400)
         }
 
-        return new Promise<Buffer>((resolve, reject) => {
-            pdf.create(contenido).toBuffer((err, buffer) => {
-                if (err) return reject(err)
-                if (!buffer) return reject(new Error('No se pudo generar el buffer del PDF'))
-                resolve(buffer)
+        return await new Promise<Buffer>((resolve, reject) => {
+            const doc = new PDFDocument({
+                margin: 50,
+                size: 'A4'
             })
+
+            const chunks: Buffer[] = []
+
+            doc.on('data', (chunks) => {
+                chunks.push(chunks)
+            })
+
+            doc.on('end', () => {
+                resolve(Buffer.concat(chunks))
+            })
+
+            doc.on('error', (error) => {
+                reject(error)
+            })
+
+            doc.fontSize(18).text("Transcripción", {underline: true})
+            doc.moveDown()
+
+            for (const segment of segments) {
+                doc
+                    .fontSize(10)
+                    .fillColor('blue')
+                    .text(`${formatTime(segment.start)}:${formatTime(segment.end)}`)
+
+                doc
+                    .fontSize(12)
+                    .fillColor('black')
+                    .text(segment.text)
+
+                doc.moveDown()
+            }
+
+            doc.end()
         })
     }
 
