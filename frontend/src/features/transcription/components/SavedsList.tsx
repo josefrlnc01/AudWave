@@ -51,16 +51,11 @@ export default function SavedsList() {
 
       <div className='w-full flex flex-col gap-4'>
         
-        {filtereds.length === 0 &&
+        {filtereds.length === 0  &&
           <>
           <div className="w-full mb-6">
 
-              <input
-                value={inputValue}
-                onChange={handleInputValue}
-                placeholder="Buscar archivo..."
-                className="w-full pl-9 pr-3 py-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-400 focus:outline-none focus:border-blue-500"
-              />
+              
             </div>
             {files.map(file => (
               <button key={file._id}>
@@ -79,7 +74,7 @@ export default function SavedsList() {
               </button>
             ))}
           </>}
-        {filtereds.length > 0 &&
+        {(filtereds.length > 0 && (filteredsFile.length > 0 || filteredsYoutube.length > 0)) &&
           <>
             <div className="w-full mb-6">
 

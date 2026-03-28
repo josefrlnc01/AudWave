@@ -13,9 +13,6 @@ export type MutationProps = {
     link: string | null
     formData: FormData | null
 }
-
-
-
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
     const [usedMinutes, setUsedMinues] = useState<number | null>(minutesStore.get() ?? 0)
@@ -152,7 +149,7 @@ export default function Form() {
                     </span>
                 </div>}
 
-                <aside className="w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-white bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur">
+                <aside className="w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur">
 
                     <form className="w-full flex flex-col  lg:p-2 gap-6">
 
@@ -184,7 +181,7 @@ export default function Form() {
                             </div>}
                             {(!fileInputValue && !inputValue) && <span className="text-center text-sm md:text-xl text-gray-300 ">O</span>}
                         <div className="grow flex flex-col justify-center items-center gap-15">
-                            
+                            {!fileInputValue &&
                                 <div className="w-full flex flex-col justify-around gap-2">
                                     <label className=" text-gray-400 pl-1 text-sm md:text-xl">Introduce un enlace de youtube</label>
                                     <input onChange={handleInput}
@@ -192,18 +189,16 @@ export default function Form() {
                                             e.currentTarget.value = ''
                                             setInputValue('')
                                         }}
-                                        id="yt-input"
                                         placeholder="Pega tu enlace aquí"
                                         type='text'
                                         className='min-w-full w-full lg:w-1/4 p-3 hover:backdrop-blur-md text-sm text-gray-300 rounded-xl focus:outline-none  bg-slate-800 hover:bg-slate-800/80 transition-colors duration-100 ease-in' />
 
-                                </div>
+                                </div>}
                         </div>
                         {(changed && fileInputValue) && 
                         <span className="text-sm text-shadow-white font-semibold text-center">Archivo preparado</span>}
                         <button
                             type="submit"
-                            id="transcribe-button"
                             onClick={handleForm}
                             className={`${(fileInputValue || inputValue) && changed ? 'bg-blue-500/90 animate-pulse' : 'bg-blue-600'} pl-6 pr-6 pb-3 pt-3 rounded-xl font-semibold text-white hover:bg-blue-500 hover:animate-none transition-colors ease duration-300 cursor-pointer`}>
                             Transcribir</button>
