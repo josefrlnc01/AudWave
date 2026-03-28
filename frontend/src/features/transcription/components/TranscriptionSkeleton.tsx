@@ -12,13 +12,8 @@ const awaitPhrases = [
 ]
 
 export default function TranscriptionSkeleton() {
-
-
     const [index, setIndex] = useState(0)
     const [fade, setFade] = useState(true)
-
-
-
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -34,7 +29,6 @@ export default function TranscriptionSkeleton() {
     }, [awaitPhrases.length])
 
     const phrase = awaitPhrases[index]
-
 
 
     return (

@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { minutesStore } from "@/shared/stores/minutes.store";
 import { formatMinutes } from "@/shared/utils/minutes";
-import type { User } from "../types/user.types";
 import { suscriptionStore } from "@/shared/stores/user-suscription.store";
-import { tokenStore } from "@/lib/token.store";
 
 export type MutationProps = {
     link: string | null
@@ -20,7 +18,6 @@ export default function Form() {
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
     const queryClient = useQueryClient()
-    const [user, setUser] = useState<User>()
     console.log(inputValue)
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
@@ -31,7 +28,6 @@ export default function Form() {
         onSuccess: (data) => {
             queryClient.invalidateQueries({queryKey: ['allSaveds']})
             setUsedMinues(data?.usedMinutes!)
-            setUser(data?.user)
         }
     })
     

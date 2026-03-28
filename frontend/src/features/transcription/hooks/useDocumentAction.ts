@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query"
 import { toast } from "react-toastify"
 
 export const useDocumentAction = () => {
-     const generatePdf = useMutation({
+    const generatePdf = useMutation({
         mutationFn: generatePDF,
         onError: (error) => {
             toast.error(error.message)

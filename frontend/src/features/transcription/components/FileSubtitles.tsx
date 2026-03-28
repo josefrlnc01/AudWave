@@ -1,28 +1,20 @@
-import { useMutation } from '@tanstack/react-query'
-import { toast } from 'react-toastify'
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { Spinner } from '@/components/ui/spinner'
 import Subtitles from '../pages/SubtitlesView'
 import { motion } from 'motion/react'
 import { useState } from 'react'
-import flecha from './../../../assets/apunta-hacia-abajo.webp'
-import type { Translated } from '../types/translared.types'
-import { freeUserLanguages, languages } from '../stores/languages'
-import { useDocumentAction } from '../hooks/useDocumentAction'
+import { languages } from '../stores/languages'
 import { container, item } from '../stores/motion'
-import { generateIaSummary } from '../api/savedsApi'
 import { useTranslate } from '@/features/translation/hooks/useTranslate'
 import { formatTime } from '@/shared/utils/minutes'
 import { DropdownMenuBasic } from '@/components/DropdownMenuBasic'
 import SummarySection from './SummarySection'
 import { useSummary } from '../hooks/useSummary'
 import { useEditFile } from '../hooks/useEditFIle'
-import { useNavigate } from 'react-router'
 import EditFileDialog from './EditFileDialog'
 
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
-    const navigate = useNavigate()
     const { summary, handleGenerateIaSummary } = useSummary()
     const { isLoading } = useSummary()
     const { isOpen, setIsOpen } = useEditFile()

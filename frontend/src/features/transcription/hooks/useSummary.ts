@@ -1,7 +1,6 @@
 import { tokenStore } from "@/lib/token.store"
 import { isAxiosError } from "axios"
 import { useState } from "react"
-import { useParams } from "react-router"
 
 export const useSummary = () => {
     const [summary, setSummary] = useState('')
@@ -30,7 +29,6 @@ export const useSummary = () => {
 
                 if (done) break
 
-
                 const chunk = decoder.decode(value)
                 const lines = chunk.split('\n\n').filter(Boolean)
 
@@ -45,10 +43,6 @@ export const useSummary = () => {
                 }
                 setIsLoading(false)
             }
-
-
-            
-
         } catch (error) {
             if (isAxiosError(error) && error.response) {
                 throw new Error(error.response.data.error)

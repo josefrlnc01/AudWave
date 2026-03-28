@@ -1,8 +1,5 @@
-import { tokenStore } from '@/lib/token.store'
-import { isAxiosError } from 'axios'
-import React, { useState } from 'react'
+
 import { motion } from 'motion/react'
-import { useSummary } from '../hooks/useSummary'
 export type SummaryProps = {
     summary: string,
     isLoading: boolean,

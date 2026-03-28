@@ -20,18 +20,12 @@ export type Saveds = {
 
 export default function SavedsList() {
   const [inputValue, setInputValue] = useState('')
-  const [newData, setNewData] = useState([])
   const { data } = useQuery({
     queryFn: getSaveds,
     queryKey: ['allSaveds']
   })
 
-
-
-
   if (!data) return <p>No hay datos</p>
-
-
 
   const files: Saveds = data.files
   const youtubeFiles: Saveds = data.youtubeFiles
@@ -39,8 +33,6 @@ export default function SavedsList() {
   const handleInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setInputValue(value)
-
-
   }
 
   const filteredsFile = files.filter(file => file.title.toLowerCase().includes(inputValue.toLowerCase()))
