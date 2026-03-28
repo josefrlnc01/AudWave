@@ -5,9 +5,12 @@ import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router"
 import { toast } from "react-toastify"
+import { Eye, EyeOff } from "lucide-react"
+import { useState } from "react"
 
 export default function RegisterView() {
     const navigate = useNavigate()
+    const [show, setShow] = useState(false)
     const initialValues: RegistrationForm = {
         name: '',
         email: '',
@@ -134,42 +137,62 @@ export default function RegisterView() {
 
                     <div className="flex flex-col gap-3">
                         <label className="text-sm font-semibold text-zinc-300 ml-1">Contraseña</label>
-                        <input
-                            type="password"
-                            id="password"
-                            {...register('password', {
-                                required: 'El campo de contraseña es obligatorio'
-                            })}
-                            className="w-full px-4 py-3 rounded-xl
+                        <div className='relative'>
+                            <input
+                                id='password'
+                                type={`${show ? 'text' : 'password'}`}
+                                className='w-full px-4 py-3 rounded-xl
                         bg-slate-900/60
                         border border-slate-700
                         focus:border-blue-500
                         focus:ring-2 focus:ring-blue-500/30
                         outline-none
-                        transition text-white" />
-                        {errors && (
-                            <ErrorMessage>{errors.password?.message}</ErrorMessage>
-                        )}
+                        transition text-white'
+                                {...register('password', {
+                                    required: 'La contraseña es obligatoria',
+                                })}
+                            />
+                            {errors.password && (
+                                <ErrorMessage>{errors.password.message}</ErrorMessage>
+                            )}
+                            <button
+                                type="button"
+                                onClick={() => setShow(!show)}
+                                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-white"
+                            >
+                                {show ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-3">
                         <label className="text-sm font-semibold text-zinc-300 ml-1">Repite la contraseña</label>
-                        <input
-                            type="password"
-                            id="password_confirmation"
-                            {...register('password_confirmation', {
-                                required: 'El campo de confirmación de contraseña es obligatorio'
-                            })}
-                            className="w-full px-4 py-3 rounded-xl
+                        <div className="relative">
+                            <input
+                                type={`${show ? 'text' : 'password'}`}
+                                id="password_confirmation"
+                                {...register('password_confirmation', {
+                                    required: 'El campo de confirmación de contraseña es obligatorio'
+                                })}
+                                className="w-full px-4 py-3 rounded-xl
                         bg-slate-900/60
                         border border-slate-700
                         focus:border-blue-500
                         focus:ring-2 focus:ring-blue-500/30
                         outline-none
                         transition text-white" />
-                        {errors && (
-                            <ErrorMessage>{errors.password_confirmation?.message}</ErrorMessage>
-                        )}
+                            {errors && (
+                                <ErrorMessage>{errors.password_confirmation?.message}</ErrorMessage>
+                            )}
+
+                            <button
+                                type="button"
+                                onClick={() => setShow(!show)}
+                                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-white"
+                            >
+                                {show ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
+                        </div>
                     </div>
                     <input type="submit" className="w-full py-3 rounded-xl
                     bg-linear-to-r from-blue-500 to-indigo-500
