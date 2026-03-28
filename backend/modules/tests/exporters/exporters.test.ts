@@ -42,4 +42,11 @@ describe('DocumentService', () => {
         const buffer = await DocumentService.generatePdf(segments)
         expect(Buffer.isBuffer(buffer)).toBe(true)
     })
+
+    it('generate CSV devuelve CSV correcto', async () => {
+        const csv = await DocumentService.generateCsv(segments)
+        expect(csv).toContain('start,end,text')
+        expect(csv).toContain('[00:00],[00:05],Hola')
+        expect(csv).toContain('[00:05],[00:10],Mundo')
+    })
 })
