@@ -5,6 +5,7 @@ import InputIcon from "../../../assets/input.svg"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatMinutes } from "@/shared/utils/minutes";
 import { suscriptionStore } from "@/shared/stores/user-suscription.store";
+import { useTheme } from "@/shared/context/ThemeContext";
 
 export type MutationProps = {
     link: string | null
@@ -17,6 +18,7 @@ export default function Form() {
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
     const queryClient = useQueryClient()
+    const {theme} = useTheme()
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
         Error,
@@ -89,6 +91,8 @@ export default function Form() {
         event.preventDefault()
     }
 
+    
+
     return (
         <>
 
@@ -153,7 +157,7 @@ export default function Form() {
                     </span>
                 </div>}
 
-                <aside className="w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto lg:min-h-2/5 lg:h-2/5 bg-slate-800/30 flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur">
+                <aside className={`w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto lg:min-h-2/5 lg:h-2/5 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-white'} flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur`}>
 
                     <form className="w-full flex flex-col  lg:p-2 gap-6">
 

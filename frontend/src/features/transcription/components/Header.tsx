@@ -3,6 +3,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { logOut } from "@/features/auth/api/authApi"
 import { useAuth } from "@/features/auth/hooks/useAuth"
 import { deleteUser } from "@/features/user/userApi"
+import { useTheme } from "@/shared/context/ThemeContext"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { LogOut, Menu } from "lucide-react"
@@ -10,7 +11,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 
 export default function Header() {
-
+  const {theme, toggleTheme} = useTheme()
 
   const { data } = useAuth()
   const [isOpenForDelete, setIsOpenForDelete] = useState(false)
@@ -43,13 +44,16 @@ export default function Header() {
 
 
   return (
-    <header className='w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center'>
+    <header className={theme === 'dark'
+  ? 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center bg-slate-950 text-white'
+  : 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-200 flex justify-between md:justify-evenly items-center bg-white text-slate-900'}>
       <div className="flex items-center gap-2">
         <h1 className="font-bold text-4xl text-white">Aud<span className="text-blue-600/80">Wave</span></h1>
       </div>
 
       
       <div className="flex justify-center  items-center hover:scale-110 transition-transform duration-100 ease-in focus:outline-none focus-visible:outline-none">
+        <button onClick={toggleTheme}>{theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}</button>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Menu className="w-5 h-5 text-slate-400 cursor-pointer " />
