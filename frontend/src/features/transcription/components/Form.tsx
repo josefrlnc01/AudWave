@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { sendLink, type PromiseFile, type PromiseLink } from "../api/transcriptionApi";
 import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
@@ -11,6 +11,7 @@ export type MutationProps = {
     formData: FormData | null
 }
 export default function Form() {
+    const resultRef = useRef<HTMLDivElement>(null)
     const [inputValue, setInputValue] = useState('')
     const [usedMinutes, setUsedMinues] = useState<number | null>(Number(localStorage.getItem('usedMinutes')) ?? 0)
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
@@ -26,15 +27,17 @@ export default function Form() {
         onSuccess: (data) => {
             queryClient.invalidateQueries({queryKey: ['allSaveds']})
             setUsedMinues(data?.usedMinutes!)
+            setTimeout(() => {
+                resultRef.current?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                })
+            }, 100)
         }
     })
     
-
-   
     const suscription = suscriptionStore.get()
     
-    
-
     const handleForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
 
@@ -200,11 +203,14 @@ export default function Form() {
                     </form>
 
                 </aside>
-                <SubtitlesView
+                <div ref={resultRef}>
+                    <SubtitlesView
                     mutation={mutation}
                     inputValue={inputValue}
                     fileInputValue={fileInputValue}
                 />
+                </div>
+                
             </section>
         </>
     )
