@@ -5,3 +5,10 @@ link.json
 service_account.json
 uploads
 document.pdf
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
