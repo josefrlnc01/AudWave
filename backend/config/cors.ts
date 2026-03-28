@@ -13,6 +13,7 @@ if (isProd) {
 export const corsMiddleware = () => cors({
     credentials:true,
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+        console.log('origin', origin)
         const ACCEPTED_ORIGINS:string[] | undefined = [
         frontendUrl,
         getRequiredEnv('FRONTEND_URL_WWW')
