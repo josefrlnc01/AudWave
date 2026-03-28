@@ -2,6 +2,10 @@
 
 Para la hackaton de CubePath NodeMailer estará desactivado por falta de tiempo para su implementación final, pero en el flujo final de producción real estará presente para su uso en autenticación del usuario en registro y cambio de contraseña.
 
+Tests E2E implementados con Playwright para verificar flujo de creación de cuenta y login y para verificar recepción de transcripción de archivo/video de youtube.
+Tests unitarios implementados con Vitest para comprobar formatos de documentos exportables, middleware de autenticación y servicio de archivos guardados en BD.
+
+
 # 🎵 AudWave
 
 ### Transcripción y traducción de audio con IA de precisión profesional
