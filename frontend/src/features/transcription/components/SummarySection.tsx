@@ -32,7 +32,7 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
                     disabled={isLoading}
                     className='w-full py-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition-colors cursor-pointer'
                 >
-                    {isLoading ? 'Generando...' : 'Generar Resumen'}
+                    Generar resumen
                 </button>
 
                 {!summary && !isLoading && (
