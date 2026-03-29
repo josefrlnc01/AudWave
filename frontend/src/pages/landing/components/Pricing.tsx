@@ -26,7 +26,7 @@ export default function Pricing() {
                         </li>
                         <li className="flex items-center gap-3 text-sm text-gray-300">
                             <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
-                            Solo exportaciones en formato TXT
+                            TXT, PDF SRT, VTT
                         </li>
                     </ul>
                     <button className="w-full py-3 rounded-xl font-semibold
