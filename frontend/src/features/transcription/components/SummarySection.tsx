@@ -1,3 +1,4 @@
+import { useTheme } from '@/shared/context/ThemeContext'
 import { motion } from 'motion/react'
 export type SummaryProps = {
     summary: string,
@@ -7,11 +8,12 @@ export type SummaryProps = {
 }
 
 export default function SummarySection({ summary, isLoading, handleGenerateIaSummary, id }: SummaryProps) {
-
+    const {theme} = useTheme()
 
     return (
-        <div className='flex flex-col w-full lg:w-72 shrink-0'>
-            <div className='px-5 py-3 border-b border-slate-700/30 flex items-center justify-between'>
+        <div className={`flex flex-col w-full h-full lg:w-72 shrink-0`}>
+            
+            <div className={`px-5 py-3 border-b h-full border-slate-700/30 flex items-center justify-between ${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'}`}>
                 <div>
                     <h3 className='text-xs font-semibold text-slate-400 uppercase tracking-widest'>Resumen IA</h3>
                     <p className='text-xs text-slate-600 mt-0.5'>Generado por GPT-4o</p>

@@ -70,9 +70,9 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
        
         <aside className={`w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4  flex flex-col ${theme === 'dark' ? 'bg-slate-900/60 border-slate-800/50' : 'bg-slate-200 border-slate-300/50'} rounded-xl border  backdrop-blur shadow-xl overflow-hidden`}>
 
-            <header className={`flex items-center w-full pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-300 border-slate-300/50'}`}>
+            <header className={`flex items-center w-full pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-200 border-slate-300/50'}`}>
                 <div className='grow-0 flex items-center gap-4 min-w-0'>
-                    <h2 title={data.title} className='text-sm font-semibold text-gray-100 truncate max-w-50 lg:max-w-none'>
+                    <h2 title={data.title} className={`text-sm font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-slate-950'} truncate max-w-50 lg:max-w-none`}>
                         {data.title}
                         <span className="text-xs font-normal text-slate-500 ml-1">(Original)</span>
                     </h2>
@@ -94,7 +94,7 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
             <div className='flex flex-col lg:flex-row flex-1 min-h-0'>
 
                 <div className='flex flex-col flex-1 border-r border-slate-700/50'>
-                    <div className='px-5 py-3 border-b border-slate-700/30 flex items-center justify-between gap-4'>
+                    <div className={`px-5 py-3 border-b ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-slate-300 border-slate-200'}  flex items-center justify-between gap-4`}>
                         <h3 className='text-xs font-semibold text-slate-400 uppercase tracking-widest'>Transcripción</h3>
                         {(user.suscription === 'pro' || user.suscription === 'business') && 
                         <>
@@ -134,7 +134,7 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
                         }
                     </div>
                     <motion.div
-                        className={`grow ${theme === 'dark' ? 'bg-slate-800/40' : 'bg-slate-300 text-slate-900'} p-4 md:p-8`}
+                        className={`grow ${theme === 'dark' ? 'bg-slate-800/40' : 'bg-slate-200 text-slate-900'} p-4 md:p-8`}
                         variants={savedsContainer}
                         initial='hidden'
                         animate='show'>
@@ -195,7 +195,7 @@ export default function SavedFile({ data,  user, id }: SavedFileProps) {
                             <motion.div
                                 initial={{ opacity: 0, height: 0 }}
                                 animate={{ opacity: 1, height: 'auto' }}
-                                className='px-4 pb-4'
+                                className={`${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'} px-4 pb-4 h-full min-h-full`}
                             >
                                 <SummarySection
                                     summary={summary}
