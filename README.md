@@ -1,4 +1,10 @@
 <div align="center">
+Para acceder a la aplicación y probar todas las funcionalidades 
+el dia de la votación puedes usar la siguiente cuenta con el plan Business activo:
+
+
+Email: demo@audwave.app
+Contraseña: audwave2026
 
 Para la hackaton de CubePath NodeMailer estará desactivado por falta de tiempo para su implementación final, pero en el flujo final de producción real estará presente para su uso en autenticación del usuario en registro y cambio de contraseña.
 
@@ -16,7 +22,12 @@ Tests unitarios implementados con Vitest para comprobar formatos de documentos e
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
 [![OpenAI](https://img.shields.io/badge/OpenAI-Whisper-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com)
 
-<img width="1897" height="901" alt="Screenshot 2026-03-24 120728" src="https://github.com/user-attachments/assets/343d3070-06c5-43f6-ade2-d619890aaecf" />
+
+<img width="1893" height="904" alt="Screenshot 2026-03-29 165953" src="https://github.com/user-attachments/assets/22de35b0-847e-4bf3-bbf9-d120406a789d" />
+
+<img width="1894" height="895" alt="Screenshot 2026-03-29 170748" src="https://github.com/user-attachments/assets/d8f001ab-e35b-4c73-8770-a053defd2f09" />
+
+<img width="1881" height="895" alt="Screenshot 2026-03-29 170847" src="https://github.com/user-attachments/assets/3fcdda81-6d53-44fe-8baa-bf3d2a140ff9" />
 
 
 </div>
@@ -281,9 +292,14 @@ docker run -p 4000:4000 --env-file .env audwave-backend
 |---|:---:|:---:|:---:|
 | Precio | $0/mes | $6/mes | $15/mes |
 | Minutos de transcripción | 6 min | 3 horas | 10 horas |
-| Idiomas de traducción | — | 4 idiomas | 4 idiomas |
-| Exportación PDF | ❌ | ✅ | ✅ |
-| Exportación SRT/TXT | ❌ | ✅ | ✅ |
+| Idiomas de traducción | — | Sin límite | Sin límite |
+| Exportación PDF |  ✅ | ✅ | ✅ |
+| Exportación CSV |  ✅ | ✅ | ✅ |
+| Exportación SRT/TXT |  ✅ | ✅ | ✅ |
+| Exportación VTT |  ✅ | ✅ | ✅ |
+| Exportación DOCX |  ❌ | ❌ | ✅ |
+| Exportación CSV |  ❌ | ❌ | ✅ |
+| Exportación JSON |  ❌ | ❌ | ✅ |
 | Historial guardado | ✅ | ✅ | ✅ |
 | Resumen IA | ❌ | ❌ | ✅ |
 
@@ -291,12 +307,8 @@ docker run -p 4000:4000 --env-file .env audwave-backend
 
 ## 🗺️ Roadmap
 
-- [ ] Exportación en formato VTT y DOCX
-- [ ] Resumen automático con GPT-4
 - [ ] Detección de múltiples hablantes (diarización)
 - [ ] Integración de pagos con Stripe
-- [ ] API pública para desarrolladores
-- [ ] Extensión de Chrome
 
 ---
 
@@ -324,7 +336,7 @@ MIT © 2026 AudWave — José María Sánchez Serna
 
 <div align="center">
 
-Hecho con ❤️ y demasiado café
+Hecho con ❤️
 
 **[⬆ Volver arriba](#-audwave)**
 
