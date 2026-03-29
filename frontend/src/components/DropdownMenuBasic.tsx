@@ -177,15 +177,13 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                 </svg>
                 TXT
             </div>
-            <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded">Free</span>
+            <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded border border-blue-500/20">Free</span>
         </DropdownMenuItem>
 
         {/* PRO y BUSINESS */}
-        {(user.suscription === 'pro' || user.suscription === 'business') && (
             <>
                 <DropdownMenuItem
                     onClick={() => handleGenerateTranscriptionPdf(data.segments)}
-                    disabled={(user.suscription !== 'business' && user.suscription !== 'pro')} 
                     className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
                 >
                     <div className="flex items-center gap-2">
@@ -194,11 +192,10 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                         </svg>
                         PDF
                     </div>
-                    <span className="text-xs text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20">Pro</span>
+                    <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded border border-blue-500/20">Free</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     onClick={() => handleGenerateTranscriptionSrt(data.segments)}
-                    disabled={(user.suscription !== 'business' && user.suscription !== 'pro')} 
                     className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
                 >
                     <div className="flex items-center gap-2">
@@ -207,11 +204,10 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                         </svg>
                         SRT
                     </div>
-                    <span className="text-xs text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20">Pro</span>
+                    <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded border border-blue-500/20">Free</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     onClick={() => handleGenerateTranscriptionVtt(data.segments)}
-                    disabled={(user.suscription !== 'business' && user.suscription !== 'pro')} 
                     className="flex items-center justify-between px-2 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors focus:bg-slate-800 focus:text-white"
                 >
                     <div className="flex items-center gap-2">
@@ -220,13 +216,13 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                         </svg>
                         VTT
                     </div>
-                    <span className="text-xs text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20">Pro</span>
+                    <span className="text-xs text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded border border-blue-500/20">Free</span>
                 </DropdownMenuItem>
             </>
-        )}
+        
 
         {/* Solo BUSINESS */}
-        {user.suscription === 'business' && (
+
             <>
                 <DropdownMenuSeparator className="bg-slate-700/30 my-1"/>
                 <DropdownMenuLabel className="text-xs font-semibold text-purple-400/70 uppercase tracking-widest px-2 pb-1">
@@ -272,7 +268,6 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
                     <span className="text-xs text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">Business</span>
                 </DropdownMenuItem>
             </>
-        )}
     </DropdownMenuGroup>
 </DropdownMenuContent>  
         </DropdownMenu>
