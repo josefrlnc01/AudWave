@@ -15,7 +15,7 @@ export default function Hero() {
           Impulsado por Whisper v1
         </div>
         <h2 className='text-4xl text-center lg:text-7xl text-white font-bold tracking-tight mb-6'>Convierte audios y vídeos en texto con <strong className='text-blue-600/80 text-center'>precisión</strong></h2>
-        <p className='max-w-2xl mx-auto text-lg md:text-xl text-center text-gray-400 mb-10 leading-relaxed'>Sube tu archivo y obtén resultados en cuestión de minutos. Soporte de múltiples idiomas, traducción automática.</p>
+        <p className='max-w-2xl mx-auto text-lg md:text-xl text-center text-gray-400 mb-10 leading-relaxed'>Sube tu archivo y obtén su transcripción rápidamente. Soporte de múltiples idiomas, traducción automática.</p>
         <button
           onClick={() => navigate('/auth/register')}
           className='pt-2 pb-2 pr-4 pl-4 bg-blue-600 cursor-pointer hover:bg-blue-700 rounded-xl font-bold text-lg shadow-xl transition-colors duration-200 ease-in'>
