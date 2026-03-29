@@ -1,17 +1,23 @@
 import { StrictMode, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
 import Router from './router/router.tsx'
-import { themeStore, type Theme } from './shared/stores/theme.store.ts'
 import { ThemeContext } from './shared/context/ThemeContext.tsx'
+import type { Theme } from './shared/stores/theme.store.ts'
 
 function Root() {
-  const [theme, setTheme] = useState<Theme>(themeStore.get())
+  const [theme, setTheme] = useState<Theme>(() => {
+    const saved = localStorage.getItem('theme')
+    if (saved === 'light' || saved === 'dark') return saved
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
+  })
 
   useEffect(() => {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
+    console.log('prefersDark', prefersDark)
     const html = document.documentElement
     html.classList.remove('light', 'dark')
     html.classList.add(theme)
