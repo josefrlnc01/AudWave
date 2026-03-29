@@ -4,10 +4,12 @@ import { useAuth } from '@/features/auth/hooks/useAuth'
 import { Navigate } from 'react-router'
 import { Outlet } from 'react-router'
 import { Spinner } from '@/components/ui/spinner'
+import { useTheme } from '@/shared/context/ThemeContext'
 
 
 export default function AppLayout({ children }: { children?: React.ReactNode }) {
     const { data, isError, isLoading } = useAuth()
+    const {theme} = useTheme()
     if (isLoading) {
         return (
             <aside className="p-4 min-h-screen max-w-screen h-screen bg-[#101622] flex flex-col gap-3 items-center text-white justify-center">
@@ -26,7 +28,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
             <>
                 
                     
-                    <main className='min-w-screen max-w-screen overflow-x-hidden max-h-screen min-h-screen bg-[#101622] text-white'>
+                    <main className={`min-w-screen max-w-screen overflow-x-hidden max-h-screen min-h-screen ${theme === 'dark' ? 'bg-[#101622] text-white' : 'bg-slate-300/40  text-slate-900'} `}>
                         
                         <Outlet />
 

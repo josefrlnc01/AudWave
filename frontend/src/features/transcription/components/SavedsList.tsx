@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getSaveds } from '../api/savedsApi'
 import { Link } from 'react-router'
 import { useState } from 'react'
+import { useTheme } from '@/shared/context/ThemeContext'
 
 export type Saveds = {
   _id: string,
@@ -19,6 +20,7 @@ export type Saveds = {
 
 
 export default function SavedsList() {
+  const {theme} = useTheme()
   const [inputValue, setInputValue] = useState('')
   const { data } = useQuery({
     queryFn: getSaveds,
@@ -45,7 +47,7 @@ export default function SavedsList() {
       {(filteredsFile.length > 0 || filteredsYoutube.length > 0) &&
         <>
           <section className='w-full p-2 md:p-0'>
-            <aside className='w-full relative mt-0 bg-slate-800/30 lg:w-2/4 md:w-3/4 p-4 rounded-xl  m-auto flex flex-col justify-center items-center mb-10'>
+            <aside className={`w-full relative mt-0 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-slate-100 border-2 border-blue-200'} lg:w-2/4 md:w-3/4 p-4 rounded-xl  m-auto flex flex-col justify-center items-center mb-10`}>
               <div className='flex flex-col gap-2 justify-center items-center mb-6'>
                 <h2 className='font-bold text-lg md:text-xl lg:text-2xl'>Archivos transcritos</h2>
                 <span className='text-sm md:text-lg text-gray-400'>Pulsa sobre uno para acceder a su contenido</span>
@@ -57,7 +59,7 @@ export default function SavedsList() {
 
                     {files.map(file => (
                       <button key={file._id}>
-                        <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
+                        <Link to={`/saveds/${file.fileId}`} className={`${theme === 'dark' ? 'bg-slate-800/70  hover:bg-slate-700/90' : 'bg-slate-300 hover:bg-slate-200'} p-4 md:p-6 gap-2 rounded-md flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer`} key={file._id}>
                           <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
                           <span className='text-white min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl'>{file.duration}</span>
                         </Link>
@@ -65,7 +67,7 @@ export default function SavedsList() {
                     ))}
                     {youtubeFiles.map(file => (
                       <button key={file._id}>
-                        <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
+                        <Link to={`/saveds/${file.fileId}`} className={`${theme === 'dark' ? 'bg-slate-800/70  hover:bg-slate-700/90' : 'bg-slate-300 hover:bg-slate-200'} p-4 md:p-6 gap-2 rounded-md flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer`} key={file._id}>
                           <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
                           <span className='text-white min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl'>{file.duration}</span>
                         </Link>
@@ -80,14 +82,14 @@ export default function SavedsList() {
                         value={inputValue}
                         onChange={handleInputValue}
                         placeholder="Buscar archivo..."
-                        className="w-full pl-9 pr-3 py-3 bg-slate-800 border border-slate-700 rounded-lg text-sm text-gray-200 placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                        className={`w-full pl-9 pr-3 py-3 ${theme === 'dark' ? 'bg-slate-800 border border-slate-700 text-gray-200' : 'bg-slate-200 text-slate-900'} rounded-lg text-sm  placeholder-slate-400 focus:outline-none focus:border-blue-500`}
                       />
                     </div>
                     {filtereds.map(file => (
                       <button key={file._id}>
-                        <Link to={`/saveds/${file.fileId}`} className='bg-slate-800/70 p-4 md:p-6 gap-2 rounded-md hover:bg-slate-700/90 flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer' key={file._id}>
-                          <h4 className='wrap-break-word text-start text-sm md:text-md'>{file.title}</h4>
-                          <span className='text-white min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl'>{file.duration}</span>
+                        <Link to={`/saveds/${file.fileId}`} className={`${theme === 'dark' ? 'bg-slate-800/70  hover:bg-slate-700/90' : 'bg-slate-300 hover:bg-slate-200'} p-4 md:p-6 gap-2 rounded-md flex justify-between items-center hover:scale-105 transition-all duration-200 ease cursor-pointer`} key={file._id}>
+                          <h4 className={`${theme === 'dark' ? 'text-white' : 'text-slate-900'} wrap-break-word text-start text-sm md:text-md`}>{file.title}</h4>
+                          <span className={`${theme === 'dark' ? 'text-slate-900' : 'text-white'} min-w-22 text-xs md:text-sm flex justify-center items-center bg-blue-600 pt-1 pb-1 pl-3 pr-3 rounded-2xl`}>{file.duration}</span>
                         </Link>
                       </button>
                     ))}
