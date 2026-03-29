@@ -10,6 +10,7 @@
     "@types/nodemailer": "^7.0.11",
     "axios": "^1.13.5",
     "bcrypt": "^6.0.0",
+    "connect-timeout": "^1.9.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "csv-stringify": "^6.7.0",
@@ -42,6 +43,7 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@types/connect-timeout": "^1.9.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",

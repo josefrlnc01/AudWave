@@ -13,6 +13,9 @@ import admin from 'firebase-admin'
 import { userRoutes } from '../modules/user/user.routes.js'
 import { translationRoutes } from '../modules/translation/translation.routes.js'
 import fs from 'node:fs'
+import timeout from 'connect-timeout'
+
+
 await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
 const port = process.env.PORT 
@@ -22,6 +25,10 @@ app.use(cookieParser())
 app.use(corsMiddleware())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) 
+app.use(timeout('300s'))
+app.use((req, res, next) => {
+  if (!req.timedout) next()
+})
 
 app.use('/auth', authRoute)
 app.use('/yt-video', youtubeVideoRoute)
