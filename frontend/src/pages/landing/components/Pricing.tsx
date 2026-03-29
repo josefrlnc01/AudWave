@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 
 export default function Pricing() {
     return (
@@ -31,7 +32,11 @@ export default function Pricing() {
                     </ul>
                     <button className="w-full py-3 rounded-xl font-semibold
                     border border-slate-500 text-slate-200
-                    hover:bg-slate-800 cursor-pointer transition-colors duration-200 ease-in">Empezar gratis</button>
+                    hover:bg-slate-800 cursor-pointer transition-colors duration-200 ease-in">
+                        <Link to={'/auth/register'}>
+                        Probar gratis
+                        </Link>
+                    </button>
                 </div>
 
                 <div className="relative p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid rounded-md scale-105 border-[#0d59f2] transition-all">
