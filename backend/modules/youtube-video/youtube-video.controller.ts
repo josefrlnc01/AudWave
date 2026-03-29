@@ -27,12 +27,7 @@ export class YoutubeVideoController {
         
         
         
-        //Comprobación de longitud
-        const isValid = await YoutubeVideoService.isValidLength(id)
-        if (!isValid) {
-            const message = "El vídeo es muy largo"
-            return res.status(403).json(message)
-        }   
+         
 
 
         try {

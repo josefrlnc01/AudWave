@@ -121,19 +121,6 @@ export class YoutubeVideoService {
     }
 
 
-    static isValidLength = async (id: string) => {
-        const videoInfo = await YoutubeVideoService.getVideoInfo(id)
-        const videoItems = videoInfo.items
-        const videoDuration = videoItems[0].contentDetails.duration
-        const minutes: string = getVideoMinutes(videoDuration)
-        if (parseInt(minutes) >= 8) {
-            const message = "El vídeo es muy largo"
-            return false
-        }
-        return true
-    }
-
-
 
     static getTranscriptionFromAudio = async (user: IUser, ip: string) => {
         const backendDir = process.cwd()
