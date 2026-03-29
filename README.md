@@ -1,6 +1,6 @@
 <div align="center">
 Para acceder a la aplicación y probar todas las funcionalidades 
-el dia de la votación puedes usar esta cuenta con el plan Business activo.
+el dia de la votación puedes usar la siguiente cuenta con el plan Business activo:
 
 
 Email: demo@audwave.app
