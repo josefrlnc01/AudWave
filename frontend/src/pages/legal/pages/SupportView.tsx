@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
 import { motion, AnimatePresence } from 'motion/react'
 import { ChevronDown } from 'lucide-react'
 

@@ -1,33 +1,19 @@
 import { useTheme } from "@/shared/context/ThemeContext"
-
+import { Link } from 'react-router'
 
 export default function Footer() {
-  const {theme} = useTheme()
+  const { theme } = useTheme()
   return (
-   
     <footer className={`${theme === 'dark' ? 'bg-transparent' : 'bg-slate-400/40 text-slate-900'} grow-0 w-full px-8 py-4 md:py-8 border-t border-slate-800`}>
-      {/* Contenedor interno para manejar el layout flex */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-        
-        {/* Logo / Nombre - Ocupa un ancho fijo o proporcional para no empujar de más */}
-        <div className="flex-1 flex justify-start">
-          <h3 className={`${theme === 'dark' ? 'text-gray-400/70' : 'text-slate-900/70'} text-xl`}>AudWave</h3>
+      <div className='max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500'>
+        <div className='grow-0'>
+          <h2 className='text-lg font-bold self-start'><span>Aud</span><span className="text-blue-500">Wave</span></h2>
         </div>
-        
-        {/* Navegación - Centrada */}
-        <nav className='flex flex-col md:flex-row justify-center gap-2 md:gap-10 font-semibold'>
-            <a className={`${theme === 'dark' ? 'text-gray-400/70' : 'text-slate-900/70'} cursor-pointer`}>Contacto</a>
-            <a className={`${theme === 'dark' ? 'text-gray-400/70' : 'text-slate-900/70'} cursor-pointer`}>Términos</a>
-            <a className={`${theme === 'dark' ? 'text-gray-400/70' : 'text-slate-900/70'} cursor-pointer`}>Soporte</a>
-        </nav>
-
-        {/* Copyright - Alineado a la derecha en desktop */}
-        <div className="flex-1 flex justify-end">
-          <small className={`${theme === 'dark' ? 'text-gray-400/70' : 'text-slate-900'} text-center md:text-end`}> 
-            ©2026 AudWave. Transcribe videos y audios con precisión. 
-          </small>
+        <div className='flex items-center gap-6'>
+          <Link to='/support' className='hover:text-white transition-colors'>Soporte</Link>
+          <Link to='/privacy' className='hover:text-white transition-colors'>Privacidad</Link>
+          <Link to='/landing-page' className='hover:text-white transition-colors'>Inicio</Link>
         </div>
-        
       </div>
     </footer>
   )
