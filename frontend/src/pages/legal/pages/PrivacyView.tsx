@@ -1,4 +1,3 @@
-import { Link } from 'react-router'
 import { motion } from 'motion/react'
 
 const sections = [
