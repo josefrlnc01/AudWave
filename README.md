@@ -22,7 +22,12 @@ Tests unitarios implementados con Vitest para comprobar formatos de documentos e
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
 [![OpenAI](https://img.shields.io/badge/OpenAI-Whisper-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com)
 
-<img width="1897" height="901" alt="Screenshot 2026-03-24 120728" src="https://github.com/user-attachments/assets/343d3070-06c5-43f6-ade2-d619890aaecf" />
+
+<img width="1893" height="904" alt="Screenshot 2026-03-29 165953" src="https://github.com/user-attachments/assets/22de35b0-847e-4bf3-bbf9-d120406a789d" />
+
+<img width="1894" height="895" alt="Screenshot 2026-03-29 170748" src="https://github.com/user-attachments/assets/d8f001ab-e35b-4c73-8770-a053defd2f09" />
+
+<img width="1881" height="895" alt="Screenshot 2026-03-29 170847" src="https://github.com/user-attachments/assets/3fcdda81-6d53-44fe-8baa-bf3d2a140ff9" />
 
 
 </div>
