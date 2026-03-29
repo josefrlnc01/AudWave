@@ -44,7 +44,7 @@ export default function Header() {
   return (
     <header className={theme === 'dark'
       ? 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-800 flex justify-between md:justify-evenly items-center bg-slate-950 text-white'
-      : 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-200 flex justify-between md:justify-evenly items-center bg-slate-300/40 text-slate-900'}>
+      : 'w-full min-w-full text-center py-4 px-4 md:px-0 border-b border-slate-200 flex justify-between md:justify-evenly items-center bg-slate-400/40 text-slate-900'}>
       <div className="flex items-center gap-2">
         <h1 className="font-bold text-4xl text-white">Aud<span className="text-blue-600/80">Wave</span></h1>
       </div>
@@ -76,15 +76,15 @@ export default function Header() {
           <DropdownMenuTrigger className="hover:scale-110">
             <Menu className="w-5 h-5 text-slate-400 cursor-pointer " />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-slate-900 border border-slate-700/50">
-            <DropdownMenuLabel className="text-xs font-bold text-white">
+          <DropdownMenuContent className={`${theme === 'dark' ? 'bg-slate-900 border border-slate-700/50' : 'bg-slate-200 text-slate-950'}`}>
+            <DropdownMenuLabel className={`text-xs font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>
               Cuenta
             </DropdownMenuLabel>
             <DropdownMenuItem className="text-slate-400 text-sm">
               {data.user.name}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuLabel className="text-xs font-bold text-white">
+            <DropdownMenuLabel className={`text-xs font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>
               Acciones
             </DropdownMenuLabel>
             <DropdownMenuItem onClick={handleLogOut} className="text-red-400 hover:bg-slate-800 cursor-pointer transition-colors ease duration-100">

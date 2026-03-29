@@ -12,9 +12,11 @@ import SummarySection from './SummarySection'
 import { useSummary } from '../hooks/useSummary'
 import { useEditFile } from '../hooks/useEditFIle'
 import EditFileDialog from './EditFileDialog'
+import { useTheme } from '@/shared/context/ThemeContext'
 
 
 export default function FileSubtitles({ mutation, inputValue, fileInputValue }: SubtitlesViewProps) {
+    const {theme} = useTheme()
     const { summary, handleGenerateIaSummary } = useSummary()
     const { isLoading } = useSummary()
     const { isOpen, setIsOpen } = useEditFile()
@@ -80,7 +82,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
             {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.fileText.fileId} title={mutation.data?.fileText.title} />}
 
-            <aside id='file-result' className='w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4   flex flex-col  bg-slate-900/60 rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden'>
+            <aside id='file-result' className={`w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4   flex flex-col  ${theme === 'dark' ? 'bg-slate-900/60' : 'bg-slate-200'} rounded-xl border border-slate-800/50 backdrop-blur shadow-xl overflow-hidden`}>
 
                 <header className='flex items-center w-full pr-3 pl-5 py-3.5 bg-slate-800/60 border-b border-slate-700/50'>
                     <div className='grow-0 flex items-center gap-4 min-w-0'>

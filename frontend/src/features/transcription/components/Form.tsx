@@ -163,7 +163,7 @@ export default function Form() {
                             <div id="targ"
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
-                                className={`flex p-12 w-full flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${!fileInputValue ? 'border-dashed bg-slate-800/20 border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'} justify-center items-center`}>
+                                className={`flex p-12 w-full flex-col grow-2 gap-4 md:gap-1 hover:scale-105 hover:backdrop-blur-md transition-transform ease-in-out duration-500 rounded-xl border ${theme === 'dark' ? 'bg-slate-800/20' : 'bg-slate-400/40 text-slate-900'} ${!fileInputValue ? 'border-dashed  border-slate-700' : 'border-solid bg-slate-800/40 border-blue-500/70'}  justify-center items-center`}>
                                 <img src={InputIcon} />
                                 <label className="text-lg md:text-2xl font-bold">Sube tu archivo</label>
                                 <p className="text-sm md:text-xl text-gray-400 text-center">Selecciona un video o audio de tu dispositivo</p>
@@ -185,11 +185,11 @@ export default function Form() {
                                     className="hidden" />
 
                             </div>}
-                        {(!fileInputValue && !inputValue) && <span className="text-center text-sm md:text-xl text-gray-300 ">O</span>}
+                        {(!fileInputValue && !inputValue) && <span className={`${theme === 'dark' ? ' text-gray-300' : 'text-slate-950'} text-center text-sm md:text-xl`}>O</span>}
                         <div className="grow flex flex-col justify-center items-center gap-15">
                             {!fileInputValue &&
                                 <div className="w-full flex flex-col justify-around gap-2">
-                                    <label className=" text-gray-400 pl-1 text-sm md:text-xl">Introduce un enlace de youtube</label>
+                                    <label className={`${theme === 'dark' ? ' text-gray-400' : 'text-slate-950'} pl-1 text-sm md:text-xl`}>Introduce un enlace de youtube</label>
                                     <input onChange={handleInput}
                                         onClick={(e) => {
                                             e.currentTarget.value = ''
@@ -197,7 +197,7 @@ export default function Form() {
                                         }}
                                         placeholder="Pega tu enlace aquí"
                                         type='text'
-                                        className='min-w-full w-full lg:w-1/4 p-3 hover:backdrop-blur-md text-sm text-gray-300 rounded-xl focus:outline-none  bg-slate-800 hover:bg-slate-800/80 transition-colors duration-100 ease-in' />
+                                        className={`min-w-full w-full lg:w-1/4 p-3 hover:backdrop-blur-md text-sm text-gray-300 rounded-xl focus:outline-none ${theme === 'dark' ? 'bg-slate-800 hover:bg-slate-800/80' : 'bg-slate-200 hover:bg-slate-200/80 placeholder:text-slate-900'} transition-colors duration-100 ease-in`} />
 
                                 </div>}
                         </div>
