@@ -114,8 +114,8 @@ export default function SupportView() {
                         <div>
                             <h3 className='text-sm font-semibold text-white mb-1'>Email</h3>
                             <p className='text-xs text-slate-400 mb-2'>Respuesta en menos de 24 horas</p>
-                            <a href='mailto:soporte@audwave.app' className='text-sm text-blue-400 hover:text-blue-300 transition-colors'>
-                                soporte@audwave.app
+                            <a href='mailto:josefrlnc01@gmail.com' className='text-sm text-blue-400 hover:text-blue-300 transition-colors'>
+                                josefrlnc01@gmail.com
                             </a>
                         </div>
                     </div>
