@@ -155,7 +155,7 @@ export default function Form() {
                     </span>
                 </div>}
 
-                <aside className={`w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto min-h-[32rem] ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-slate-100'} flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-2xl backdrop-blur`}>
+                <aside className={`w-full relative mt-0 lg:w-2/4 md:w-3/4 self-auto min-h-128 ${theme === 'dark' ? 'bg-slate-800/30' : 'bg-slate-100'} flex flex-col justify-center items-center lg:justify-center rounded-2xl p-2 py-6 lg:p-8 mb-12 shadow-md backdrop-blur`}>
 
                     <form className="w-full flex flex-col  lg:p-2 gap-6 min-h-3/4">
 
