@@ -9,13 +9,10 @@ const sections = [
                 subtitle: 'Datos de cuenta',
                 text: 'Cuando te registras en AudWave recopilamos tu nombre, dirección de correo electrónico y contraseña (almacenada de forma encriptada). Si usas el inicio de sesión con Google, obtenemos tu nombre y email desde tu cuenta de Google a través de Firebase Authentication.'
             },
-            {
-                subtitle: 'Archivos de audio y vídeo',
-                text: 'Los archivos que subes para transcribir se procesan temporalmente en nuestros servidores y se eliminan inmediatamente después de completar la transcripción. No almacenamos tus archivos de audio o vídeo de forma permanente.'
-            },
+    
             {
                 subtitle: 'Transcripciones guardadas',
-                text: 'Las transcripciones que eliges guardar en tu historial se almacenan en nuestra base de datos asociadas a tu cuenta para que puedas acceder a ellas cuando quieras.'
+                text: 'Las transcripciones se guardan automáticamente en base de datos al realizar un flujo completo, luego puedes eliminarlas cuando desees.'
             },
             {
                 subtitle: 'Datos de uso',

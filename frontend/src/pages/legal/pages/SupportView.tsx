@@ -29,7 +29,7 @@ const faqs = [
     },
     {
         question: '¿El resumen IA en qué plan está disponible?',
-        answer: 'El resumen automático generado por GPT-4o está disponible exclusivamente en el plan Business.'
+        answer: 'El resumen automático generado por GPT-4o-mini está disponible exclusivamente en el plan Business.'
     },
     {
         question: '¿Puedo cancelar mi suscripción en cualquier momento?',
