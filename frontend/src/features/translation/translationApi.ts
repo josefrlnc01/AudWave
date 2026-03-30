@@ -1,22 +1,7 @@
 import axios, { isAxiosError } from "axios";
+import type { TranslateTextProps, TranslateYoutubeTextProps } from "./types/translation.types";
 const urlBackend = import.meta.env.VITE_API_URL
-type TranslateTextProps = {
-    lang: string,
-    fileText: {
-        start:number,
-        end:number,
-        text:string
-    }[]
-}
 
-type TranslateYoutubeTextProps = {
-    lang: string,
-    youtubeVideoText: {
-        start:number,
-        end:number,
-        text:string
-    }[]
-}
 
 export async function translateText ({lang, fileText}: TranslateTextProps) {
     try {
