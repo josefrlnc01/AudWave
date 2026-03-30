@@ -14,7 +14,7 @@ export async function generateSummary (segments: {text:string}[]) {
                     content: `Eres un asistente experto en síntesis de contenido.
                     Recibirás el texto de una transcripción de audio.
                     Tu tarea es:
-                    - Generar un resumen conciso de 3-5 frases
+                    - Generar un resumen conciso
                     - Capturar los puntos clave del contenido
                     - Mantener un tono neutro y profesional
                     - NO inventar información que no esté en el texto
