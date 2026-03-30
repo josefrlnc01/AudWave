@@ -73,7 +73,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         <>
 
             {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.youtubeVideoText.fileId} title={mutation.data?.youtubeVideoText.title} />}
-            <aside id='yt-result' className={`w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4  flex flex-col ${theme === 'dark' ? 'bg-slate-900/60 border-slate-800/50' : 'bg-slate-200 border-slate-300/50'} rounded-xl border  backdrop-blur shadow-xl overflow-hidden`}>
+            <aside className={`w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4  flex flex-col ${theme === 'dark' ? 'bg-slate-900/60 border-slate-800/50' : 'bg-slate-200 border-slate-300/50'} rounded-xl border  backdrop-blur shadow-xl overflow-hidden`}>
 
                 <header className={`flex items-center w-full pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-200 border-slate-300/50'}`}>
                     <div className='grow-0 flex items-center gap-4 min-w-0'>
@@ -111,7 +111,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                 <div className='flex flex-col lg:flex-row flex-1 min-h-0'>
 
                     <div className='flex flex-col flex-1 border-r border-slate-700/50'>
-                        <div className={`px-5 py-3 border-b ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-slate-300 border-slate-200'}  flex items-center justify-between gap-4`}>
+                        <div className={`px-5 py-3 border-b ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-white border-slate-200'}  flex items-center justify-between gap-4`}>
                             <h3 className={`text-xs font-semibold  ${theme === 'dark' ? 'text-slate-400' : 'text-slate-800'} uppercase tracking-widest`}>Transcripción</h3>
 
                             {(user.suscription === 'pro' || user.suscription === 'business') &&
@@ -137,7 +137,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                         <button
                                             onClick={handleTranslate}
                                             disabled={!selectedLang || isTranslating}
-                                            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                                            className={`flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 ${theme === 'dark' ? 'disabled:bg-slate-700 disabled:text-slate-500' : 'disabled:bg-slate-300 disabled:text-slate-500'} disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer`}
                                         >
                                             {isTranslating ? (
                                                 <>
@@ -153,7 +153,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                             }
                         </div>
                         <motion.div
-                            className={`grow ${theme === 'dark' ? 'bg-slate-800/40' : 'bg-slate-200 text-slate-900'} p-4 md:p-8`}
+                            className={`grow ${theme === 'dark' ? 'bg-slate-800/40' : 'bg-white text-slate-900'} p-4 md:p-8`}
                             variants={savedsContainer}
                             initial='hidden'
                             animate='show'>
@@ -167,6 +167,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                     <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                                 </motion.p>
                             ))}
+    
                             {youtubeTranslation.length > 0 && youtubeTranslation.map((s, i) => (
                                 <motion.p
                                     key={i}
@@ -177,15 +178,14 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                     <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                                 </motion.p>
                             ))}
-
                         </motion.div>
                     </div>
 
                     {user.suscription === 'business' && (
-                        <div className={`border-t ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-slate-300 border-slate-200'}`}>
+                        <div className={`border-t ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-slate-100 border-slate-200'}`}>
                             <button
                                 onClick={() => setShowSummary(!showSummary)}
-                                className='w-full flex items-center justify-between px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-slate-800/40 transition-colors'
+                                className='w-full flex items-center justify-between px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-slate-800/40 transition-colors cursor-pointer'
                             >
                                 <div className='flex items-center gap-2'>
                                     <svg className='w-4 h-4 text-blue-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
@@ -205,7 +205,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                 <motion.div
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: 'auto' }}
-                                    className={`${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'} px-4 pb-4 h-full min-h-full`}
+                                    className={`${theme === 'dark' ? 'bg-inherit' : 'bg-slate-100 border-slate-200'} px-4 pb-4 h-full w-full min-h-full`}
                                 >
                                     <SummarySection
                                         summary={summary}
