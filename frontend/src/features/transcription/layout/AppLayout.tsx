@@ -5,6 +5,8 @@ import { Navigate } from 'react-router'
 import { Outlet } from 'react-router'
 import { Spinner } from '@/components/ui/spinner'
 import { useTheme } from '@/shared/context/ThemeContext'
+
+//Estilos para react toastify
 const contextClass = {
     success: "bg-slate-900 border border-green-500/30 text-green-400",
     error: "bg-slate-900 border border-red-500/30 text-red-400",
