@@ -1,3 +1,4 @@
+import { useTheme } from '@/shared/context/ThemeContext'
 import { useEffect, useState } from 'react'
 
 const awaitPhrase = [
@@ -7,7 +8,7 @@ const awaitPhrase = [
 export default function TranscriptionSkeleton() {
     const [index, setIndex] = useState(0)
     const [fade, setFade] = useState(true)
-
+    const {theme} = useTheme()
     useEffect(() => {
         const interval = setInterval(() => {
             setFade(false)
@@ -25,12 +26,12 @@ export default function TranscriptionSkeleton() {
 
 
     return (
-        <section className='w-full h-full fixed inset-0 flex flex-col items-center justify-center z-30 bg-slate-900/60 backdrop-blur-md p-8'>
+        <section className={`w-full h-full fixed inset-0 flex flex-col items-center justify-center z-30 ${theme === 'dark' ? 'bg-slate-900/60' : 'bg-slate-200'} backdrop-blur-md p-8`}>
 
 
             <div className='flex items-center gap-3 mb-8'>
                 <div className='w-3 h-3 bg-blue-500 rounded-full animate-pulse'></div>
-                <p className='text-sm font-medium text-slate-200'>Procesando transcripción</p>
+                <p className={`text-sm font-medium ${theme === 'dark' ? 'text-slate-200' : 'text-slate-900'}`}>Procesando transcripción</p>
             </div>
 
 
@@ -47,7 +48,7 @@ export default function TranscriptionSkeleton() {
             </div>
 
             <small
-                className={`mt-8 text-slate-300 transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'
+                className={`mt-8 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-900'} transition-opacity duration-300 ${fade ? 'opacity-100' : 'opacity-0'
                     }`}
             >
                 {phrase}
