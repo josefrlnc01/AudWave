@@ -66,7 +66,7 @@ Diseñada para **periodistas, creadores de contenido, traductores y profesionale
 2. Haz click en "Transcribir"
 3. Visualiza la transcripción con timestamps en tiempo real
 4. Elige un idioma y traduce con un click
-5. Descarga en el formato que necesites (PDF, SRT, TXT)
+5. Descarga en el formato que necesites (PDF, SRT, TXT...)
 ```
 
 ---
@@ -307,7 +307,7 @@ docker run -p 4000:4000 --env-file .env audwave-backend
 
 ## 🗺️ Roadmap
 
-- [ ] Detección de múltiples hablantes (diarización)
+- [ ] Implementación de cola para procesamiento de archivos pesados
 - [ ] Integración de pagos con Stripe
 
 ---
