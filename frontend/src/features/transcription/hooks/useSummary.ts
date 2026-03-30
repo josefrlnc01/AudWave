@@ -18,20 +18,25 @@ export const useSummary = () => {
                 }
             }
             )
-            
+            //Creación de reader de stream
             const reader = response.body!.getReader()
+            //Creación decodificador 
             const decoder = new TextDecoder()
 
             while (true) {
+                //Lectura de response
                 const { done, value } = await reader.read()
 
                 if (done) break
-
+                //Decodificación del output de bd
                 const chunk = decoder.decode(value)
+
+                //Partición del output en líneas
                 const lines = chunk.split('\n\n').filter(Boolean)
 
                 for (const line of lines) {
                     if (line.startsWith('data: ')) {
+                        //Formateo de la linea, si empieza con data: hola mundo, coger solo hola mundo
                         const data = line.replace('data: ', '')
 
                         if (data === '[DONE]') return
