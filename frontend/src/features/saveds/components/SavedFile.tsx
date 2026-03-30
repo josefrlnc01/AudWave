@@ -128,7 +128,7 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
                                         <button
                                             onClick={handleTranslate}
                                             disabled={!selectedLang || isTranslating}
-                                            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+                                            className={`flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 ${theme === 'dark' ? 'disabled:bg-slate-700 disabled:text-slate-500' : 'disabled:bg-slate-300 disabled:text-slate-500'} disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer`}
                                         >
                                             {isTranslating ? (
                                                 <>
