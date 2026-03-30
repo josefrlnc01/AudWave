@@ -13,6 +13,7 @@ import { useSummary } from '../hooks/useSummary'
 import { useEditFile } from '../hooks/useEditFIle'
 import EditFileDialog from './EditFileDialog'
 import { useTheme } from '@/shared/context/ThemeContext'
+import { toast } from 'react-toastify'
 
 
 
@@ -20,6 +21,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const { theme } = useTheme()
     const [lang, setLang] = useState('')
     const [selectedLang, setSelectedLang] = useState(false)
+    const [isCopiyng, setIsCopiyng] = useState(false)
     const { youtubeTranslation, generateYoutubeTranslation, isTranslating, setIsTranslating } = useTranslate()
     const { summary, handleGenerateIaSummary, isLoading } = useSummary()
     const { isOpen, setIsOpen } = useEditFile()
@@ -58,6 +60,14 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         setIsTranslating(true)
     }
 
+    const formattedText = youtubeVideoText.segments.map(s => s.text).join('\n')
+
+    const handleCopyText = () => {
+        navigator.clipboard.writeText(formattedText)
+        toast.success('Texto copiado')
+        setIsCopiyng(true)
+    }
+
 
     return (
         <>
@@ -67,14 +77,34 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
                 <header className={`flex items-center w-full pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-200 border-slate-300/50'}`}>
                     <div className='grow-0 flex items-center gap-4 min-w-0'>
-                        <h2 title={youtubeVideoText.title} className={`text-sm font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-slate-950'} truncate max-w-50 lg:max-w-none`}>
+                        <h2 title={`Título: ${youtubeVideoText.title}`} className={`text-sm font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-slate-950'} truncate max-w-50 lg:max-w-none`}>
                             {youtubeVideoText.title}
                             <span className="text-xs font-normal text-slate-500 ml-1">(Original)</span>
                         </h2>
+                        <button
+                            title='Copiar texto plano'
+                            className={`${isCopiyng ? 'opacity-10' : 'opacity-100'} cursor-pointer`}
+                            onClick={handleCopyText}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="w-5 h-5"
+                            >
+                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
 
                     </div>
                     <div className='flex grow items-center justify-end gap-2 self-start'>
+
                         <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={null} data={youtubeVideoText} user={user} />
+
                     </div>
                 </header>
 
