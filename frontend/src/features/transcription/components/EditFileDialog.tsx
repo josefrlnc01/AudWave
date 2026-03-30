@@ -25,6 +25,7 @@ export default function EditFileDialog({ isOpen, setIsOpen, id, title }: EditFil
         mutationFn: editTitle,
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['saveds'] })
+            queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
             toast.success(data)
         },
         onError: (error) => {
