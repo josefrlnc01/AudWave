@@ -2,31 +2,10 @@ import { tokenStore } from "@/lib/token.store"
 import axios, { isAxiosError } from "axios";
 import type { StoredYoutubeVideoTranscription, StoredYoutubeVideoTranslation } from "../types/yt-video.types";
 import type { StoredFileTranscription, StoredFileTranslation } from "../types/file.types";
-import type { SavedFile } from "../components/SavedFile";
 
-export type PromiseLink = {
-    youtubeVideoText: SavedFile,
-    translatedYoutubeVideo: string,
-    usedMinutes: number,
-    user: {
-        _id: () => string,
-        suscription: string,
-        name: string,
-        email: string
-    }
-}
+import type { PromiseFile, PromiseLink } from "../types/subtitles.types";
 
-export type PromiseFile = {
-    fileText: SavedFile,
-    translatedFile: string,
-    usedMinutes: number,
-    user: {
-        _id: () => string,
-        suscription: string,
-        name: string,
-        email: string
-    }
-}
+
 
 const urlBackend = import.meta.env.VITE_API_URL
 

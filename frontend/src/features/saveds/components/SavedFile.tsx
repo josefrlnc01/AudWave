@@ -1,40 +1,20 @@
 import { DropdownMenuBasic } from '@/components/DropdownMenuBasic'
 import { motion } from 'motion/react'
 import { useNavigate } from 'react-router'
-import { savedsContainer, item } from '../stores/motion'
 import { formatTime } from '@/shared/utils/minutes'
-import { useSummary } from '../hooks/useSummary'
-import SummarySection from './SummarySection'
 import { useTranslate } from '@/features/translation/hooks/useTranslate'
 import { Spinner } from '@/components/ui/spinner'
-import { languages } from '../stores/languages'
-import type { User } from '../types/user.types'
+import { languages } from '@/features/transcription/stores/languages'
 import { useState } from 'react'
-import { useEditFile } from '../hooks/useEditFIle'
-import EditFileDialog from './EditFileDialog'
+import { useEditFile } from '@/features/transcription/hooks/useEditFIle'
+import EditFileDialog from '@/features/transcription/components/EditFileDialog'
 import { useTheme } from '@/shared/context/ThemeContext'
 import { toast } from 'react-toastify'
+import { item, savedsContainer } from '@/features/transcription/stores/motion'
+import SummarySection from '@/features/transcription/components/SummarySection'
+import { useSummary } from '@/features/transcription/hooks/useSummary'
+import type { SavedFileProps } from '../types/saveds.types'
 
-export type SavedFile = {
-    duration: string
-    fileId: string
-    segments: {
-        start: number,
-        end: number,
-        text: string
-    }[],
-    title: string
-    user: string,
-    origin: string,
-    __v: number
-    _id: string
-}
-
-type SavedFileProps = {
-    data: SavedFile
-    user: User
-    id: string
-}
 
 
 export default function SavedFile({ data, user, id }: SavedFileProps) {

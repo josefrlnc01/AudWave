@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { getSaved } from '../../saveds/api/savedsApi'
+import { getSaved } from '../api/savedsApi'
 import { useParams } from 'react-router'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Header from '../../transcription/components/Header'
+import Footer from '../../transcription/components/Footer'
 import SavedFile from '../components/SavedFile'
 
 

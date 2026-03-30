@@ -2,7 +2,7 @@ import Form from '@/features/transcription/components/Form'
 import Footer from '@/features/transcription/components/Footer'
 
 import Header from '../components/Header'
-import SavedsList from '../components/SavedsList'
+import SavedsList from '../../saveds/components/SavedsList'
 
 export default function MainView() {
 

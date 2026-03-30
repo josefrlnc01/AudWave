@@ -1,6 +1,29 @@
+import type { SavedFile } from "@/features/saveds/types/saveds.types"
 import type { UseMutationResult } from "@tanstack/react-query"
 
-import type { PromiseFile, PromiseLink } from "../api/transcriptionApi"
+export type PromiseLink = {
+    youtubeVideoText: SavedFile,
+    translatedYoutubeVideo: string,
+    usedMinutes: number,
+    user: {
+        _id: () => string,
+        suscription: string,
+        name: string,
+        email: string
+    }
+}
+
+export type PromiseFile = {
+    fileText: SavedFile,
+    translatedFile: string,
+    usedMinutes: number,
+    user: {
+        _id: () => string,
+        suscription: string,
+        name: string,
+        email: string
+    }
+}
 
 export type SubtitlesViewProps = {
     mutation: UseMutationResult<PromiseLink  | PromiseFile | undefined, Error, MutationProps, unknown>,

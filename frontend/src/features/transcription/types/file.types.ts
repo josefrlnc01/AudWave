@@ -1,4 +1,4 @@
-import type { SavedFile } from "../components/SavedFile"
+import type { SavedFile } from "@/features/saveds/types/saveds.types"
 
 export type StoredFileTranscription = {
     title: string,
