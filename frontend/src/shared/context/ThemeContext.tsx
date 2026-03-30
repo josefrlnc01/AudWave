@@ -1,10 +1,5 @@
 import { useContext, createContext } from "react";
-import type { Theme } from "../stores/theme.store";
-
-export type ThemeContextType = {
-    theme: Theme,
-    toggleTheme: () => void
-}
+import type { ThemeContextType } from "./types/context.types";
 
 export const ThemeContext = createContext<ThemeContextType | null>(null)
 
