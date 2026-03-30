@@ -6,8 +6,8 @@ import { Outlet } from 'react-router'
 import { Spinner } from '@/components/ui/spinner'
 import { useTheme } from '@/shared/context/ThemeContext'
 const contextClass = {
-    success: "bg-blue-600",
-    error: "bg-red-600",
+    success: "bg-slate-900 border border-green-500/30 text-green-400",
+    error: "bg-slate-900 border border-red-500/30 text-red-400",
     info: "bg-gray-600",
     warning: "bg-orange-400",
     default: "bg-indigo-600",
@@ -45,8 +45,9 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
                 <ToastContainer
                     toastClassName={(context) =>
                         contextClass[context?.type || "default"] +
-                        " relative flex p-1 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer"
+                        " relative flex items-center text-white min-w-10 min-h-10 rounded-xl px-6 py-3 mb-2 cursor-pointer shadow-xl border border-slate-700/50 text-white text-sm font-medium overflow-hidden"
                     }
+                    position='bottom-right'
                     pauseOnHover={false}
                     pauseOnFocusLoss={false}
                 />
