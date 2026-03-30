@@ -82,8 +82,6 @@ export class FileService {
                 business: 600
             }
 
-            
-
             const limit = planLimits[user.suscription] ?? 0
 
             if (totalMinutes > limit) {
@@ -97,7 +95,7 @@ export class FileService {
                 },
                 {upsert: true, new: true}
             )
-            
+
             const fileText = await transcribeWhisperAudio(finalFilePath)
 
             await fs.unlink(finalFilePath)
