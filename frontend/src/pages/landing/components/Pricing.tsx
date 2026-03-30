@@ -1,14 +1,33 @@
 import { Link } from "react-router";
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/all';
+
+gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger)
+
 
 export default function Pricing() {
+    useGSAP(() => {
+        gsap.to(".pricing-box", {
+            scrollTrigger: {
+                trigger: ".pricing-box",
+                start: "top 80%"
+            },
+            opacity: 1,
+            duration: 0.8
+        })
+    })
+
+
     return (
-        <section className='bg-slate-800/30 w-full min-w-full p-6 flex flex-col justify-center items-center grow gap-8 md:gap-4 py-14 md:py-10 lg:py-4'>
+        <section className='pricing-box bg-slate-800/30 w-full min-w-full p-6 flex flex-col justify-center items-center grow gap-8 md:gap-4 py-14 md:py-10 lg:py-4 opacity-0'>
             <aside>
                 <h3 className='text-3xl text-white font-bold text-center'>Planes diseñados a medida</h3>
                 <p className='max-w-2xl mx-auto text-sm md:text-lg text-gray-500 text-center leading-relaxed'>Escoge lo que mejor se adapte a tus necesidades.</p>
             </aside>
             <aside className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-8 w-full md:w-3/4 md:max-w-3/4 lg:w-3/4 ld:max-w-3/4 m-auto p-0 md:p-10 lg:p-14'>
-                <div className="p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid border-transparent rounded-md hover:scale-[1.02] hover:border-[#0d59f2] transition-all">
+                <div className="pricing-card p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid border-transparent rounded-md hover:scale-[1.02]  hover:border-[#0d59f2] transition-all opacity-100">
                     <div className="mb-8">
                         <h3 className="text-lg font-bold text-gray-400 uppercase tracking-widest">Básico</h3>
                         <div className="mt-4 flex items-baseline">
@@ -34,12 +53,12 @@ export default function Pricing() {
                     border border-slate-500 text-slate-200
                     hover:bg-slate-800 cursor-pointer transition-colors duration-200 ease-in">
                         <Link to={'/auth/register'}>
-                        Probar gratis
+                            Probar gratis
                         </Link>
                     </button>
                 </div>
 
-                <div className="relative p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid rounded-md scale-105 border-[#0d59f2] transition-all">
+                <div className="pricing-card relative p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid rounded-md scale-105 border-[#0d59f2] transition-all opacity-100">
                     <span className="absolute -top-4 left-1/2 -translate-x-1/2  text-sm justify-center items-center font-bold bg-[#0d59f2] rounded-3xl pt-1 pb-1 pr-3 pl-3">RECOMENDADO</span>
                     <div className="mb-8">
                         <h3 className="text-lg font-bold uppercase text-[#0d59f2] tracking-widest">PRO</h3>
@@ -68,7 +87,7 @@ export default function Pricing() {
                         transition-all duration-200 shadow-lg cursor-pointer ease-in">Mejorar a PRO</button>
                 </div>
 
-                <div className="p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid border-transparent rounded-md hover:scale-[1.02] hover:border-[#0d59f2] transition-all">
+                <div className="pricing-card p-8 rounded-custom bg-slate-800/40 flex flex-col h-full border-2 border-solid border-transparent rounded-md hover:scale-[1.02] hover:border-[#0d59f2] transition-all opacity-100">
                     <div className="mb-8">
                         <h3 className="text-lg font-bold text-gray-400 uppercase tracking-widest">BUSINESS</h3>
                         <div className="mt-4 flex items-baseline">
