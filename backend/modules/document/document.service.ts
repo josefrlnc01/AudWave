@@ -57,8 +57,8 @@ export class DocumentService {
 
     static generateSrt = async (segments: { start: number, end: number, text: string }[]) => {
         return segments.map((segment, i) => {
-            const start = formatSRTTime(segment.start)
-            const end = formatSRTTime(segment.end)
+            const start = formatSRTTime(Number(segment.start.toFixed(2)))
+            const end = formatSRTTime(Number(segment.end.toFixed(2)))
             return `${i + 1}\n${start} --> ${end}\n${segment.text.trim()}`
         }).join('\n\n')
     }
@@ -66,7 +66,7 @@ export class DocumentService {
 
     static generateVtt = async (segments: { start: number, end: number, text: string }[]) => {
         const body = segments.map(s => `
-            ${formatVTTTime(s.start)} --> ${formatVTTTime(s.end)}
+            ${formatVTTTime(Number(s.start.toFixed(2)))} --> ${formatVTTTime(Number(s.end.toFixed(2)))}
             ${s.text}
             `.trim()).join('\n\n')
 
@@ -76,8 +76,8 @@ export class DocumentService {
 
     static generateTxt = async (segments: { start: number, end: number, text: string }[]) => {
         return segments.map((segment) => {
-            const start = formatTime(segment.start)
-            const end = formatTime(segment.end)
+            const start = formatTime(Number(segment.start.toFixed(2)))
+            const end = formatTime(Number(segment.end.toFixed(2)))
             return `${start}:${end} ${segment.text}`
         }).join('\n')
     }
@@ -89,7 +89,7 @@ export class DocumentService {
                 spacing: {after: 200},
                 children: [
                     new TextRun({
-                        text: `${formatTime((seg.start))} `,
+                        text: `${formatTime((Number(seg.start.toFixed(2))))} `,
                         color: '666666',
                         font: 'Courier New'
                     }),
@@ -118,8 +118,8 @@ export class DocumentService {
 
     static generateJson = async (segments:{start: number, end: number, text: string}[]) => {
         const document = segments.map(s => {
-            const start = s.start
-            const end = s.end
+            const start = Number(s.start.toFixed(2))
+            const end = Number(s.end.toFixed(2))
             return {
                 start,
                 end,
@@ -133,7 +133,7 @@ export class DocumentService {
 
 
     static generateCsv = async (segments:{start: number, end: number, text: string }[]) => {
-        const rows = segments.map(s => [formatTime(s.start), formatTime(s.end), s.text ])
+        const rows = segments.map(s => [formatTime(Number(s.start.toFixed(2))), formatTime(Number(s.end.toFixed(2))), s.text ])
         const data = stringify([
             ["start", "end", "text"],
             ...rows
