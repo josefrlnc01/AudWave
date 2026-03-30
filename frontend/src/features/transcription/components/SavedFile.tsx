@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { useEditFile } from '../hooks/useEditFIle'
 import EditFileDialog from './EditFileDialog'
 import { useTheme } from '@/shared/context/ThemeContext'
+import { toast } from 'react-toastify'
 
 export type SavedFile = {
     duration: string
@@ -39,6 +40,7 @@ type SavedFileProps = {
 export default function SavedFile({ data, user, id }: SavedFileProps) {
     const { theme } = useTheme()
     const navigate = useNavigate()
+    const [isCopiyng, setIsCopiyng] = useState(false)
     const [showSummary, setShowSummary] = useState(false)
     const { summary, isLoading, handleGenerateIaSummary } = useSummary()
     const { translation, youtubeTranslation, generateFileTranslation, generateYoutubeTranslation, isTranslating, selectedLang, setSelectedLang, setLang, lang } = useTranslate()
@@ -64,6 +66,14 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
         }
     }
 
+    const formattedText = data.segments.map(s => s.text).join('\n')
+
+    const handleCopyText = () => {
+        navigator.clipboard.writeText(formattedText)
+        toast.success('Texto copiado')
+        setIsCopiyng(true)
+    }
+
     return (
         <>
             {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={id!} title={data.title} />}
@@ -72,10 +82,28 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
 
                 <header className={`flex items-center w-full pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-200 border-slate-300/50'}`}>
                     <div className='grow-0 flex items-center gap-4 min-w-0'>
-                        <h2 title={data.title} className={`text-sm font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-slate-950'} truncate max-w-50 lg:max-w-none`}>
+                        <h2 title={`Título: ${data.title}`} className={`text-sm font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-slate-950'} truncate max-w-50 lg:max-w-none`}>
                             {data.title}
                             <span className="text-xs font-normal text-slate-500 ml-1">(Original)</span>
                         </h2>
+                        <button
+                            title='Copiar texto plano'
+                            className={`${isCopiyng ? 'opacity-10' : 'opacity-100'} cursor-pointer`}
+                            onClick={handleCopyText}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="w-5 h-5"
+                            >
+                                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
 
                     </div>
                     <div className='flex grow items-center justify-end gap-2 self-start'>
@@ -96,7 +124,7 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
                     <div className='flex flex-col flex-1 border-r border-slate-700/50'>
                         <div className={`px-5 py-3 border-b ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-slate-300 border-slate-200'}  flex items-center justify-between gap-4`}>
                             <h3 className={`text-xs font-semibold  ${theme === 'dark' ? 'text-slate-400' : 'text-slate-800'} uppercase tracking-widest`}>Transcripción</h3>
-                            
+
                             {(user.suscription === 'pro' || user.suscription === 'business') &&
                                 <>
                                     <div className="flex items-center justify-center gap-2">
@@ -104,7 +132,7 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
                                             <select
                                                 onChange={handleSelect}
                                                 defaultValue=''
-                                                
+
                                                 className={`flex-1  appearance-none text-xs px-2 py-1.5 rounded-lg border ${theme === 'dark' ? 'bg-slate-800 text-slate-300 border-slate-700 focus:outline-none hover:bg-slate-900/90' : 'bg-slate-200 text-slate-900 border-slate-300'}  focus:border-blue-500 cursor-pointer duration-200 transition-colors ease`}
                                             >
                                                 <option value="" className='text-sm' disabled>Traducir a...</option>
