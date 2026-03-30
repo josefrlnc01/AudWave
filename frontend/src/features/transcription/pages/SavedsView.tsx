@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { getSaved } from '../api/savedsApi'
+import { getSaved } from '../../saveds/api/savedsApi'
 import { useParams } from 'react-router'
 import Header from '../components/Header'
 import Footer from '../components/Footer'

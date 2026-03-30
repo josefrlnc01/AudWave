@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dialog'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { editTitle } from '../api/savedsApi'
+import { editTitle } from '../../saveds/api/savedsApi'
 import { toast } from 'react-toastify'
 
 type EditFileDialogProps = {

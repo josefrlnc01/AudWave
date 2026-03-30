@@ -9,7 +9,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
-import { deleteSaved } from "@/features/transcription/api/savedsApi"
+import { deleteSaved } from "@/features/saveds/api/savedsApi"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
 import type { PromiseFile, PromiseLink } from "@/features/transcription/api/transcriptionApi"

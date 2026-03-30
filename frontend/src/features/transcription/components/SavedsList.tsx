@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { getSaveds } from '../api/savedsApi'
+import { getSaveds } from '../../saveds/api/savedsApi'
 import { Link } from 'react-router'
 import { useState } from 'react'
 import { useTheme } from '@/shared/context/ThemeContext'
