@@ -36,6 +36,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
             mutation?.reset()
+            
             toast.success(data)
         },
         onError: (error) => {

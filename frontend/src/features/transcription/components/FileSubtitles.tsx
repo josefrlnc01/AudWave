@@ -122,7 +122,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                     </div>
                     <div className='flex grow items-center justify-end gap-2 self-start'>
 
-                        <DropdownMenuBasic id={fileText.fileId} setIsOpen={setIsOpen} mutation={null} data={fileText} user={user} />
+                        <DropdownMenuBasic id={fileText.fileId} setIsOpen={setIsOpen} mutation={mutation} data={fileText} user={user} />
 
                     </div>
                 </header>

@@ -97,7 +97,7 @@ export default function Form() {
         <>
 
             <section className="p-2 lg:p-8 relative grow flex flex-col justify-center items-center mb-15">
-                {suscription === 'free' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6 mt-4">
+                {suscription === 'free' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:gap-3 justify-center items-center mb-6 mt-4">
                     <div className="relative w-full bg-slate-200 rounded-full h-2">
                         <div
                             className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
@@ -116,7 +116,7 @@ export default function Form() {
                         <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 6 min usados
                     </span>
                 </div>}
-                {suscription === 'pro' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:flex-row md:gap-3 justify-center items-center mb-6 mt-4">
+                {suscription === 'pro' && <div className="w-full md:w-2/4 flex flex-col gap-6 md:gap-3 justify-center items-center mb-6 mt-4">
                     <div className="relative w-full bg-slate-800 rounded-full h-2">
                         <div
                             className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
@@ -135,7 +135,7 @@ export default function Form() {
                         <span className="text-blue-500">{formatMinutes(usedMinutes!)}</span> / 3h
                     </span>
                 </div>}
-                {suscription === 'business' && <div className="w-full md:w-2/4 flex flex-col gap-4 md:gap-3 md:flex-row  justify-center items-center mb-6 mt-4">
+                {suscription === 'business' && <div className="w-full md:w-2/4 flex flex-col gap-4 md:gap-3 justify-center items-center mb-6 mt-4">
                     <div className="relative w-full bg-slate-800 rounded-full h-2">
                         <div
                             className="relative h-2 rounded-full overflow-hidden bg-blue-500 transition-all duration-500"
