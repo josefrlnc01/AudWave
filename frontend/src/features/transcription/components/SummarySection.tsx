@@ -13,7 +13,7 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
     return (
         <div className={`flex flex-col w-full  gap-4 justify-between lg:w-72 scrollba shrink`}>
             
-            <div className={`px-5 py-3 border-b  grow border-slate-700/30 flex items-center justify-between ${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'}`}>
+            <div className={`px-5 py-3 border-b  grow border-slate-700/30 flex items-center justify-between ${theme === 'dark' ? 'bg-inherit' : 'bg-slate-100 border-slate-200'}`}>
                 <div>
                     
                     <h3 className={`text-xs font-semibold text-slate-400 uppercase tracking-widest  ${theme === 'dark' ? 'text-inherit' : 'text-slate-800'}`}>Resumen IA</h3>

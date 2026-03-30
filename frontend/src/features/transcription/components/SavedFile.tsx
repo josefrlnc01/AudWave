@@ -122,7 +122,7 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
                 <div className='flex flex-col lg:flex-row flex-1 min-h-0'>
 
                     <div className='flex flex-col flex-1 border-r border-slate-700/50'>
-                        <div className={`px-5 py-3 border-b ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-slate-300 border-slate-200'}  flex items-center justify-between gap-4`}>
+                        <div className={`px-5 py-3 border-b ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-white border-slate-200'}  flex items-center justify-between gap-4`}>
                             <h3 className={`text-xs font-semibold  ${theme === 'dark' ? 'text-slate-400' : 'text-slate-800'} uppercase tracking-widest`}>Transcripción</h3>
 
                             {(user.suscription === 'pro' || user.suscription === 'business') &&
@@ -164,7 +164,7 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
                             }
                         </div>
                         <motion.div
-                            className={`grow ${theme === 'dark' ? 'bg-slate-800/40' : 'bg-slate-200 text-slate-900'} p-4 md:p-8`}
+                            className={`grow ${theme === 'dark' ? 'bg-slate-800/40' : 'bg-white text-slate-900'} p-4 md:p-8`}
                             variants={savedsContainer}
                             initial='hidden'
                             animate='show'>
@@ -202,10 +202,10 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
                     </div>
 
                     {user.suscription === 'business' && (
-                        <div className={`border-t ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-slate-300 border-slate-200'}`}>
+                        <div className={`border-t ${theme === 'dark' ? 'bg-inherit border-slate-800' : 'bg-slate-100 border-slate-200'}`}>
                             <button
                                 onClick={() => setShowSummary(!showSummary)}
-                                className='w-full flex items-center justify-between px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-slate-800/40 transition-colors'
+                                className='w-full flex items-center justify-between px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-slate-800/40 transition-colors cursor-pointer'
                             >
                                 <div className='flex items-center gap-2'>
                                     <svg className='w-4 h-4 text-blue-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
@@ -225,7 +225,7 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
                                 <motion.div
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: 'auto' }}
-                                    className={`${theme === 'dark' ? 'bg-inherit' : 'bg-slate-300 border-slate-200'} px-4 pb-4 h-full w-full min-h-full`}
+                                    className={`${theme === 'dark' ? 'bg-inherit' : 'bg-slate-100 border-slate-200'} px-4 pb-4 h-full w-full min-h-full`}
                                 >
                                     <SummarySection
                                         summary={summary}
