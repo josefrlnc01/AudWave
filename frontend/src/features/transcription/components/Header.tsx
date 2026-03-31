@@ -42,6 +42,9 @@ export default function Header() {
   }
 
 
+  console.log(data.user.suscription)
+
+
 
   return (
     <header className={theme === 'dark'
@@ -78,12 +81,13 @@ export default function Header() {
           <DropdownMenuTrigger className="hover:scale-110">
             <Menu className="w-5 h-5 text-slate-400 cursor-pointer " />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className={`${theme === 'dark' ? 'bg-slate-900 border border-slate-700/50' : 'bg-slate-200 text-slate-950'}`}>
+          <DropdownMenuContent className={`${theme === 'dark' ? 'bg-slate-900 border border-slate-700/50' : 'bg-white text-slate-950 border-gray-100 shadow-xs'}`}>
             <DropdownMenuLabel className={`text-xs font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>
               Cuenta
             </DropdownMenuLabel>
-            <DropdownMenuItem className="text-slate-400 text-sm">
+            <DropdownMenuItem className="text-slate-400 text-sm flex items-center gap-3">
               {data.user.name}
+              <small className="px-3 py-1 bg-slate-700 text-blue-500 rounded-xl">{data.user.suscription}</small>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuLabel className={`text-xs font-bold ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>

@@ -119,7 +119,7 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button size="icon" className={`${theme === 'dark' ? 'bg-slate-800 text-gray-100 hover:bg-slate-700 ' : 'bg-slate-100 text-slate-900 hover:bg-slate-100'} px-3 py-1.5 transition-colors border-mone  cursor-pointer`}>
+                <Button size="icon" className={`${theme === 'dark' ? 'bg-slate-800 text-gray-100 hover:bg-slate-700 ' : 'bg-slate-100 text-slate-900 hover:bg-slate-100/80'} p-1.5 transition-colors border-mone  cursor-pointer`}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
