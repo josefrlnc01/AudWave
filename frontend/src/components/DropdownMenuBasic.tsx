@@ -17,6 +17,8 @@ import { useDocumentAction } from "@/features/transcription/hooks/useDocumentAct
 import type { SavedFile } from "@/features/saveds/types/saveds.types"
 import type { User } from "@/features/transcription/types/user.types"
 import { useTheme } from "@/shared/context/ThemeContext"
+import type { Translated } from "@/features/transcription/types/translared.types"
+import { useTranslate } from "@/features/translation/hooks/useTranslate"
 
 
 type DropdownProps = {
@@ -24,12 +26,14 @@ type DropdownProps = {
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
     mutation: UseMutationResult<PromiseLink | PromiseFile | undefined, Error, MutationProps, unknown> | null,
     data: SavedFile,
-    user: User
+    user: User,
+    translation: Translated
 }
-export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: DropdownProps) {
+export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user,  translation }: DropdownProps) {
     const { theme } = useTheme()
     const queryClient = useQueryClient()
     const navigate = useNavigate()
+    console.log('translating', translation)
     const deleteFN = useMutation({
         mutationFn: deleteSaved,
         onSuccess: (data) => {
@@ -52,58 +56,121 @@ export function DropdownMenuBasic({ id, setIsOpen, mutation, data, user }: Dropd
         generateCsv } = useDocumentAction()
 
     const handleGenerateTranscriptionPdf = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
+        let formData 
+        if (translation.length > 0) {
+            formData = {
+                segments: translation,
+                title: data.title
+            }
+        } else {
+            formData = {
             segments,
             title: data.title
         }
+        }
+        
         generatePdf.mutate(formData)
     }
 
     const handleGenerateTranscriptionSrt = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
+        let formData 
+        if (translation.length > 0) {
+            formData = {
+                segments: translation,
+                title: data.title
+            }
+        } else {
+            formData = {
             segments,
             title: data.title
         }
+        }
+        
         generateSrt.mutate(formData)
     }
 
     const handleGenerateTranscriptionTxt = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
+        let formData 
+        if (translation.length > 0) {
+            formData = {
+                segments: translation,
+                title: data.title
+            }
+        } else {
+            formData = {
             segments,
             title: data.title
         }
+        }
+        
         generateTxt.mutate(formData)
     }
 
     const handleGenerateTranscriptionVtt = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
+        let formData 
+        if (translation.length > 0) {
+            formData = {
+                segments: translation,
+                title: data.title
+            }
+        } else {
+            formData = {
             segments,
             title: data.title
         }
+        }
+        
         generateVtt.mutate(formData)
     }
 
     const handleGenerateTranscriptionDocX = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
+        let formData 
+        if (translation.length > 0) {
+            formData = {
+                segments: translation,
+                title: data.title
+            }
+        } else {
+            formData = {
             segments,
             title: data.title
         }
+        }
+        
         generateDocX.mutate(formData)
     }
 
     const handleGenerateTranscriptionJson = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
+        let formData 
+        if (translation.length > 0) {
+            formData = {
+                segments: translation,
+                title: data.title
+            }
+        } else {
+            formData = {
             segments,
             title: data.title
         }
+        }
+        
         generateJson.mutate(formData)
     }
 
     const handleGenerateTranscriptionCsv = (segments: { start: number, end: number, text: string }[]) => {
-        const formData = {
+        let formData 
+        if (translation.length > 0) {
+            formData = {
+                segments: translation,
+                title: data.title
+            }
+        } else {
+            formData = {
             segments,
             title: data.title
         }
+        }
+        
         generateCsv.mutate(formData)
     }
 

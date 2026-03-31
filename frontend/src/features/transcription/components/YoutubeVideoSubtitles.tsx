@@ -14,6 +14,7 @@ import { useEditFile } from '../hooks/useEditFIle'
 import EditFileDialog from './EditFileDialog'
 import { useTheme } from '@/shared/context/ThemeContext'
 import { toast } from 'react-toastify'
+import { translateText } from '@/features/translation/translationApi'
 
 
 
@@ -59,8 +60,9 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             lang,
             youtubeVideoText: youtubeVideoText.segments
         }
-        generateYoutubeTranslation.mutate(formData)
         setIsTranslating(true)
+        generateYoutubeTranslation.mutate(formData)
+        
     }
 
     const formattedText = youtubeVideoText.segments.map(s => s.text).join('\n')
@@ -106,7 +108,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                     </div>
                     <div className='flex grow items-center justify-end gap-2 self-start'>
 
-                        <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={mutation} data={youtubeVideoText} user={user} />
+                        <DropdownMenuBasic id={youtubeVideoText.fileId} setIsOpen={setIsOpen} mutation={mutation} data={youtubeVideoText} translation={youtubeTranslation} user={user} />
 
                     </div>
                 </header>

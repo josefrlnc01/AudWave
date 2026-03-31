@@ -90,7 +90,7 @@ export default function SavedFile({ data, user, id }: SavedFileProps) {
                     </div>
                     <div className='flex grow items-center justify-end gap-2 self-start'>
 
-                        <DropdownMenuBasic id={data.fileId} setIsOpen={setIsOpen} mutation={null} data={data} user={user} />
+                        <DropdownMenuBasic id={data.fileId} setIsOpen={setIsOpen} mutation={null} data={data} translation={translation ?? youtubeTranslation} user={user} />
 
                         <button onClick={() => navigate('/dashboard')} className='p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors cursor-pointer'>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

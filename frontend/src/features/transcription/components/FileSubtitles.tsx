@@ -63,7 +63,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
     const fileText = mutation.data.fileText
     const user = mutation.data.user
     const displayTitle = editedTitle ?? fileText.title
-
+    
 
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedLang(true)
@@ -76,8 +76,9 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
             lang,
             fileText: fileText.segments
         }
-        generateFileTranslation.mutate(formData)
         setIsTranslating(true)
+        generateFileTranslation.mutate(formData)
+        
     }
 
     const formattedText = fileText.segments.map(s => s.text).join('\n')
@@ -124,7 +125,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
                                 </div>
                                 <div className='flex grow items-center justify-end gap-2 self-start'>
             
-                                    <DropdownMenuBasic id={fileText.fileId} setIsOpen={setIsOpen} mutation={mutation} data={fileText} user={user} />
+                                    <DropdownMenuBasic id={fileText.fileId} setIsOpen={setIsOpen} mutation={mutation} data={fileText} translation={translation} user={user} />
             
                                 </div>
                             </header>
