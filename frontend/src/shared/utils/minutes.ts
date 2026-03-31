@@ -4,7 +4,7 @@ export function formatMinutes(decimal: number): string {
     const mins = Math.floor(totalSeconds / 60)
     const secs = totalSeconds % 60
 
-    return secs > 0 ? `${mins}m ${totalSeconds}s` : `${mins}min`
+    return secs > 0 ? `${mins}m ${secs}s` : `${mins}min`
 }
 
 export function formatTime(seconds: number) {
