@@ -25,7 +25,7 @@ export async function sendLink(link: string | null, formData: FormData | null): 
 
     try {
 
-        if (!link) {
+        if (!link && !formData) {
             throw new Error('Debes elegir un vídeo/audio para proceder con su transcripción.')
         }
 
