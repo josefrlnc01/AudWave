@@ -28,7 +28,7 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
                     disabled={isLoading}
                     className='w-full py-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition-colors cursor-pointer'
                 >
-                    Generar resumen
+                    {isLoading ? 'Generando...' : 'Generar Resumen'}
                 </button>
 
                 {!summary && !isLoading && (
@@ -45,6 +45,9 @@ export default function SummarySection({ summary, isLoading, handleGenerateIaSum
                     >
                         <p className={`${theme === 'dark' ? 'text-slate-300' : 'text-slate-900'} text-sm leading-relaxed`}>
                             {summary}
+                            {isLoading && (
+                                <span className='inline-block w-0.5 h-3.5 bg-blue-400 ml-0.5 animate-pulse align-middle' />
+                            )}
                         </p>
                     </motion.div>
                 )}
