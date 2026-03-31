@@ -104,7 +104,7 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
             <aside id='file-result' className={`w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4  flex flex-col ${theme === 'dark' ? 'bg-slate-900/60 border-slate-800/50' : 'bg-slate-200 border-slate-300/50'} rounded-xl border  backdrop-blur shadow-xl overflow-hidden`}>
 
-                <header className={`flex items-center w-full pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-200 border-slate-300/50'}`}>
+                <header className={`flex items-center w-full gap-5 pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-200 border-slate-300/50'}`}>
                     <div className='grow-0 flex items-center gap-4 min-w-0'>
                         <h2 title={`Título: ${displayTitle}`} className={`text-sm font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-slate-950'} truncate max-w-50 lg:max-w-none`}>
                             {displayTitle}
@@ -159,13 +159,13 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
                             {(user.suscription === 'pro' || user.suscription === 'business') &&
                                 <>
-                                    <div className="flex items-center justify-center gap-2">
-                                        <div className='relative'>
+                                    <div className="flex items-center justify-end gap-2">
+                                        
                                             <select
                                                 onChange={handleSelect}
                                                 defaultValue=''
 
-                                                className={`flex-1  appearance-none text-xs px-2 py-1.5 rounded-lg border ${theme === 'dark' ? 'bg-slate-800 text-slate-300 border-slate-700 focus:outline-none hover:bg-slate-900/90' : 'bg-slate-200 text-slate-900 border-slate-300'}  focus:border-blue-500 cursor-pointer duration-200 transition-colors ease`}
+                                                className={`appearance-none max-w-2/5 text-xs px-2 py-1.5 rounded-lg border ${theme === 'dark' ? 'bg-slate-800 text-slate-300 border-slate-700 focus:outline-none hover:bg-slate-900/90' : 'bg-slate-200 text-slate-900 border-slate-300'}  focus:border-blue-500 cursor-pointer duration-200 transition-colors ease`}
                                             >
                                                 <option value="" className='text-sm' disabled>Traducir a...</option>
                                                 {languages.map(lang => (
@@ -174,13 +174,13 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
 
                                             </select>
 
-                                        </div>
+                                       
 
 
                                         <button
                                             onClick={handleTranslate}
                                             disabled={!selectedLang || isTranslating}
-                                            className={`flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 ${theme === 'dark' ? 'disabled:bg-slate-700 disabled:text-slate-500' : 'disabled:bg-slate-300 disabled:text-slate-500'} disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer`}
+                                            className={`flex items-center gap-2 px-1 py-1 text-sm md:px-3 md:py-1.5 bg-blue-600 hover:bg-blue-500 ${theme === 'dark' ? 'disabled:bg-slate-700 disabled:text-slate-500' : 'disabled:bg-slate-300 disabled:text-slate-500'} disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer`}
                                         >
                                             {isTranslating ? (
                                                 <>

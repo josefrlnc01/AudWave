@@ -20,7 +20,7 @@ export default function VideoSection() {
                     </p>
                     <ul className='flex flex-col gap-3'>
                         {[
-                            'Timestamps por segmento con Whisper',
+                            'Timestamps por segmento',
                             'Genera documentos en 133 idiomas con un click',
                             'Exporta en PDF, SRT, VTT, DOCX y más'
                         ].map((item) => (

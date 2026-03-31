@@ -61,7 +61,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         }
         setIsTranslating(true)
         generateYoutubeTranslation.mutate(formData)
-        
+
     }
 
     const formattedText = youtubeVideoText.segments.map(s => s.text).join('\n')
@@ -76,7 +76,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
         setTimeout(() => {
             setIsCopiyng(false)
         }, 2000)
-        
+
     }
 
 
@@ -86,7 +86,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
             {isOpen && <EditFileDialog isOpen={isOpen} setIsOpen={setIsOpen} id={mutation.data?.youtubeVideoText.fileId} title={displayTitle} onTitleUpdated={setEditedTitle} />}
             <aside id='yt-result' className={`w-full md:w-3/4 lg:w-2/4 md:min-w-3/4 lg:min-w-2/4  flex flex-col ${theme === 'dark' ? 'bg-slate-900/60 border-slate-800/50' : 'bg-slate-200 border-slate-300/50'} rounded-xl border  backdrop-blur shadow-xl overflow-hidden`}>
 
-                <header className={`flex items-center w-full pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-200 border-slate-300/50'}`}>
+                <header className={`flex items-center w-full gap-5 pr-3 pl-5 py-3.5 ${theme === 'dark' ? 'bg-slate-800/60 border-b border-slate-700/50' : 'bg-slate-200 border-slate-300/50'}`}>
                     <div className='grow-0 flex items-center gap-4 min-w-0'>
                         <h2 title={`Título: ${displayTitle}`} className={`text-sm font-semibold ${theme === 'dark' ? 'text-gray-100' : 'text-slate-950'} truncate max-w-50 lg:max-w-none`}>
                             {displayTitle}
@@ -101,11 +101,11 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
                                     fill="none"
-                                    stroke="#22c55e" 
+                                    stroke="#22c55e"
                                     strokeWidth="2"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
-                                    className="w-5 h-5 text-green-500" 
+                                    className="w-5 h-5 text-green-500"
                                 >
                                     <polyline points="20 6 9 17 4 12"></polyline>
                                 </svg>
@@ -141,28 +141,25 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
 
                             {(user.suscription === 'pro' || user.suscription === 'business') &&
                                 <>
-                                    <div className="flex items-center justify-center gap-2">
-                                        <div className='relative'>
-                                            <select
-                                                onChange={handleSelect}
-                                                defaultValue=''
+                                    <div className="flex items-center justify-end gap-2">
 
-                                                className={`flex-1  appearance-none text-xs px-2 py-1.5 rounded-lg border ${theme === 'dark' ? 'bg-slate-800 text-slate-300 border-slate-700 focus:outline-none hover:bg-slate-900/90' : 'bg-slate-200 text-slate-900 border-slate-300'}  focus:border-blue-500 cursor-pointer duration-200 transition-colors ease`}
-                                            >
-                                                <option value="" className='text-sm' disabled>Traducir a...</option>
-                                                {languages.map(lang => (
-                                                    <option key={lang.value} value={lang.value}>{lang.label}</option>
-                                                ))}
+                                        <select
+                                            onChange={handleSelect}
+                                            defaultValue=''
 
-                                            </select>
+                                            className={`appearance-none max-w-2/5 text-xs px-2 py-1.5 rounded-lg border ${theme === 'dark' ? 'bg-slate-800 text-slate-300 border-slate-700 focus:outline-none hover:bg-slate-900/90' : 'bg-slate-200 text-slate-900 border-slate-300'}  focus:border-blue-500 cursor-pointer duration-200 transition-colors ease`}
+                                        >
+                                            <option value="" className='text-sm' disabled>Traducir a...</option>
+                                            {languages.map(lang => (
+                                                <option key={lang.value} value={lang.value}>{lang.label}</option>
+                                            ))}
 
-                                        </div>
-
+                                        </select>
 
                                         <button
                                             onClick={handleTranslate}
                                             disabled={!selectedLang || isTranslating}
-                                            className={`flex items-center gap-2 px-3 py-1.5 bg-blue-600 hover:bg-blue-500 ${theme === 'dark' ? 'disabled:bg-slate-700 disabled:text-slate-500' : 'disabled:bg-slate-300 disabled:text-slate-500'} disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer`}
+                                            className={`flex items-center gap-2 px-1 py-1 text-sm md:px-3 md:py-1.5 bg-blue-600 hover:bg-blue-500 ${theme === 'dark' ? 'disabled:bg-slate-700 disabled:text-slate-500' : 'disabled:bg-slate-300 disabled:text-slate-500'} disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer`}
                                         >
                                             {isTranslating ? (
                                                 <>
@@ -192,7 +189,7 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
                                     <span className='text-[#0d59f2] text-xs mr-2 font-mono font-semibold'>{formatTime(Number(s.start.toFixed(2)))}:{formatTime(Number(s.end.toFixed(2)))}</span> {s.text}
                                 </motion.p>
                             ))}
-    
+
                             {youtubeTranslation.length > 0 && youtubeTranslation.map((s, i) => (
                                 <motion.p
                                     key={i}
