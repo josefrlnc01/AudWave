@@ -23,8 +23,7 @@ prueba.mp4
 *.njsproj
 *.sln
 *.sw?
-VIdeo Project.webm
-audwave-logo.webp
+
 # Playwright
 /test-results/
 /playwright-report/
