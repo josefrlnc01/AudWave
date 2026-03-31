@@ -2,7 +2,7 @@ import { useTheme } from '@/shared/context/ThemeContext'
 import { useEffect, useState } from 'react'
 
 const awaitPhrase = [
-    "Analizando archivo, puede tardar un poco...",
+    "Analizando archivo, puede tardar un poco...", "Transcribiendo audio...", "Procesando texto..."
 ]
 
 export default function TranscriptionSkeleton() {
