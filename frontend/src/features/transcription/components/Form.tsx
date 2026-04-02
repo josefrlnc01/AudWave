@@ -13,12 +13,14 @@ import { minutesStore } from "@/shared/stores/minutes.store";
 
 export default function Form() {
     const [inputValue, setInputValue] = useState('')
-    const [usedMinutes, setUsedMinues] = useState<number>(Number(minutesStore.get() ?? Number(localStorage.getItem('usedMinutes'))))
+    const [usedMinutes, setUsedMinues] = useState<number>(Number(minutesStore.get()))
     const [fileInputValue, setFileInputValue] = useState<FormData | null>(null)
     const [formData, setFormData] = useState<FormData | null>(null)
     const [changed, setChanged] = useState(false)
     const queryClient = useQueryClient()
     const {theme} = useTheme()
+
+    //Mutación de función principal de transcripción
     const mutation = useMutation<
         PromiseLink | PromiseFile | undefined,
         Error,
@@ -28,10 +30,10 @@ export default function Form() {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
             setUsedMinues(data?.usedMinutes!)
-            localStorage.setItem('usedMinutes', String(data?.usedMinutes))
         }
     })
-
+    console.log('store minutos', minutesStore.get())
+    console.log('local storage minutos', Number(localStorage.getItem('usedMinutes')))
     //Movimiento de scroll hacia el elemento de transcripción cuando se realiza una 
     useEffect(() => {
         if (!mutation.data) return
