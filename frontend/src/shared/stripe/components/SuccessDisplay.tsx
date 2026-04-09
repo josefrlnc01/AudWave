@@ -1,5 +1,7 @@
 
+import Header from '@/features/transcription/components/Header'
 import Logo from './Logo'
+import Footer from '@/features/transcription/components/Footer'
 
 export type SuccessDisplayProps = {
     sessionId: string
@@ -29,22 +31,29 @@ export default function SuccessDisplay({sessionId}: SuccessDisplayProps) {
     }
 
     return (
-        <section>
-            <div className="product Box-root">
-                <Logo />
+        <>
+        <Header/>
+        <section className='w-screen h-screen flex flex-col justify-center items-center'>
+            <aside className='bg-slate-900 p-12 rounded-xl flex flex-col gap-4'>
+                    <div className="product Box-root">
                 <div className="description Box-root">
-                    <h3>Subscription to Suscripción PRO AudWave successful!</h3>
+                    <h3 className='text-white font-bold'>¡Compra del plan de suscripción realizada correctamente!</h3>
                 </div>
             </div>
-            <form action="/create-portal-session" method="POST">
+            <form className='flex flex-col justify-center' action="/create-portal-session" method="POST">
                 <input
                     type="hidden"
                     name="session_id"
                 />
-                <button onClick={handleCreatePortalSession} type="submit">
-                    Manage your billing information
+                <button className='text-white bg-slate-950 p-4 rounded-md font-semibold cursor-pointer mx-auto hover:bg-slate-950/80 transition-colors ease-in' onClick={handleCreatePortalSession} type="submit">
+                    Administra tu suscripción
                 </button>
             </form>
+            </aside>
+            
         </section>
+        <Footer/>
+        </>
+        
     )
 }
