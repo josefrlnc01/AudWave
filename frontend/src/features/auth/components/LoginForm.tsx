@@ -175,9 +175,9 @@ export default function LoginForm() {
                 <p className='text-sm text-zinc-400 transition-colors'>¿No tienes una cuenta aún? <span className="text-indigo-400 font-medium hover:text-indigo-300 cursor-pointer"><Link
                     to={'/auth/register'}
                 >Crea una aquí</Link></span></p>
-                {import.meta.env.DEV && <p className='text-sm text-zinc-400 transition-colors'>¿Has olvidado tu contraseña? <span className="text-indigo-400 font-medium hover:text-indigo-300 cursor-pointer"><Link
+                <p className='text-sm text-zinc-400 transition-colors'>¿Has olvidado tu contraseña? <span className="text-indigo-400 font-medium hover:text-indigo-300 cursor-pointer"><Link
                     to={'/auth/forgot-password'}
-                >Solicita una nueva</Link></span></p>}
+                >Solicita una nueva</Link></span></p>
             </nav>
         </form>
     )

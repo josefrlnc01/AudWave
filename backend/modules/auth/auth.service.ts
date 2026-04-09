@@ -29,7 +29,7 @@ export class AuthService {
             const token = new Token()
             token.token = generate6DigitsToken()
             token.user = user._id
-
+            console.log('user', user)
             await AuthEmail.sendEmail({
                 name: user.name,
                 email: user.email,
@@ -51,9 +51,10 @@ export class AuthService {
             if (!tokenExists) {
                 throw new AppError('Token no válido', 401)
             }
-
+            console.log('token exists', token)
             //Confirmamos el usuario
             const user = await User.findById(tokenExists.user)
+            console.log('user', user)
             if (!user) {
                 throw new AppError('Usuario no encontrado', 404)
             }
@@ -74,9 +75,6 @@ export class AuthService {
             if (!user) {
                 throw new AppError('Credenciales incorrectas', 404)
 
-            }
-            if (process.env.AUTO_CONFIRM === 'true') {
-                user.confirmed = true
             }
             if (!user.confirmed) {
 
