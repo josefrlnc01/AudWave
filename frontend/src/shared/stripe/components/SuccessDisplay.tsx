@@ -1,6 +1,5 @@
 
 import Header from '@/features/transcription/components/Header'
-import Logo from './Logo'
 import Footer from '@/features/transcription/components/Footer'
 
 export type SuccessDisplayProps = {
