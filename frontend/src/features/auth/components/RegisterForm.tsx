@@ -36,7 +36,7 @@ export default function RegisterForm() {
             toast.error(error.message)
         },
         onSuccess: (data) => {
-            console.log(data)
+    
             if (data.startsWith('Usuario creado')) {
                 toast.success(data)
                 setTimeout(() => {
