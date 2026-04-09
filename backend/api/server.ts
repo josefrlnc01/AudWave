@@ -1,8 +1,7 @@
 import dns from 'dns';
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 import express from 'express'
-import dotenv from 'dotenv'
-dotenv.config()
+import 'dotenv/config'
 import { corsMiddleware } from '../config/cors.js'
 import { authRoute } from '../modules/auth/auth.routes.js'
 import { connectToDb } from '../config/db.js'
@@ -22,17 +21,17 @@ import { StripeController } from '../modules/stripe/stripe.controller.js';
 
 await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
-const port = process.env.PORT 
+const port = process.env.PORT
 
 const app = express()
 app.use(cookieParser())
 app.use(corsMiddleware())
 app.post('/stripe/webhook', express.raw({ type: 'application/json' }), StripeController.createWebHook)
 app.use(express.json())
-app.use(express.urlencoded({ extended: true })) 
+app.use(express.urlencoded({ extended: true }))
 app.use(timeout('300s'))
 app.use((req, res, next) => {
-  if (!req.timedout) next()
+    if (!req.timedout) next()
 })
 
 app.use('/auth', authRoute)
@@ -41,7 +40,7 @@ app.use('/file', fileRoute)
 app.use('/document', documentRoute)
 app.use('/saveds', savedsRoute)
 app.use('/translation', translationRoutes)
-app.use('/stripe',stripeRoutes)
+app.use('/stripe', stripeRoutes)
 app.use('/user', userRoutes)
 
 const getFirebaseCredential = () => {
