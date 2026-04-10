@@ -124,7 +124,7 @@ export default function PrivacyView() {
                         <p className='text-sm text-slate-300 leading-relaxed'>
                             En AudWave nos tomamos tu privacidad muy en serio. Este documento explica qué datos recopilamos,
                             cómo los usamos y qué derechos tienes sobre ellos. Si tienes cualquier duda, puedes contactarnos
-                            en <a href='mailto:josefrlnc01@gmail.com' className='text-blue-400 hover:text-blue-300 transition-colors'>josefrlnc01@gmail.com</a>.
+                            en <a href='mailto:soporte@audwave.es' className='text-blue-400 hover:text-blue-300 transition-colors'>soporte@audwave.es</a>.
                         </p>
                     </div>
                 </motion.div>
@@ -179,7 +179,7 @@ export default function PrivacyView() {
                         <p className='text-xs text-slate-400'>Responderemos en menos de 48 horas.</p>
                     </div>
                     <a
-                        href='mailto:josefrlnc01@gmail.com'
+                        href='mailto:soporte@audwave.es'
                         className='shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl transition-colors'
                     >
                         <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
