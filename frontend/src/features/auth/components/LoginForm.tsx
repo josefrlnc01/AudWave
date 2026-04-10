@@ -117,7 +117,7 @@ export default function LoginForm() {
                         outline-none
                         transition text-white'
                     {...register("email", {
-                        required: 'El email es obligatorio',
+                        required: 'El campo email es obligatorio',
                         pattern: {
                             value: /\S+@\S+\.\S+/,
                             message: "E-mail no válido",
@@ -146,12 +146,10 @@ export default function LoginForm() {
                         outline-none
                         transition text-white'
                         {...register('password', {
-                            required: 'La contraseña es obligatoria',
+                            required: 'El campo contraseña es obligatorio',
                         })}
                     />
-                    {errors.password && (
-                        <ErrorMessage>{errors.password.message}</ErrorMessage>
-                    )}
+
                     <button
                         type="button"
                         onClick={() => setShow(!show)}
@@ -160,7 +158,9 @@ export default function LoginForm() {
                         {show ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                 </div>
-
+                {errors.password && (
+                    <ErrorMessage>{errors.password.message}</ErrorMessage>
+                )}
             </div>
 
             <input
