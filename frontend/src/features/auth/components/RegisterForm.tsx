@@ -155,7 +155,7 @@ export default function RegisterForm() {
                         outline-none
                         transition text-white'
                         {...register('password', {
-                            required: 'La contraseña es obligatoria',
+                            required: 'El campo contraseña es obligatorio'
                         })}
                     />
                     {errors.password && (

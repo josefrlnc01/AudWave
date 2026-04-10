@@ -24,6 +24,11 @@ export class AuthService {
             if (!user.password) {
                 throw new AppError('Es necesario introducir una contraseña', 400)
             }
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{6,}$/;
+            const isValidPassword = passwordRegex.test(user.password);
+            if (!isValidPassword) {
+                throw new AppError('La contraseña debe contener al menos un carácter numérico, una letra minúscula, una letra mayúscula y 6 carácteres')
+            }
             user.password = await hashPassword(user.password)
 
             const token = new Token()
