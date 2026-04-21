@@ -4,7 +4,7 @@ import SubtitlesView from "../pages/SubtitlesView";
 import InputIcon from "../../../assets/input.svg"
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatMinutes } from "@/shared/utils/minutes";
-import { subscriptionStore } from "@/shared/stores/user-suscription.store";
+import { subscriptionStore } from "@/shared/stores/user-subscription.store";
 import { useTheme } from "@/shared/context/ThemeContext";
 import type { TranscriptionResult } from "../types/subtitles.types";
 import { minutesStore } from "@/shared/stores/minutes.store";

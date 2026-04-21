@@ -4,7 +4,7 @@ import { useAuth } from '@/features/auth/hooks/useAuth'
 import { Navigate, Outlet } from 'react-router'
 import { ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
-import { subscriptionStore } from '@/shared/stores/user-suscription.store';
+import { subscriptionStore } from '@/shared/stores/user-subscription.store';
 //Estilos para react toastify
 const contextClass = {
     success: "bg-slate-900 border border-green-500/30 text-green-400",

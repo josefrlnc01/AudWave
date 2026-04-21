@@ -2,7 +2,7 @@ import { tokenStore } from "@/lib/token.store"
 import { toast } from "react-toastify"
 import Header from "@/features/transcription/components/Header"
 import Footer from "@/features/transcription/components/Footer"
-import { subscriptionStore } from "@/shared/stores/user-suscription.store"
+import { subscriptionStore } from "@/shared/stores/user-subscription.store"
 import { useTheme } from "@/shared/context/ThemeContext"
 
 
