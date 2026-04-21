@@ -1,6 +1,5 @@
 import type { SubtitlesViewProps } from '../types/subtitles.types'
 import { Spinner } from '@/components/ui/spinner'
-import Subtitles from '../pages/SubtitlesView'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { languages } from '../stores/languages'
@@ -13,7 +12,6 @@ import { useSummary } from '../hooks/useSummary'
 import { useEditFile } from '../hooks/useEditFIle'
 import EditFileDialog from './EditFileDialog'
 import { useTheme } from '@/shared/context/ThemeContext'
-import SubtitlesView from '../pages/SubtitlesView'
 import YoutubeVideoSubtitles from './YoutubeVideoSubtitles'
 
 
