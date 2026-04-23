@@ -4,7 +4,7 @@ import { dirname, resolve } from 'node:path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-const envPath = resolve(__dirname, '../.env')
+const envPath = resolve(__dirname, '../../.env')
 const result = dotenv.config({ path: envPath })
 console.log('ENV PATH:', envPath)
 console.log('DOTENV RESULT:', result.error ?? 'OK')
