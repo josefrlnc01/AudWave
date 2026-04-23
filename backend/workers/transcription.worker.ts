@@ -34,7 +34,7 @@ export const youtubeTranscriptionWorker = new Worker('youtubeTranscription', asy
 
     return {savedYoutubeFile, usedMinutes, user}
 }, {
-    connection,
+    connection: getConnection(),
     concurrency: 2
 })
 
