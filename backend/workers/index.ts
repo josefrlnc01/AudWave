@@ -1,7 +1,9 @@
 import { fileURLToPath } from 'node:url'
 import dotenv from 'dotenv'
 import { dirname, resolve } from 'node:path'
-
+import dns from 'node:dns'
+dns.setDefaultResultOrder('ipv4first')
+dns.setServers(['8.8.8.8', '8.8.4.4'])
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const envPath = resolve(__dirname, '../../.env')
