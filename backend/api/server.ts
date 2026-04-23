@@ -1,7 +1,7 @@
 import dns from 'dns';
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 import express from 'express'
-import 'dotenv/config'
+import dotenv from 'dotenv'
 import { corsMiddleware } from '../config/cors.js'
 import { authRoute } from '../modules/auth/auth.routes.js'
 import { connectToDb } from '../config/db.js'
@@ -18,7 +18,16 @@ import timeout from 'connect-timeout'
 import { stripeRoutes } from '../modules/stripe/stripe.routes.js';
 import { StripeController } from '../modules/stripe/stripe.controller.js';
 import '../workers/transcription.worker.js'
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+dotenv.config({path: resolve(__dirname, '../../.env')})
+
+console.log('workers iniciados')
 
 await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
