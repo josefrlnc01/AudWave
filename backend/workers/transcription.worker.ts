@@ -1,7 +1,7 @@
 import { Worker } from "bullmq";
 import { convertVideoToAudio } from "../shared/utils/video.js";
 import { FileService } from "../modules/file/file.service.js";
-import { connection } from "../config/queue.js";
+import { getConnection } from "../config/queue.js";
 import { YoutubeVideoService } from "../modules/youtube-video/youtube-video.service.js";
 
 export const fileTranscriptionWorker = new Worker('fileTranscription', async (job) => {
@@ -15,7 +15,7 @@ export const fileTranscriptionWorker = new Worker('fileTranscription', async (jo
 
     return { savedFile, usedMinutes, user }
 }, {
-    connection,
+    connection: getConnection(),
     concurrency: 2
 })
 

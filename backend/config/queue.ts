@@ -2,16 +2,16 @@ import {Queue} from 'bullmq'
 
 const isProd = process.env.NODE_ENV === 'production'
 
-export const connection = {
+export const getConnection = () => ({
     host: isProd ? process.env.REDIS_HOST : '45.90.237.66',
     port: Number(process.env.REDIS_PORT ?? 6379),
     maxRetriesPerRequest: null
-}
+})
 
-export const fileTranscriptionQueue = new Queue('fileTranscription', {connection})
-
-
-export const youtubeTranscriptionQueue = new Queue('youtubeTranscription', {connection})
+export const fileTranscriptionQueue = new Queue('fileTranscription', {connection: getConnection()})
 
 
-console.log('redis connection', connection)
+export const youtubeTranscriptionQueue = new Queue('youtubeTranscription', {connection: getConnection()})
+
+
+console.log('redis connection', getConnection())
