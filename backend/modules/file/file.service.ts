@@ -66,7 +66,7 @@ export class FileService {
                 {
                     $set: {usedMinutes: totalMinutes}
                 },
-                {upsert: true, new: true}
+                {upsert: true, returnDocument: 'after'}
             )
 
             const fileText = await transcribeWhisperAudio(finalFilePath)

@@ -133,7 +133,7 @@ export class YoutubeVideoService {
             {
                 $set: { usedMinutes: totalMinutes }
             },
-            { upsert: true, new: true }
+            { upsert: true, returnDocument: 'after' }
         )
 
         const youtubeVideoText = await transcribeWhisperAudio(filepath)
