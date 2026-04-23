@@ -2,6 +2,7 @@ import { fileURLToPath } from 'node:url'
 import dotenv from 'dotenv'
 import { dirname, resolve } from 'node:path'
 import dns from 'node:dns'
+import { connectToDb } from '../config/db.js'
 dns.setDefaultResultOrder('ipv4first')
 dns.setServers(['8.8.8.8', '8.8.4.4'])
 const __filename = fileURLToPath(import.meta.url)
@@ -12,6 +13,8 @@ console.log('ENV PATH:', envPath)
 console.log('DOTENV RESULT:', result.error ?? 'OK')
 console.log('NODE_ENV:', process.env.NODE_ENV)
 console.log('REDIS_HOST:', process.env.REDIS_HOST)
+
+await connectToDb()
 await import( './transcription.worker.js')
 
 
