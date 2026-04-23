@@ -30,13 +30,11 @@ export async function sendLink(link: string | null, formData: FormData | null): 
     const accessToken = tokenStore.get()
 
     try {
-        console.log('form data sendlink', formData)
         if (!link && !formData) {
             throw new Error('Debes elegir un vídeo/audio para proceder con su transcripción.')
         }
 
         if (link !== null) {
-            console.log('link', link)
             const response = await fetch(`${urlBackend}/yt-video`, {
                 method: 'POST',
                 body: JSON.stringify({ videoLink: link }),

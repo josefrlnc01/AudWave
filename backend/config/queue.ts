@@ -12,6 +12,3 @@ export const fileTranscriptionQueue = new Queue('fileTranscription', {connection
 
 
 export const youtubeTranscriptionQueue = new Queue('youtubeTranscription', {connection: getConnection()})
-
-
-console.log('redis connection', getConnection())

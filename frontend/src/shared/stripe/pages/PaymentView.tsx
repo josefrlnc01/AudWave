@@ -8,7 +8,6 @@ export default function PaymentView() {
     let [message, setMessage] = useState('');
     let [success, setSuccess] = useState(false);
     let [sessionId, setSessionId] = useState('');
-    console.log('success', success)
     useEffect(() => {
         // Check to see if this is a redirect back from Checkout
         const query = new URLSearchParams(window.location.search);

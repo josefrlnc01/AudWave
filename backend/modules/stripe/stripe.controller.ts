@@ -20,9 +20,6 @@ export class StripeController {
                 return res.status(200).json({message: 'Plan actualizado correctamente'})
             }
             
-
-            
-            console.log('session url', session.url)
             res.status(200).json({url: session.url})
         } catch (error) {
             if (error instanceof AppError) {
@@ -44,7 +41,6 @@ export class StripeController {
             if (!portalSession || !portalSession.return_url) {
                 return res.status(400).json('Error al procesar el pago')
             }
-            console.log('sessiobn id', session_id)
             
             res.status(200).json({url: portalSession.url})
         } catch (error) {

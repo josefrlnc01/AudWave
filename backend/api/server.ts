@@ -27,8 +27,6 @@ const __dirname = dirname(__filename)
 
 dotenv.config({path: resolve(__dirname, '../../.env')})
 
-console.log('workers iniciados')
-
 await connectToDb()
 const isProd = process.env.NODE_ENV === 'production';
 const port = process.env.PORT

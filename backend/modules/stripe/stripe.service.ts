@@ -114,7 +114,6 @@ export class StripeService {
                     endpointSecret
                 );
             } catch (err: any) {
-                console.log(`⚠️ Webhook signature verification failed.`, err.message);
                 return res.sendStatus(400);
             }
         } else {
@@ -233,9 +232,6 @@ export class StripeService {
                         stripeSubscriptionId: session.subscription
                     })
 
-                    console.log('✅ Pago completado para la sesión:', session.id);
-                    console.log('subscription id', session.subscription)
-                    console.log('customer', session.customer)
                     break
 
 

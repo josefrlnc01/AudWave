@@ -61,7 +61,6 @@ export default function YoutubeVideoSubtitles({ mutation, inputValue, fileInputV
     const youtubeVideoText = mutation.data.savedYoutubeFile
     const user = mutation.data.user
     const displayTitle = editedTitle ?? youtubeVideoText.title
-    console.log('data', mutation.data)
     //Guardado del valor del input de lenguage
     const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedLang(true)

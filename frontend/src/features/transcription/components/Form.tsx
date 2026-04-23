@@ -23,9 +23,8 @@ export default function Form() {
     //Mutación de función principal de transcripción
     const mutation = useMutation<TranscriptionResult | undefined, Error, void>({
         mutationFn: startTranscription,
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['allSaveds'] })
-            console.log(data)
         }
     })
 
@@ -105,7 +104,6 @@ export default function Form() {
         let jobId: string
         let clipOrigin: string
         if (inputValue !== null) {
-            console.log('input value', inputValue)
             jobId = await sendLink(inputValue, null)
             clipOrigin = 'youtube'
         } else {

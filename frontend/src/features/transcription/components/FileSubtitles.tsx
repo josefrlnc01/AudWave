@@ -71,7 +71,6 @@ export default function FileSubtitles({ mutation, inputValue, fileInputValue }: 
     const fileText = mutation.data.savedFile
     const user = mutation.data.user
 
-    console.log('mutation data', mutation.data)
     const displayTitle = editedTitle ?? fileText.title
 
     //Guardado del valor del input de lenguage

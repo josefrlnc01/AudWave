@@ -52,7 +52,6 @@ export class FileController {
         }
 
         const state = await job.getState()
-        console.log('state', state)
         if (state === 'completed') {
             return res.status(200).json({
                 status: 'completed',
